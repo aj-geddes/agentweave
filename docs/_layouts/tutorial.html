@@ -1,0 +1,249 @@
+---
+layout: default
+---
+
+<article class="tutorial-page" itemscope itemtype="http://schema.org/LearningResource">
+  <!-- Tutorial Header -->
+  <header class="tutorial-header">
+    <div class="tutorial-meta-top">
+      {% if page.difficulty %}
+      <span class="badge badge-{{ page.difficulty | downcase }}">
+        {{ page.difficulty }}
+      </span>
+      {% endif %}
+
+      {% if page.category %}
+      <span class="tutorial-category">{{ page.category }}</span>
+      {% endif %}
+    </div>
+
+    <h1 class="tutorial-title" itemprop="name">{{ page.title }}</h1>
+
+    {% if page.description %}
+    <p class="tutorial-description" itemprop="description">{{ page.description }}</p>
+    {% endif %}
+
+    <!-- Tutorial Info Bar -->
+    <div class="tutorial-info-bar">
+      {% if page.duration %}
+      <div class="info-item">
+        <svg class="info-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/>
+          <path fill-rule="evenodd" d="M7.5 3a.5.5 0 01.5.5v5.21l3.248 1.856a.5.5 0 01-.496.868l-3.5-2A.5.5 0 017 9V3.5a.5.5 0 01.5-.5z"/>
+        </svg>
+        <span class="info-label">Estimated time:</span>
+        <span class="info-value" itemprop="timeRequired" content="PT{{ page.duration }}M">{{ page.duration }} minutes</span>
+      </div>
+      {% endif %}
+
+      {% if page.last_updated %}
+      <div class="info-item">
+        <svg class="info-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/>
+          <path d="M8 4a.5.5 0 01.5.5V8H10a.5.5 0 010 1H8a.5.5 0 01-.5-.5V4.5A.5.5 0 018 4z"/>
+        </svg>
+        <span class="info-label">Updated:</span>
+        <time class="info-value" datetime="{{ page.last_updated | date_to_xmlschema }}" itemprop="dateModified">
+          {{ page.last_updated | date: "%B %Y" }}
+        </time>
+      </div>
+      {% endif %}
+
+      {% if page.version %}
+      <div class="info-item">
+        <svg class="info-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M8.5 1.5a.5.5 0 00-1 0v5.793L5.354 5.146a.5.5 0 10-.708.708l3 3a.5.5 0 00.708 0l3-3a.5.5 0 00-.708-.708L8.5 7.293V1.5z"/>
+          <path d="M3 9.5a.5.5 0 01.5.5v2.5a1 1 0 001 1h7a1 1 0 001-1V10a.5.5 0 011 0v2.5a2 2 0 01-2 2h-7a2 2 0 01-2-2V10a.5.5 0 01.5-.5z"/>
+        </svg>
+        <span class="info-label">SDK Version:</span>
+        <span class="info-value">{{ page.version }}</span>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- What You'll Learn -->
+  {% if page.learning_objectives %}
+  <aside class="learning-objectives" role="complementary">
+    <h2 class="objectives-title">
+      <svg class="title-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"/>
+      </svg>
+      What you'll learn
+    </h2>
+    <ul class="objectives-list" itemprop="teaches">
+      {% for objective in page.learning_objectives %}
+      <li>{{ objective }}</li>
+      {% endfor %}
+    </ul>
+  </aside>
+  {% endif %}
+
+  <!-- Prerequisites -->
+  {% if page.prerequisites %}
+  <aside class="prerequisites" role="complementary">
+    <h2 class="prerequisites-title">
+      <svg class="title-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/>
+      </svg>
+      Prerequisites
+    </h2>
+    <ul class="prerequisites-list" itemprop="educationalUse">
+      {% for prerequisite in page.prerequisites %}
+      <li>
+        {% if prerequisite.url %}
+        <a href="{{ prerequisite.url | relative_url }}">{{ prerequisite.name }}</a>
+        {% else %}
+        {{ prerequisite }}
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </aside>
+  {% endif %}
+
+  <!-- Progress Indicator -->
+  <div class="tutorial-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="progress-bar"></div>
+  </div>
+
+  <!-- Tutorial Content -->
+  <div class="tutorial-content" itemprop="text">
+    {{ content }}
+  </div>
+
+  <!-- Next Steps -->
+  {% if page.next_steps %}
+  <aside class="next-steps" role="complementary">
+    <h2 class="next-steps-title">Next Steps</h2>
+    <ul class="next-steps-list">
+      {% for step in page.next_steps %}
+      <li>
+        <a href="{{ step.url | relative_url }}" class="next-step-link">
+          <span class="step-title">{{ step.title }}</span>
+          {% if step.description %}
+          <span class="step-description">{{ step.description }}</span>
+          {% endif %}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </aside>
+  {% endif %}
+
+  <!-- Tutorial Navigation -->
+  {% if page.prev_tutorial or page.next_tutorial %}
+  <nav class="tutorial-navigation" aria-label="Tutorial series navigation">
+    <div class="nav-links">
+      {% if page.prev_tutorial %}
+      <a href="{{ page.prev_tutorial.url | relative_url }}" class="nav-link nav-prev" rel="prev">
+        <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+        <div class="nav-content">
+          <span class="nav-label">Previous Tutorial</span>
+          <span class="nav-title">{{ page.prev_tutorial.title }}</span>
+        </div>
+      </a>
+      {% endif %}
+
+      {% if page.next_tutorial %}
+      <a href="{{ page.next_tutorial.url | relative_url }}" class="nav-link nav-next" rel="next">
+        <div class="nav-content">
+          <span class="nav-label">Next Tutorial</span>
+          <span class="nav-title">{{ page.next_tutorial.title }}</span>
+        </div>
+        <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+        </svg>
+      </a>
+      {% endif %}
+    </div>
+  </nav>
+  {% endif %}
+
+  <!-- Feedback -->
+  <aside class="tutorial-feedback" role="complementary">
+    <h3>How was this tutorial?</h3>
+    <p>Your feedback helps us improve our documentation.</p>
+    <div class="feedback-buttons">
+      <button type="button" class="feedback-btn feedback-excellent" data-rating="5" aria-label="Excellent">
+        Excellent
+      </button>
+      <button type="button" class="feedback-btn feedback-good" data-rating="4" aria-label="Good">
+        Good
+      </button>
+      <button type="button" class="feedback-btn feedback-okay" data-rating="3" aria-label="Okay">
+        Okay
+      </button>
+      <button type="button" class="feedback-btn feedback-poor" data-rating="2" aria-label="Needs improvement">
+        Needs improvement
+      </button>
+    </div>
+  </aside>
+</article>
+
+<!-- Tutorial-specific JavaScript -->
+<script>
+  // Progress tracking
+  document.addEventListener('DOMContentLoaded', function() {
+    const progressBar = document.querySelector('.progress-bar');
+    const content = document.querySelector('.tutorial-content');
+    
+    if (progressBar && content) {
+      window.addEventListener('scroll', function() {
+        const windowHeight = window.innerHeight;
+        const documentHeight = content.offsetHeight;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
+        
+        progressBar.style.width = Math.min(scrollPercent, 100) + '%';
+        document.querySelector('.tutorial-progress').setAttribute('aria-valuenow', Math.min(scrollPercent, 100));
+      });
+    }
+
+    // Code copy buttons
+    const codeBlocks = document.querySelectorAll('pre code');
+    codeBlocks.forEach(function(codeBlock) {
+      const button = document.createElement('button');
+      button.className = 'code-copy-btn';
+      button.textContent = 'Copy';
+      button.setAttribute('aria-label', 'Copy code to clipboard');
+      
+      button.addEventListener('click', function() {
+        navigator.clipboard.writeText(codeBlock.textContent).then(function() {
+          button.textContent = 'Copied!';
+          button.classList.add('copied');
+          setTimeout(function() {
+            button.textContent = 'Copy';
+            button.classList.remove('copied');
+          }, 2000);
+        });
+      });
+      
+      codeBlock.parentElement.style.position = 'relative';
+      codeBlock.parentElement.appendChild(button);
+    });
+
+    // Feedback tracking
+    const feedbackButtons = document.querySelectorAll('.feedback-btn');
+    feedbackButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        const rating = this.getAttribute('data-rating') || this.getAttribute('data-feedback');
+        console.log('Tutorial feedback:', rating);
+        // Here you would send this to your analytics service
+        
+        // Visual feedback
+        feedbackButtons.forEach(btn => btn.classList.remove('selected'));
+        this.classList.add('selected');
+        
+        // Show thank you message
+        const feedback = this.closest('.tutorial-feedback, .page-feedback');
+        const thankYou = document.createElement('p');
+        thankYou.className = 'feedback-thanks';
+        thankYou.textContent = 'Thank you for your feedback!';
+        feedback.appendChild(thankYou);
+      });
+    });
+  });
+</script>

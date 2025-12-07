@@ -1,0 +1,212 @@
+<nav class="main-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-container">
+    <!-- Mobile Nav Header -->
+    <div class="nav-header">
+      <button class="nav-close" aria-label="Close navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Navigation Tree -->
+    <ul class="nav-list">
+      <!-- Getting Started -->
+      <li class="nav-section{% if page.url contains '/getting-started/' %} active{% endif %}">
+        <button class="nav-section-toggle" aria-expanded="{% if page.url contains '/getting-started/' %}true{% else %}false{% endif %}">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM10 6v4M10 14h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="nav-section-title">Getting Started</span>
+          <svg class="nav-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav-submenu">
+          <li><a href="{{ '/getting-started/introduction/' | relative_url }}" class="nav-link{% if page.url == '/getting-started/introduction/' %} active{% endif %}">Introduction</a></li>
+          <li><a href="{{ '/getting-started/quickstart/' | relative_url }}" class="nav-link{% if page.url == '/getting-started/quickstart/' %} active{% endif %}">Quick Start</a></li>
+          <li><a href="{{ '/getting-started/installation/' | relative_url }}" class="nav-link{% if page.url == '/getting-started/installation/' %} active{% endif %}">Installation</a></li>
+          <li><a href="{{ '/getting-started/configuration/' | relative_url }}" class="nav-link{% if page.url == '/getting-started/configuration/' %} active{% endif %}">Configuration</a></li>
+          <li><a href="{{ '/getting-started/first-agent/' | relative_url }}" class="nav-link{% if page.url == '/getting-started/first-agent/' %} active{% endif %}">Your First Agent</a></li>
+        </ul>
+      </li>
+
+      <!-- Core Concepts -->
+      <li class="nav-section{% if page.url contains '/core-concepts/' %} active{% endif %}">
+        <button class="nav-section-toggle" aria-expanded="{% if page.url contains '/core-concepts/' %}true{% else %}false{% endif %}">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 2L2 6l8 4 8-4-8-4zM2 14l8 4 8-4M2 10l8 4 8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="nav-section-title">Core Concepts</span>
+          <svg class="nav-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav-submenu">
+          <li><a href="{{ '/core-concepts/architecture/' | relative_url }}" class="nav-link{% if page.url == '/core-concepts/architecture/' %} active{% endif %}">Architecture</a></li>
+          <li><a href="{{ '/core-concepts/identity/' | relative_url }}" class="nav-link{% if page.url == '/core-concepts/identity/' %} active{% endif %}">Identity</a></li>
+          <li><a href="{{ '/core-concepts/authorization/' | relative_url }}" class="nav-link{% if page.url == '/core-concepts/authorization/' %} active{% endif %}">Authorization</a></li>
+          <li><a href="{{ '/core-concepts/a2a-protocol/' | relative_url }}" class="nav-link{% if page.url == '/core-concepts/a2a-protocol/' %} active{% endif %}">A2A Protocol</a></li>
+          <li><a href="{{ '/core-concepts/agent-cards/' | relative_url }}" class="nav-link{% if page.url == '/core-concepts/agent-cards/' %} active{% endif %}">Agent Cards</a></li>
+          <li><a href="{{ '/core-concepts/security-model/' | relative_url }}" class="nav-link{% if page.url == '/core-concepts/security-model/' %} active{% endif %}">Security Model</a></li>
+          <li><a href="{{ '/core-concepts/observability/' | relative_url }}" class="nav-link{% if page.url == '/core-concepts/observability/' %} active{% endif %}">Observability</a></li>
+        </ul>
+      </li>
+
+      <!-- Tutorials -->
+      <li class="nav-section{% if page.url contains '/tutorials/' %} active{% endif %}">
+        <button class="nav-section-toggle" aria-expanded="{% if page.url contains '/tutorials/' %}true{% else %}false{% endif %}">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="nav-section-title">Tutorials</span>
+          <svg class="nav-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav-submenu">
+          <li><a href="{{ '/tutorials/basic-agent/' | relative_url }}" class="nav-link{% if page.url == '/tutorials/basic-agent/' %} active{% endif %}">Building a Basic Agent</a></li>
+          <li><a href="{{ '/tutorials/multi-agent/' | relative_url }}" class="nav-link{% if page.url == '/tutorials/multi-agent/' %} active{% endif %}">Multi-Agent System</a></li>
+          <li><a href="{{ '/tutorials/custom-methods/' | relative_url }}" class="nav-link{% if page.url == '/tutorials/custom-methods/' %} active{% endif %}">Custom Methods</a></li>
+          <li><a href="{{ '/tutorials/authorization-policies/' | relative_url }}" class="nav-link{% if page.url == '/tutorials/authorization-policies/' %} active{% endif %}">Authorization Policies</a></li>
+          <li><a href="{{ '/tutorials/error-handling/' | relative_url }}" class="nav-link{% if page.url == '/tutorials/error-handling/' %} active{% endif %}">Error Handling</a></li>
+          <li><a href="{{ '/tutorials/testing/' | relative_url }}" class="nav-link{% if page.url == '/tutorials/testing/' %} active{% endif %}">Testing Agents</a></li>
+          <li><a href="{{ '/tutorials/deployment/' | relative_url }}" class="nav-link{% if page.url == '/tutorials/deployment/' %} active{% endif %}">Deploying to Production</a></li>
+        </ul>
+      </li>
+
+      <!-- How-To Guides -->
+      <li class="nav-section{% if page.url contains '/how-to/' %} active{% endif %}">
+        <button class="nav-section-toggle" aria-expanded="{% if page.url contains '/how-to/' %}true{% else %}false{% endif %}">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 2a2 2 0 012 0l5.196 3a2 2 0 011 1.732v6.536a2 2 0 01-1 1.732L11 18a2 2 0 01-2 0l-5.196-3a2 2 0 01-1-1.732V6.732a2 2 0 011-1.732L9 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="nav-section-title">How-To Guides</span>
+          <svg class="nav-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav-submenu">
+          <li><a href="{{ '/how-to/configure-spire/' | relative_url }}" class="nav-link{% if page.url == '/how-to/configure-spire/' %} active{% endif %}">Configure SPIRE</a></li>
+          <li><a href="{{ '/how-to/write-opa-policies/' | relative_url }}" class="nav-link{% if page.url == '/how-to/write-opa-policies/' %} active{% endif %}">Write OPA Policies</a></li>
+          <li><a href="{{ '/how-to/setup-mtls/' | relative_url }}" class="nav-link{% if page.url == '/how-to/setup-mtls/' %} active{% endif %}">Setup mTLS</a></li>
+          <li><a href="{{ '/how-to/implement-custom-transport/' | relative_url }}" class="nav-link{% if page.url == '/how-to/implement-custom-transport/' %} active{% endif %}">Custom Transport</a></li>
+          <li><a href="{{ '/how-to/add-metrics/' | relative_url }}" class="nav-link{% if page.url == '/how-to/add-metrics/' %} active{% endif %}">Add Metrics</a></li>
+          <li><a href="{{ '/how-to/enable-tracing/' | relative_url }}" class="nav-link{% if page.url == '/how-to/enable-tracing/' %} active{% endif %}">Enable Tracing</a></li>
+          <li><a href="{{ '/how-to/debug-agents/' | relative_url }}" class="nav-link{% if page.url == '/how-to/debug-agents/' %} active{% endif %}">Debug Agents</a></li>
+        </ul>
+      </li>
+
+      <!-- API Reference -->
+      <li class="nav-section{% if page.url contains '/api/' %} active{% endif %}">
+        <button class="nav-section-toggle" aria-expanded="{% if page.url contains '/api/' %}true{% else %}false{% endif %}">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 7h3m10 0h-3m-7 5h3m4 0h3M3 4h14a2 2 0 012 2v8a2 2 0 01-2 2H3a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="nav-section-title">API Reference</span>
+          <svg class="nav-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav-submenu">
+          <li><a href="{{ '/api/agent/' | relative_url }}" class="nav-link{% if page.url == '/api/agent/' %} active{% endif %}">Agent</a></li>
+          <li><a href="{{ '/api/decorators/' | relative_url }}" class="nav-link{% if page.url == '/api/decorators/' %} active{% endif %}">Decorators</a></li>
+          <li><a href="{{ '/api/context/' | relative_url }}" class="nav-link{% if page.url == '/api/context/' %} active{% endif %}">Context</a></li>
+          <li><a href="{{ '/api/identity/' | relative_url }}" class="nav-link{% if page.url == '/api/identity/' %} active{% endif %}">Identity</a></li>
+          <li><a href="{{ '/api/authorization/' | relative_url }}" class="nav-link{% if page.url == '/api/authorization/' %} active{% endif %}">Authorization</a></li>
+          <li><a href="{{ '/api/transport/' | relative_url }}" class="nav-link{% if page.url == '/api/transport/' %} active{% endif %}">Transport</a></li>
+          <li><a href="{{ '/api/a2a/' | relative_url }}" class="nav-link{% if page.url == '/api/a2a/' %} active{% endif %}">A2A Protocol</a></li>
+          <li><a href="{{ '/api/config/' | relative_url }}" class="nav-link{% if page.url == '/api/config/' %} active{% endif %}">Configuration</a></li>
+          <li><a href="{{ '/api/exceptions/' | relative_url }}" class="nav-link{% if page.url == '/api/exceptions/' %} active{% endif %}">Exceptions</a></li>
+          <li><a href="{{ '/api/observability/' | relative_url }}" class="nav-link{% if page.url == '/api/observability/' %} active{% endif %}">Observability</a></li>
+          <li><a href="{{ '/api/testing/' | relative_url }}" class="nav-link{% if page.url == '/api/testing/' %} active{% endif %}">Testing</a></li>
+        </ul>
+      </li>
+
+      <!-- Examples -->
+      <li class="nav-section{% if page.url contains '/examples/' %} active{% endif %}">
+        <button class="nav-section-toggle" aria-expanded="{% if page.url contains '/examples/' %}true{% else %}false{% endif %}">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 8h6M7 12h3m8 4a9 9 0 11-18 0 9 9 0 0118 0zm-9-6h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="nav-section-title">Examples</span>
+          <svg class="nav-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav-submenu">
+          <li><a href="{{ '/examples/hello-world/' | relative_url }}" class="nav-link{% if page.url == '/examples/hello-world/' %} active{% endif %}">Hello World</a></li>
+          <li><a href="{{ '/examples/calculator/' | relative_url }}" class="nav-link{% if page.url == '/examples/calculator/' %} active{% endif %}">Calculator Agent</a></li>
+          <li><a href="{{ '/examples/data-pipeline/' | relative_url }}" class="nav-link{% if page.url == '/examples/data-pipeline/' %} active{% endif %}">Data Pipeline</a></li>
+          <li><a href="{{ '/examples/microservices/' | relative_url }}" class="nav-link{% if page.url == '/examples/microservices/' %} active{% endif %}">Microservices</a></li>
+          <li><a href="{{ '/examples/workflow-orchestration/' | relative_url }}" class="nav-link{% if page.url == '/examples/workflow-orchestration/' %} active{% endif %}">Workflow Orchestration</a></li>
+          <li><a href="{{ '/examples/cross-cloud/' | relative_url }}" class="nav-link{% if page.url == '/examples/cross-cloud/' %} active{% endif %}">Cross-Cloud Agents</a></li>
+          <li><a href="{{ '/examples/monitoring/' | relative_url }}" class="nav-link{% if page.url == '/examples/monitoring/' %} active{% endif %}">Monitoring & Alerts</a></li>
+          <li><a href="{{ '/examples/integration/' | relative_url }}" class="nav-link{% if page.url == '/examples/integration/' %} active{% endif %}">Third-Party Integration</a></li>
+        </ul>
+      </li>
+
+      <!-- Deployment -->
+      <li class="nav-section{% if page.url contains '/deployment/' %} active{% endif %}">
+        <button class="nav-section-toggle" aria-expanded="{% if page.url contains '/deployment/' %}true{% else %}false{% endif %}">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="nav-section-title">Deployment</span>
+          <svg class="nav-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav-submenu">
+          <li><a href="{{ '/deployment/overview/' | relative_url }}" class="nav-link{% if page.url == '/deployment/overview/' %} active{% endif %}">Overview</a></li>
+          <li><a href="{{ '/deployment/kubernetes/' | relative_url }}" class="nav-link{% if page.url == '/deployment/kubernetes/' %} active{% endif %}">Kubernetes</a></li>
+          <li><a href="{{ '/deployment/docker/' | relative_url }}" class="nav-link{% if page.url == '/deployment/docker/' %} active{% endif %}">Docker</a></li>
+          <li><a href="{{ '/deployment/aws/' | relative_url }}" class="nav-link{% if page.url == '/deployment/aws/' %} active{% endif %}">AWS</a></li>
+          <li><a href="{{ '/deployment/gcp/' | relative_url }}" class="nav-link{% if page.url == '/deployment/gcp/' %} active{% endif %}">Google Cloud</a></li>
+          <li><a href="{{ '/deployment/azure/' | relative_url }}" class="nav-link{% if page.url == '/deployment/azure/' %} active{% endif %}">Azure</a></li>
+          <li><a href="{{ '/deployment/production-checklist/' | relative_url }}" class="nav-link{% if page.url == '/deployment/production-checklist/' %} active{% endif %}">Production Checklist</a></li>
+        </ul>
+      </li>
+
+      <!-- Security -->
+      <li class="nav-section{% if page.url contains '/security/' %} active{% endif %}">
+        <button class="nav-section-toggle" aria-expanded="{% if page.url contains '/security/' %}true{% else %}false{% endif %}">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="nav-section-title">Security</span>
+          <svg class="nav-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav-submenu">
+          <li><a href="{{ '/security/overview/' | relative_url }}" class="nav-link{% if page.url == '/security/overview/' %} active{% endif %}">Security Overview</a></li>
+          <li><a href="{{ '/security/spiffe-spire/' | relative_url }}" class="nav-link{% if page.url == '/security/spiffe-spire/' %} active{% endif %}">SPIFFE/SPIRE</a></li>
+          <li><a href="{{ '/security/mtls/' | relative_url }}" class="nav-link{% if page.url == '/security/mtls/' %} active{% endif %}">mTLS</a></li>
+          <li><a href="{{ '/security/authorization/' | relative_url }}" class="nav-link{% if page.url == '/security/authorization/' %} active{% endif %}">Authorization</a></li>
+          <li><a href="{{ '/security/best-practices/' | relative_url }}" class="nav-link{% if page.url == '/security/best-practices/' %} active{% endif %}">Best Practices</a></li>
+        </ul>
+      </li>
+
+      <!-- Troubleshooting -->
+      <li class="nav-section{% if page.url contains '/troubleshooting/' %} active{% endif %}">
+        <button class="nav-section-toggle" aria-expanded="{% if page.url contains '/troubleshooting/' %}true{% else %}false{% endif %}">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="nav-section-title">Troubleshooting</span>
+          <svg class="nav-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav-submenu">
+          <li><a href="{{ '/troubleshooting/common-issues/' | relative_url }}" class="nav-link{% if page.url == '/troubleshooting/common-issues/' %} active{% endif %}">Common Issues</a></li>
+          <li><a href="{{ '/troubleshooting/identity-errors/' | relative_url }}" class="nav-link{% if page.url == '/troubleshooting/identity-errors/' %} active{% endif %}">Identity Errors</a></li>
+          <li><a href="{{ '/troubleshooting/authorization-errors/' | relative_url }}" class="nav-link{% if page.url == '/troubleshooting/authorization-errors/' %} active{% endif %}">Authorization Errors</a></li>
+          <li><a href="{{ '/troubleshooting/connection-issues/' | relative_url }}" class="nav-link{% if page.url == '/troubleshooting/connection-issues/' %} active{% endif %}">Connection Issues</a></li>
+          <li><a href="{{ '/troubleshooting/debugging/' | relative_url }}" class="nav-link{% if page.url == '/troubleshooting/debugging/' %} active{% endif %}">Debugging Guide</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>

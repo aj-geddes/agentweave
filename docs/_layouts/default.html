@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include head.html %}
+<body>
+  {% include header.html %}
+
+  <div class="container">
+    <div class="main-wrapper">
+      {% include nav.html %}
+
+      <main class="content" role="main">
+        {{ content }}
+      </main>
+
+      {% if page.show_sidebar != false %}
+      <aside class="sidebar">
+        {% include sidebar.html %}
+      </aside>
+      {% endif %}
+    </div>
+  </div>
+
+  {% include footer.html %}
+
+  <!-- Scripts -->
+  <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+  {% if page.custom_js %}
+  <script src="{{ page.custom_js | relative_url }}"></script>
+  {% endif %}
+</body>
+</html>

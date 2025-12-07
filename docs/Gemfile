@@ -1,0 +1,19 @@
+source "https://rubygems.org"
+
+# GitHub Pages gem - includes Jekyll and GitHub-compatible plugins
+gem "github-pages", group: :jekyll_plugins
+
+# Additional Jekyll plugins
+group :jekyll_plugins do
+  gem "jekyll-seo-tag"
+  gem "jekyll-sitemap"
+  gem "jekyll-feed"
+  gem "jekyll-redirect-from"
+  gem "jekyll-github-metadata"
+end
+
+# Required for Jekyll 3.0+ on Ruby 3.0+
+gem "webrick", "~> 1.7"
+
+# Optional: faster builds
+gem "kramdown-parser-gfm"

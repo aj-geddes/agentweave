@@ -1,0 +1,120 @@
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <!-- About Section -->
+      <div class="footer-section">
+        <h3 class="footer-heading">AgentWeave SDK</h3>
+        <p class="footer-description">
+          Build secure, cross-cloud AI agents with cryptographic identity and automatic authorization.
+        </p>
+        <p class="footer-tagline">
+          The secure path is the only path.
+        </p>
+      </div>
+
+      <!-- Documentation Links -->
+      <div class="footer-section">
+        <h4 class="footer-title">Documentation</h4>
+        <ul class="footer-links">
+          <li><a href="{{ '/getting-started/quickstart/' | relative_url }}">Quick Start</a></li>
+          <li><a href="{{ '/core-concepts/' | relative_url }}">Core Concepts</a></li>
+          <li><a href="{{ '/tutorials/' | relative_url }}">Tutorials</a></li>
+          <li><a href="{{ '/api/' | relative_url }}">API Reference</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources Links -->
+      <div class="footer-section">
+        <h4 class="footer-title">Resources</h4>
+        <ul class="footer-links">
+          <li><a href="{{ '/examples/' | relative_url }}">Examples</a></li>
+          <li><a href="{{ '/deployment/' | relative_url }}">Deployment</a></li>
+          <li><a href="{{ '/security/' | relative_url }}">Security</a></li>
+          <li><a href="{{ '/troubleshooting/' | relative_url }}">Troubleshooting</a></li>
+        </ul>
+      </div>
+
+      <!-- Community Links -->
+      <div class="footer-section">
+        <h4 class="footer-title">Community</h4>
+        <ul class="footer-links">
+          <li>
+            <a href="{{ site.github_url | default: 'https://github.com/agentweave/hvs-agent' }}"
+               target="_blank"
+               rel="noopener noreferrer">
+              GitHub
+              <svg class="external-link-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 6.5v3a1.5 1.5 0 01-1.5 1.5h-5A1.5 1.5 0 012 9.5v-5A1.5 1.5 0 013.5 3h3M7.5 2H10v2.5M5.5 6.5L10 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="{{ site.pypi_url | default: 'https://pypi.org/project/hvs-agent/' }}"
+               target="_blank"
+               rel="noopener noreferrer">
+              PyPI
+              <svg class="external-link-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 6.5v3a1.5 1.5 0 01-1.5 1.5h-5A1.5 1.5 0 012 9.5v-5A1.5 1.5 0 013.5 3h3M7.5 2H10v2.5M5.5 6.5L10 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="{{ site.github_url | default: 'https://github.com/agentweave/hvs-agent' }}/blob/main/LICENSE"
+               target="_blank"
+               rel="noopener noreferrer">
+              {{ site.license | default: 'Apache 2.0' }} License
+            </a>
+          </li>
+          <li>
+            <a href="{{ site.github_url | default: 'https://github.com/agentweave/hvs-agent' }}/issues"
+               target="_blank"
+               rel="noopener noreferrer">
+              Report Issue
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <p class="copyright">
+          &copy; {{ 'now' | date: "%Y" }} {{ site.author | default: 'AgentWeave Team' }}. All rights reserved.
+        </p>
+        {% if page.last_modified_at or page.date %}
+        <p class="last-updated">
+          Last updated:
+          <time datetime="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
+            {{ page.last_modified_at | default: page.date | date: "%B %d, %Y" }}
+          </time>
+        </p>
+        {% endif %}
+      </div>
+
+      <div class="footer-bottom-right">
+        <p class="made-with">
+          Built with
+          <a href="https://jekyllrb.com" target="_blank" rel="noopener noreferrer">Jekyll</a>
+          and hosted on
+          <a href="https://pages.github.com" target="_blank" rel="noopener noreferrer">GitHub Pages</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top Button -->
+<button class="back-to-top" aria-label="Back to top" title="Back to top">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 17V3M10 3l-7 7M10 3l7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<!-- Scripts -->
+<script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+{% if page.extra_js %}
+  {% for js in page.extra_js %}
+    <script src="{{ js | relative_url }}"></script>
+  {% endfor %}
+{% endif %}

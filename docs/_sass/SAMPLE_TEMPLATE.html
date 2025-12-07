@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AgentWeave SDK Documentation - Sample Template">
+  <title>Sample Page - AgentWeave SDK</title>
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <!-- Syntax highlighting (optional - Prism.js) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <!-- Skip to content link (accessibility) -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- Site wrapper -->
+  <div class="site-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="header-container">
+        <!-- Logo -->
+        <a href="/" class="site-logo">
+          <span class="logo-text">AgentWeave SDK</span>
+          <span class="version-badge">v1.0.0</span>
+        </a>
+
+        <!-- Main navigation (desktop) -->
+        <nav class="main-nav">
+          <a href="/docs" class="active">Docs</a>
+          <a href="/api">API Reference</a>
+          <a href="/examples">Examples</a>
+          <a href="/guides">Guides</a>
+        </nav>
+
+        <!-- Header actions -->
+        <div class="header-actions">
+          <!-- Search -->
+          <div class="search-box">
+            <input type="search" class="search-input" placeholder="Search docs..." aria-label="Search">
+            <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+
+          <!-- Theme toggle -->
+          <button class="theme-toggle" aria-label="Toggle theme">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+
+          <!-- GitHub link -->
+          <a href="https://github.com/org/agentweave" class="github-link no-external-icon">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            <span class="github-text">GitHub</span>
+          </a>
+
+          <!-- Mobile menu toggle -->
+          <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main container -->
+    <div class="site-container">
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <nav class="sidebar-nav">
+          <div class="nav-section">
+            <h4 class="nav-section-title">Getting Started</h4>
+            <ul>
+              <li><a href="/docs/installation">Installation</a></li>
+              <li><a href="/docs/quickstart" class="active">Quick Start</a></li>
+              <li><a href="/docs/configuration">Configuration</a></li>
+            </ul>
+          </div>
+
+          <div class="nav-section">
+            <h4 class="nav-section-title">Core Concepts</h4>
+            <ul>
+              <li><a href="/docs/agents">Agents</a></li>
+              <li><a href="/docs/identity">Identity</a></li>
+              <li><a href="/docs/authorization">Authorization</a></li>
+              <li><a href="/docs/communication">Communication</a></li>
+            </ul>
+          </div>
+
+          <div class="nav-section">
+            <h4 class="nav-section-title">Advanced</h4>
+            <ul>
+              <li><a href="/docs/security">Security</a></li>
+              <li><a href="/docs/deployment">Deployment</a></li>
+              <li><a href="/docs/monitoring">Monitoring</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Sidebar overlay (mobile) -->
+      <div class="sidebar-overlay"></div>
+
+      <!-- Main content -->
+      <main class="main-content" id="main-content">
+        <article class="content-wrapper">
+
+          <!-- Breadcrumbs -->
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span class="separator"></span>
+            <a href="/docs">Documentation</a>
+            <span class="separator"></span>
+            <span class="current">Quick Start</span>
+          </nav>
+
+          <!-- Page header -->
+          <header class="page-header">
+            <h1 class="page-title">Quick Start Guide</h1>
+            <p class="page-description">
+              Get up and running with AgentWeave SDK in minutes. This guide walks you through installation, configuration, and creating your first secure agent.
+            </p>
+            <div class="page-meta">
+              <span class="meta-item">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                Last updated: December 7, 2025
+              </span>
+              <span class="meta-item">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                Reading time: 5 min
+              </span>
+            </div>
+          </header>
+
+          <!-- Content -->
+          <section>
+            <h2 id="installation">Installation</h2>
+            <p>
+              Install the AgentWeave SDK using pip. The SDK requires Python 3.8 or higher.
+            </p>
+
+            <div class="code-block has-header">
+              <div class="code-header">
+                <span class="code-language">Bash</span>
+              </div>
+              <button class="copy-code-btn">Copy</button>
+              <pre><code class="language-bash">pip install agentweave-sdk</code></pre>
+            </div>
+
+            <div class="callout callout-tip">
+              <div class="callout-title">Tip</div>
+              <p>
+                For development environments, we recommend using a virtual environment to isolate dependencies.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <h2 id="basic-usage">Basic Usage</h2>
+            <p>
+              Here's a minimal example of creating a secure agent with cryptographic identity:
+            </p>
+
+            <div class="code-block has-header">
+              <div class="code-header">
+                <span class="code-language">Python</span>
+                <span class="code-filename">example.py</span>
+              </div>
+              <button class="copy-code-btn">Copy</button>
+              <pre><code class="language-python">from agentweave import Agent, Config
+
+# Create agent configuration
+config = Config(
+    name="my-agent",
+    workload_id="spiffe://example.org/my-agent",
+    spire_socket="/tmp/spire-agent/public/api.sock"
+)
+
+# Initialize agent
+agent = Agent(config)
+
+# Define a handler
+@agent.method("greet")
+async def greet(context, params):
+    name = params.get("name", "World")
+    return {"message": f"Hello, {name}!"}
+
+# Start the agent
+if __name__ == "__main__":
+    agent.serve()</code></pre>
+            </div>
+          </section>
+
+          <section>
+            <h2 id="features">Key Features</h2>
+
+            <div class="grid grid-cols-2 gap-6 my-8">
+              <div class="card card-feature">
+                <div class="card-icon">🔒</div>
+                <h3 class="card-title">Secure by Default</h3>
+                <p>Cryptographic identity and mTLS for all communications. Security cannot be bypassed.</p>
+              </div>
+
+              <div class="card card-feature">
+                <div class="card-icon">⚡</div>
+                <h3 class="card-title">High Performance</h3>
+                <p>Optimized for low-latency agent-to-agent communication with minimal overhead.</p>
+              </div>
+
+              <div class="card card-feature">
+                <div class="card-icon">🌐</div>
+                <h3 class="card-title">Cross-Cloud</h3>
+                <p>Deploy agents across multiple cloud providers with seamless networking.</p>
+              </div>
+
+              <div class="card card-feature">
+                <div class="card-icon">📊</div>
+                <h3 class="card-title">Observable</h3>
+                <p>Built-in metrics, tracing, and structured logging for full visibility.</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 id="api-reference">API Reference</h2>
+
+            <div class="api-endpoint">
+              <div class="endpoint-header">
+                <span class="http-method method-post">POST</span>
+                <span class="endpoint-path">/rpc</span>
+                <span class="api-status status-stable">Stable</span>
+              </div>
+              <p class="endpoint-description">
+                Execute a remote procedure call on an agent.
+              </p>
+
+              <div class="endpoint-section">
+                <div class="section-title">Request Body</div>
+                <div class="parameter">
+                  <span class="param-name">method</span>
+                  <span class="param-type">string</span>
+                  <span class="param-required">required</span>
+                  <p class="param-description">The name of the method to call</p>
+                </div>
+                <div class="parameter">
+                  <span class="param-name">params</span>
+                  <span class="param-type">object</span>
+                  <p class="param-description">Parameters to pass to the method</p>
+                </div>
+                <div class="parameter">
+                  <span class="param-name">id</span>
+                  <span class="param-type">string</span>
+                  <p class="param-description">Request ID for tracking</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 id="warnings">Important Notes</h2>
+
+            <div class="callout callout-warning">
+              <div class="callout-title">Warning</div>
+              <p>
+                Always validate SPIFFE IDs in production. The SDK enforces identity verification, but application-level authorization is your responsibility.
+              </p>
+            </div>
+
+            <div class="callout callout-danger">
+              <div class="callout-title">Security Notice</div>
+              <p>
+                Never disable mTLS or bypass authorization checks. The SDK is designed with security-first principles and does not allow these features to be disabled.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <h2 id="next-steps">Next Steps</h2>
+            <p>Now that you have a basic agent running, explore these topics:</p>
+
+            <ul>
+              <li><a href="/docs/configuration">Configuration Guide</a> - Learn about all configuration options</li>
+              <li><a href="/docs/authorization">Authorization Policies</a> - Define fine-grained access control</li>
+              <li><a href="/docs/deployment">Deployment</a> - Deploy agents to production</li>
+              <li><a href="/docs/examples">Examples</a> - See real-world usage patterns</li>
+            </ul>
+          </section>
+
+          <!-- Edit page link -->
+          <a href="https://github.com/org/agentweave/edit/main/docs/quickstart.md" class="edit-page-link">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+              <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+            </svg>
+            Edit this page on GitHub
+          </a>
+
+          <!-- Content navigation -->
+          <nav class="content-navigation">
+            <a href="/docs/installation" class="nav-link nav-prev">
+              <span class="nav-direction">Previous</span>
+              <span class="nav-title">Installation</span>
+            </a>
+            <a href="/docs/configuration" class="nav-link nav-next">
+              <span class="nav-direction">Next</span>
+              <span class="nav-title">Configuration</span>
+            </a>
+          </nav>
+
+        </article>
+      </main>
+
+      <!-- Table of Contents (right sidebar) -->
+      <aside class="toc-wrapper">
+        <nav class="toc">
+          <h4 class="toc-title">On This Page</h4>
+          <ul>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#basic-usage">Basic Usage</a></li>
+            <li><a href="#features">Key Features</a></li>
+            <li><a href="#api-reference">API Reference</a></li>
+            <li><a href="#warnings">Important Notes</a></li>
+            <li><a href="#next-steps">Next Steps</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <div class="footer-section">
+            <h4 class="footer-title">Documentation</h4>
+            <ul>
+              <li><a href="/docs">Getting Started</a></li>
+              <li><a href="/docs/guides">Guides</a></li>
+              <li><a href="/api">API Reference</a></li>
+              <li><a href="/examples">Examples</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Community</h4>
+            <ul>
+              <li><a href="https://github.com/org/agentweave">GitHub</a></li>
+              <li><a href="https://discord.gg/agentweave">Discord</a></li>
+              <li><a href="/blog">Blog</a></li>
+              <li><a href="/contributing">Contributing</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Resources</h4>
+            <ul>
+              <li><a href="/changelog">Changelog</a></li>
+              <li><a href="/roadmap">Roadmap</a></li>
+              <li><a href="/security">Security</a></li>
+              <li><a href="/support">Support</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Legal</h4>
+            <ul>
+              <li><a href="/privacy">Privacy Policy</a></li>
+              <li><a href="/terms">Terms of Service</a></li>
+              <li><a href="/license">License</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 AgentWeave. All rights reserved.</p>
+          <div class="footer-links">
+            <a href="/sitemap">Sitemap</a>
+            <a href="/rss">RSS</a>
+            <a href="/status">Status</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Back to top button -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+
+  <script>
+    // Theme toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    const html = document.documentElement;
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      html.setAttribute('data-theme', savedTheme);
+    }
+
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('is-open');
+      overlay.classList.toggle('is-visible');
+    });
+
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('is-open');
+      overlay.classList.remove('is-visible');
+    });
+
+    // Copy code button
+    document.querySelectorAll('.copy-code-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const codeBlock = btn.nextElementSibling;
+        const code = codeBlock.textContent;
+        navigator.clipboard.writeText(code);
+
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+
+    // Back to top button
+    const backToTop = document.querySelector('.back-to-top');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // TOC active link highlighting
+    const tocLinks = document.querySelectorAll('.toc a');
+    const sections = document.querySelectorAll('h2[id]');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 100) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

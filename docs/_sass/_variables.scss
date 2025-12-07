@@ -1,0 +1,350 @@
+// _variables.scss
+// CSS Custom Properties and Sass Variables for AgentWeave SDK Documentation
+
+// ============================================================================
+// Color Palette
+// ============================================================================
+
+// Primary Colors - Deep Blue for Security/Trust
+$color-primary-50: #f0f9ff;
+$color-primary-100: #e0f2fe;
+$color-primary-200: #bae6fd;
+$color-primary-300: #7dd3fc;
+$color-primary-400: #38bdf8;
+$color-primary-500: #0ea5e9;
+$color-primary-600: #0284c7;
+$color-primary-700: #0369a1;
+$color-primary-800: #075985;
+$color-primary-900: #1a365d; // Deep blue primary
+
+// Accent Colors - Teal
+$color-accent-50: #f0fdfa;
+$color-accent-100: #ccfbf1;
+$color-accent-200: #99f6e4;
+$color-accent-300: #5eead4;
+$color-accent-400: #2dd4bf;
+$color-accent-500: #14b8a6;
+$color-accent-600: #0d9488; // Teal accent
+$color-accent-700: #0f766e;
+$color-accent-800: #115e59;
+$color-accent-900: #134e4a;
+
+// Neutral Colors - Grays
+$color-gray-50: #f9fafb;
+$color-gray-100: #f3f4f6;
+$color-gray-200: #e5e7eb;
+$color-gray-300: #d1d5db;
+$color-gray-400: #9ca3af;
+$color-gray-500: #6b7280;
+$color-gray-600: #4b5563;
+$color-gray-700: #374151;
+$color-gray-800: #1f2937;
+$color-gray-900: #111827;
+
+// Semantic Colors
+$color-success-light: #d1fae5;
+$color-success: #10b981;
+$color-success-dark: #065f46;
+
+$color-warning-light: #fef3c7;
+$color-warning: #f59e0b;
+$color-warning-dark: #92400e;
+
+$color-danger-light: #fee2e2;
+$color-danger: #ef4444;
+$color-danger-dark: #991b1b;
+
+$color-info-light: #dbeafe;
+$color-info: #3b82f6;
+$color-info-dark: #1e3a8a;
+
+// Code Syntax Highlighting Colors
+$color-code-keyword: #c678dd;
+$color-code-string: #98c379;
+$color-code-function: #61afef;
+$color-code-comment: #5c6370;
+$color-code-number: #d19a66;
+$color-code-operator: #56b6c2;
+
+// ============================================================================
+// Dark Mode Colors
+// ============================================================================
+
+$color-dark-bg-primary: #0d1117;
+$color-dark-bg-secondary: #161b22;
+$color-dark-bg-tertiary: #1f2937;
+$color-dark-bg-code: #1a1e26;
+
+$color-dark-text-primary: #e6edf3;
+$color-dark-text-secondary: #9ca3af;
+$color-dark-text-tertiary: #6b7280;
+
+$color-dark-border: #30363d;
+$color-dark-border-hover: #484f58;
+
+// ============================================================================
+// Typography
+// ============================================================================
+
+// Font Families
+$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                   sans-serif;
+$font-family-monospace: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Fira Mono',
+                        'Roboto Mono', 'Consolas', 'Courier New', monospace;
+$font-family-heading: $font-family-base;
+
+// Font Sizes (Type Scale - 1.250 - Major Third)
+$font-size-xs: 0.75rem;      // 12px
+$font-size-sm: 0.875rem;     // 14px
+$font-size-base: 1rem;       // 16px
+$font-size-md: 1.125rem;     // 18px
+$font-size-lg: 1.25rem;      // 20px
+$font-size-xl: 1.5rem;       // 24px
+$font-size-2xl: 1.875rem;    // 30px
+$font-size-3xl: 2.25rem;     // 36px
+$font-size-4xl: 3rem;        // 48px
+$font-size-5xl: 3.75rem;     // 60px
+
+// Font Weights
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+// Line Heights
+$line-height-tight: 1.25;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.75;
+$line-height-loose: 2;
+
+// Letter Spacing
+$letter-spacing-tight: -0.025em;
+$letter-spacing-normal: 0;
+$letter-spacing-wide: 0.025em;
+
+// ============================================================================
+// Spacing System (Based on 8px grid)
+// ============================================================================
+
+$spacing-0: 0;
+$spacing-1: 0.25rem;   // 4px
+$spacing-2: 0.5rem;    // 8px
+$spacing-3: 0.75rem;   // 12px
+$spacing-4: 1rem;      // 16px
+$spacing-5: 1.25rem;   // 20px
+$spacing-6: 1.5rem;    // 24px
+$spacing-8: 2rem;      // 32px
+$spacing-10: 2.5rem;   // 40px
+$spacing-12: 3rem;     // 48px
+$spacing-16: 4rem;     // 64px
+$spacing-20: 5rem;     // 80px
+$spacing-24: 6rem;     // 96px
+$spacing-32: 8rem;     // 128px
+
+// ============================================================================
+// Breakpoints
+// ============================================================================
+
+$breakpoint-xs: 480px;
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1536px;
+
+// ============================================================================
+// Layout Dimensions
+// ============================================================================
+
+$sidebar-width: 280px;
+$sidebar-width-collapsed: 0;
+$header-height: 64px;
+$max-content-width: 1280px;
+$max-text-width: 780px;
+
+// ============================================================================
+// Border Radius
+// ============================================================================
+
+$border-radius-none: 0;
+$border-radius-sm: 0.125rem;   // 2px
+$border-radius-base: 0.25rem;  // 4px
+$border-radius-md: 0.375rem;   // 6px
+$border-radius-lg: 0.5rem;     // 8px
+$border-radius-xl: 0.75rem;    // 12px
+$border-radius-2xl: 1rem;      // 16px
+$border-radius-full: 9999px;
+
+// ============================================================================
+// Shadows
+// ============================================================================
+
+$shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+$shadow-dark-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+$shadow-dark-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+$shadow-dark-base: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+$shadow-dark-md: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+
+// ============================================================================
+// Transitions
+// ============================================================================
+
+$transition-fast: 150ms ease-in-out;
+$transition-base: 250ms ease-in-out;
+$transition-slow: 350ms ease-in-out;
+
+// ============================================================================
+// Z-index Scale
+// ============================================================================
+
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// ============================================================================
+// CSS Custom Properties (for runtime theme switching)
+// ============================================================================
+
+:root {
+  // Light mode (default)
+  --color-bg-primary: #{$color-gray-50};
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #{$color-gray-100};
+  --color-bg-code: #f6f8fa;
+
+  --color-text-primary: #{$color-gray-900};
+  --color-text-secondary: #{$color-gray-700};
+  --color-text-tertiary: #{$color-gray-600};
+
+  --color-border: #{$color-gray-200};
+  --color-border-hover: #{$color-gray-300};
+
+  --color-link: #{$color-primary-700};
+  --color-link-hover: #{$color-primary-900};
+
+  --color-primary: #{$color-primary-900};
+  --color-primary-hover: #{$color-primary-800};
+  --color-accent: #{$color-accent-600};
+  --color-accent-hover: #{$color-accent-700};
+
+  --shadow-sm: #{$shadow-sm};
+  --shadow-base: #{$shadow-base};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+
+  // Scrollbar
+  --scrollbar-track: #{$color-gray-100};
+  --scrollbar-thumb: #{$color-gray-400};
+  --scrollbar-thumb-hover: #{$color-gray-500};
+}
+
+// Dark mode
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-primary: #{$color-dark-bg-primary};
+    --color-bg-secondary: #{$color-dark-bg-secondary};
+    --color-bg-tertiary: #{$color-dark-bg-tertiary};
+    --color-bg-code: #{$color-dark-bg-code};
+
+    --color-text-primary: #{$color-dark-text-primary};
+    --color-text-secondary: #{$color-dark-text-secondary};
+    --color-text-tertiary: #{$color-dark-text-tertiary};
+
+    --color-border: #{$color-dark-border};
+    --color-border-hover: #{$color-dark-border-hover};
+
+    --color-link: #{$color-primary-400};
+    --color-link-hover: #{$color-primary-300};
+
+    --color-primary: #{$color-primary-500};
+    --color-primary-hover: #{$color-primary-400};
+    --color-accent: #{$color-accent-500};
+    --color-accent-hover: #{$color-accent-400};
+
+    --shadow-sm: #{$shadow-dark-sm};
+    --shadow-base: #{$shadow-dark-base};
+    --shadow-md: #{$shadow-dark-md};
+    --shadow-lg: #{$shadow-dark-md};
+
+    // Scrollbar
+    --scrollbar-track: #{$color-dark-bg-tertiary};
+    --scrollbar-thumb: #{$color-gray-700};
+    --scrollbar-thumb-hover: #{$color-gray-600};
+  }
+}
+
+// Manual dark mode toggle (optional - allows users to override system preference)
+[data-theme="dark"] {
+  --color-bg-primary: #{$color-dark-bg-primary};
+  --color-bg-secondary: #{$color-dark-bg-secondary};
+  --color-bg-tertiary: #{$color-dark-bg-tertiary};
+  --color-bg-code: #{$color-dark-bg-code};
+
+  --color-text-primary: #{$color-dark-text-primary};
+  --color-text-secondary: #{$color-dark-text-secondary};
+  --color-text-tertiary: #{$color-dark-text-tertiary};
+
+  --color-border: #{$color-dark-border};
+  --color-border-hover: #{$color-dark-border-hover};
+
+  --color-link: #{$color-primary-400};
+  --color-link-hover: #{$color-primary-300};
+
+  --color-primary: #{$color-primary-500};
+  --color-primary-hover: #{$color-primary-400};
+  --color-accent: #{$color-accent-500};
+  --color-accent-hover: #{$color-accent-400};
+
+  --shadow-sm: #{$shadow-dark-sm};
+  --shadow-base: #{$shadow-dark-base};
+  --shadow-md: #{$shadow-dark-md};
+  --shadow-lg: #{$shadow-dark-md};
+
+  --scrollbar-track: #{$color-dark-bg-tertiary};
+  --scrollbar-thumb: #{$color-gray-700};
+  --scrollbar-thumb-hover: #{$color-gray-600};
+}
+
+[data-theme="light"] {
+  --color-bg-primary: #{$color-gray-50};
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #{$color-gray-100};
+  --color-bg-code: #f6f8fa;
+
+  --color-text-primary: #{$color-gray-900};
+  --color-text-secondary: #{$color-gray-700};
+  --color-text-tertiary: #{$color-gray-600};
+
+  --color-border: #{$color-gray-200};
+  --color-border-hover: #{$color-gray-300};
+
+  --color-link: #{$color-primary-700};
+  --color-link-hover: #{$color-primary-900};
+
+  --color-primary: #{$color-primary-900};
+  --color-primary-hover: #{$color-primary-800};
+  --color-accent: #{$color-accent-600};
+  --color-accent-hover: #{$color-accent-700};
+
+  --shadow-sm: #{$shadow-sm};
+  --shadow-base: #{$shadow-base};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+
+  --scrollbar-track: #{$color-gray-100};
+  --scrollbar-thumb: #{$color-gray-400};
+  --scrollbar-thumb-hover: #{$color-gray-500};
+}

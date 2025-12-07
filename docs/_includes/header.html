@@ -1,0 +1,89 @@
+<header class="site-header">
+  <div class="header-container">
+    <div class="header-left">
+      <!-- Logo and Wordmark -->
+      <a href="{{ '/' | relative_url }}" class="logo-link">
+        <img src="{{ '/assets/images/logo.svg' | relative_url }}" alt="AgentWeave Logo" class="logo-image">
+        <span class="logo-wordmark">AgentWeave</span>
+      </a>
+
+      <!-- Version Selector -->
+      <div class="version-selector">
+        <button class="version-button" aria-label="Select version" aria-expanded="false">
+          <span class="version-label">v{{ site.version | default: '0.1.0' }}</span>
+          <svg class="version-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="version-dropdown" hidden>
+          <a href="{{ '/' | relative_url }}" class="version-item active">
+            <span class="version-number">v{{ site.version | default: '0.1.0' }}</span>
+            <span class="version-badge">Latest</span>
+          </a>
+          {% if site.previous_versions %}
+            {% for version in site.previous_versions %}
+              <a href="{{ version.url | relative_url }}" class="version-item">
+                <span class="version-number">v{{ version.number }}</span>
+                {% if version.stable %}<span class="version-badge stable">Stable</span>{% endif %}
+              </a>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="menu-icon"></span>
+      </button>
+
+      <!-- Search -->
+      <div class="search-container">
+        <div class="search-input-wrapper">
+          <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM18.5 18.5l-5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="Search documentation..."
+            aria-label="Search documentation"
+            autocomplete="off"
+          >
+          <kbd class="search-hint">⌘K</kbd>
+        </div>
+        <div class="search-results" id="search-results" hidden></div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="header-nav">
+        <a href="{{ '/getting-started/' | relative_url }}" class="nav-link">Docs</a>
+        <a href="{{ '/api/' | relative_url }}" class="nav-link">API</a>
+        <a href="{{ '/examples/' | relative_url }}" class="nav-link">Examples</a>
+      </nav>
+
+      <!-- GitHub Link -->
+      <a href="{{ site.github_url | default: 'https://github.com/agentweave/hvs-agent' }}"
+         class="icon-link github-link"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="View on GitHub">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" fill="currentColor"/>
+        </svg>
+      </a>
+
+      <!-- Dark Mode Toggle -->
+      <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="theme-icon theme-icon-light" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 15a5 5 0 100-10 5 5 0 000 10zM10 1v2M10 17v2M3.22 3.22l1.42 1.42M15.36 15.36l1.42 1.42M1 10h2M17 10h2M3.22 16.78l1.42-1.42M15.36 4.64l1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg class="theme-icon theme-icon-dark" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>

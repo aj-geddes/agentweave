@@ -1,0 +1,270 @@
+# Site settings
+title: "AgentWeave SDK Documentation"
+description: "Build secure, cross-cloud AI agents with cryptographic identity and zero-trust authorization. The secure path is the only path."
+tagline: "Secure AI Agent Framework for Cross-Cloud Deployments"
+author: "AgentWeave Team"
+
+# URL settings
+url: "https://aj-geddes.github.io"
+baseurl: "/agentweave"
+repository: "aj-geddes/agentweave"
+
+# GitHub
+github:
+  repository_url: "https://github.com/aj-geddes/agentweave"
+  issues_url: "https://github.com/aj-geddes/agentweave/issues"
+  latest_release: "v0.1.0"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+timezone: UTC
+
+# Kramdown settings
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
+    css_class: 'highlight'
+  auto_ids: true
+  toc_levels: 1..3
+  smart_quotes: ["apos", "apos", "quot", "quot"]
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-redirect-from
+  - jekyll-github-metadata
+
+# Collections
+collections:
+  tutorials:
+    output: true
+    permalink: /tutorials/:path/
+  guides:
+    output: true
+    permalink: /guides/:path/
+  examples:
+    output: true
+    permalink: /examples/:path/
+  api:
+    output: true
+    permalink: /api/:path/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "tutorials"
+    values:
+      layout: "tutorial"
+  - scope:
+      path: ""
+      type: "guides"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "examples"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "api"
+    values:
+      layout: "api"
+
+# Navigation structure
+navigation:
+  main:
+    - title: "Getting Started"
+      url: /getting-started/
+      children:
+        - title: "Introduction"
+          url: /getting-started/introduction/
+        - title: "Installation"
+          url: /getting-started/installation/
+        - title: "Quick Start"
+          url: /getting-started/quickstart/
+        - title: "Configuration"
+          url: /getting-started/configuration/
+
+    - title: "Core Concepts"
+      url: /concepts/
+      children:
+        - title: "Agent Identity (SPIFFE)"
+          url: /concepts/identity/
+        - title: "Authorization (OPA)"
+          url: /concepts/authorization/
+        - title: "A2A Protocol"
+          url: /concepts/a2a-protocol/
+        - title: "mTLS Transport"
+          url: /concepts/mtls/
+        - title: "Agent Cards"
+          url: /concepts/agent-cards/
+        - title: "Context Management"
+          url: /concepts/context/
+        - title: "Observability"
+          url: /concepts/observability/
+
+    - title: "Tutorials"
+      url: /tutorials/
+      children:
+        - title: "Your First Agent"
+          url: /tutorials/first-agent/
+        - title: "Multi-Agent System"
+          url: /tutorials/multi-agent/
+        - title: "Custom Authorization"
+          url: /tutorials/authorization/
+        - title: "Cross-Cloud Deployment"
+          url: /tutorials/cross-cloud/
+        - title: "Tool Integration"
+          url: /tutorials/tools/
+
+    - title: "How-To Guides"
+      url: /guides/
+      children:
+        - title: "Configure Identity"
+          url: /guides/configure-identity/
+        - title: "Write Authorization Policies"
+          url: /guides/authorization-policies/
+        - title: "Implement Custom Tools"
+          url: /guides/custom-tools/
+        - title: "Handle Errors"
+          url: /guides/error-handling/
+        - title: "Monitor Agents"
+          url: /guides/monitoring/
+        - title: "Secure Secrets"
+          url: /guides/secrets/
+        - title: "Rate Limiting"
+          url: /guides/rate-limiting/
+        - title: "Testing Agents"
+          url: /guides/testing/
+
+    - title: "API Reference"
+      url: /api/
+      children:
+        - title: "Agent"
+          url: /api/agent/
+        - title: "Decorators"
+          url: /api/decorators/
+        - title: "Identity"
+          url: /api/identity/
+        - title: "Authorization"
+          url: /api/authorization/
+        - title: "Transport"
+          url: /api/transport/
+        - title: "A2A Protocol"
+          url: /api/a2a/
+        - title: "Context"
+          url: /api/context/
+        - title: "Configuration"
+          url: /api/configuration/
+        - title: "Exceptions"
+          url: /api/exceptions/
+
+    - title: "Examples"
+      url: /examples/
+      children:
+        - title: "Basic Agent"
+          url: /examples/basic/
+        - title: "Multi-Agent Chat"
+          url: /examples/multi-agent-chat/
+        - title: "Research Assistant"
+          url: /examples/research-assistant/
+        - title: "Code Review Agent"
+          url: /examples/code-review/
+        - title: "Data Pipeline"
+          url: /examples/data-pipeline/
+        - title: "Kubernetes Operator"
+          url: /examples/k8s-operator/
+
+    - title: "Deployment"
+      url: /deployment/
+      children:
+        - title: "Docker"
+          url: /deployment/docker/
+        - title: "Kubernetes"
+          url: /deployment/kubernetes/
+        - title: "AWS ECS"
+          url: /deployment/aws-ecs/
+        - title: "Google Cloud Run"
+          url: /deployment/gcp-cloudrun/
+        - title: "Azure Container Apps"
+          url: /deployment/azure-aca/
+        - title: "Helm Charts"
+          url: /deployment/helm/
+
+    - title: "Security"
+      url: /security/
+      children:
+        - title: "Security Model"
+          url: /security/model/
+        - title: "Threat Model"
+          url: /security/threat-model/
+        - title: "Best Practices"
+          url: /security/best-practices/
+        - title: "Compliance"
+          url: /security/compliance/
+        - title: "Auditing"
+          url: /security/auditing/
+
+    - title: "Troubleshooting"
+      url: /troubleshooting/
+      children:
+        - title: "Common Issues"
+          url: /troubleshooting/common-issues/
+        - title: "Identity Problems"
+          url: /troubleshooting/identity/
+        - title: "Authorization Failures"
+          url: /troubleshooting/authorization/
+        - title: "Connection Issues"
+          url: /troubleshooting/connections/
+        - title: "Performance"
+          url: /troubleshooting/performance/
+        - title: "Debugging"
+          url: /troubleshooting/debugging/
+
+# SEO settings
+twitter:
+  username: agentweave
+  card: summary_large_image
+
+social:
+  name: AgentWeave SDK
+  links:
+    - https://github.com/aj-geddes/agentweave
+    - https://twitter.com/agentweave
+
+# Logo and images
+logo: /assets/images/agentweave-logo.png
+image: /assets/images/agentweave-social.png
+
+# Search
+search_enabled: true
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - README.md
+  - LICENSE
+  - .gitignore

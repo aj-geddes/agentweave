@@ -1,0 +1,73 @@
+{% comment %}
+  Breadcrumb navigation for showing current page location
+
+  Usage:
+    {% include breadcrumbs.html %}
+
+  Automatically generates breadcrumbs based on page.url
+{% endcomment %}
+
+{% assign crumbs = page.url | split: '/' | shift %}
+{% assign crumb_path = '' %}
+
+<nav class="breadcrumbs" aria-label="Breadcrumb navigation">
+  <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <!-- Home -->
+    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ '/' | relative_url }}" itemprop="item">
+        <svg class="breadcrumb-home-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.75 5.25l5.25-3.5 5.25 3.5v6.125a1.167 1.167 0 01-1.167 1.167H2.917a1.167 1.167 0 01-1.167-1.167V5.25z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M5.25 12.542V7h3.5v5.542" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content="1" />
+    </li>
+
+    <!-- Crumbs -->
+    {% for crumb in crumbs offset: 1 %}
+      {% unless crumb == '' %}
+        {% if forloop.last %}
+          {% assign is_last = true %}
+        {% else %}
+          {% assign is_last = false %}
+        {% endif %}
+
+        {% assign crumb_path = crumb_path | append: '/' | append: crumb %}
+
+        <!-- Clean up crumb name -->
+        {% assign crumb_name = crumb | replace: '-', ' ' | replace: '_', ' ' | capitalize %}
+
+        <!-- Remove .html or .md extension if present -->
+        {% if crumb_name contains '.html' %}
+          {% assign crumb_name = crumb_name | replace: '.html', '' %}
+        {% endif %}
+        {% if crumb_name contains '.md' %}
+          {% assign crumb_name = crumb_name | replace: '.md', '' %}
+        {% endif %}
+
+        <!-- Handle index pages -->
+        {% if crumb_name == 'Index' %}
+          {% continue %}
+        {% endif %}
+
+        <li class="breadcrumb-separator" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.5 2.25L8.25 6l-3.75 3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </li>
+
+        <li class="breadcrumb-item{% if is_last %} active{% endif %}" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          {% if is_last %}
+            <span itemprop="name" aria-current="page">{{ crumb_name }}</span>
+          {% else %}
+            <a href="{{ crumb_path | relative_url }}" itemprop="item">
+              <span itemprop="name">{{ crumb_name }}</span>
+            </a>
+          {% endif %}
+          <meta itemprop="position" content="{{ forloop.index | plus: 1 }}" />
+        </li>
+      {% endunless %}
+    {% endfor %}
+  </ol>
+</nav>

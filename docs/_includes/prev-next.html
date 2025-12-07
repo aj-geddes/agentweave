@@ -1,0 +1,77 @@
+{% comment %}
+  Previous/Next page navigation
+
+  Usage:
+    {% include prev-next.html %}
+
+  Displays navigation to previous and next pages in the documentation
+  Based on page order defined in _config.yml or front matter
+{% endcomment %}
+
+{% comment %}
+  Build a flat list of all documentation pages in order
+  This should be customized based on your site structure
+{% endcomment %}
+
+{% assign all_pages = site.pages | where_exp: "page", "page.url contains '/getting-started/' or page.url contains '/core-concepts/' or page.url contains '/tutorials/' or page.url contains '/how-to/' or page.url contains '/api/' or page.url contains '/examples/' or page.url contains '/deployment/' or page.url contains '/security/' or page.url contains '/troubleshooting/'" | sort: "order" %}
+
+{% assign prev_page = nil %}
+{% assign next_page = nil %}
+{% assign current_found = false %}
+
+{% for doc_page in all_pages %}
+  {% if current_found == false %}
+    {% if doc_page.url == page.url %}
+      {% assign current_found = true %}
+    {% else %}
+      {% assign prev_page = doc_page %}
+    {% endif %}
+  {% elsif next_page == nil and doc_page.url != page.url %}
+    {% assign next_page = doc_page %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if prev_page or next_page %}
+<nav class="prev-next-nav" aria-label="Page navigation">
+  <div class="prev-next-container">
+    {% if prev_page %}
+    <a href="{{ prev_page.url | relative_url }}" class="prev-link" rel="prev">
+      <div class="prev-next-arrow">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.5 15l-5-5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="prev-next-content">
+        <div class="prev-next-label">Previous</div>
+        <div class="prev-next-title">{{ prev_page.title | default: prev_page.name }}</div>
+        {% if prev_page.description %}
+        <div class="prev-next-description">{{ prev_page.description }}</div>
+        {% endif %}
+      </div>
+    </a>
+    {% else %}
+    <div class="prev-link prev-link-placeholder"></div>
+    {% endif %}
+
+    {% if next_page %}
+    <a href="{{ next_page.url | relative_url }}" class="next-link" rel="next">
+      <div class="prev-next-content">
+        <div class="prev-next-label">Next</div>
+        <div class="prev-next-title">{{ next_page.title | default: next_page.name }}</div>
+        {% if next_page.description %}
+        <div class="prev-next-description">{{ next_page.description }}</div>
+        {% endif %}
+      </div>
+      <div class="prev-next-arrow">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.5 15l5-5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </a>
+    {% else %}
+    <div class="next-link next-link-placeholder"></div>
+    {% endif %}
+  </div>
+</nav>
+{% endif %}

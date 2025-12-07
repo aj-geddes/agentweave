@@ -1,0 +1,103 @@
+{% comment %}
+  Enhanced code block with copy button, language indicator, and optional filename
+
+  Usage:
+    {% include code-block.html
+       language="python"
+       filename="agent.py"
+       line_numbers=true
+       code=code_content
+    %}
+
+  Parameters:
+    - language (string): Programming language for syntax highlighting
+    - filename (string, optional): Display filename in header
+    - line_numbers (bool, optional): Show line numbers (default: false)
+    - code (string): The code content to display
+    - highlight_lines (string, optional): Comma-separated line numbers to highlight (e.g., "1,3-5,10")
+{% endcomment %}
+
+{% assign lang = include.language | default: "text" %}
+{% assign filename = include.filename %}
+{% assign show_line_numbers = include.line_numbers | default: false %}
+{% assign code_content = include.code %}
+{% assign highlight_lines = include.highlight_lines %}
+{% assign code_id = include.id | default: "code-" | append: lang | append: "-" | append: forloop.index | default: 1 %}
+
+<div class="code-block-wrapper">
+  <div class="code-block-header">
+    <div class="code-block-info">
+      {% if filename %}
+        <span class="code-filename">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.167 1.75H3.5a1.167 1.167 0 00-1.167 1.167v8.166A1.167 1.167 0 003.5 12.25h7a1.167 1.167 0 001.167-1.167V5.25L8.167 1.75z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8.167 1.75V5.25h3.5M9.333 7H4.667M9.333 9.333H4.667M5.833 4.667H4.667" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {{ filename }}
+        </span>
+      {% endif %}
+
+      <span class="code-language">
+        {% case lang %}
+          {% when 'python' or 'py' %}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 1.167c-1.933 0-1.867.934-1.867.934l.007.933h1.9v.292H3.673S2.333 3.267 2.333 5.25c0 1.983 1.167 1.917 1.167 1.917h.7v-.933a1.167 1.167 0 011.167-1.167h1.866a.933.933 0 00.934-.933V2.1a1.167 1.167 0 00-1.167-1.167zm-.7 1.4a.35.35 0 11-.002.7.35.35 0 01.002-.7z" fill="currentColor"/>
+              <path d="M7 12.833c1.933 0 1.867-.933 1.867-.933l-.007-.934h-1.9v-.291h3.367s1.34-.06 1.34-2.042c0-1.983-1.167-1.916-1.167-1.916h-.7v.933a1.167 1.167 0 01-1.167 1.167H6.767a.933.933 0 00-.934.933V11.9a1.167 1.167 0 001.167 1.167zm.7-1.4a.35.35 0 11.001-.7.35.35 0 01-.002.7z" fill="currentColor"/>
+            </svg>
+            Python
+          {% when 'javascript' or 'js' %}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1.167" y="1.167" width="11.667" height="11.667" rx="1.167" fill="#F7DF1E"/>
+              <path d="M7.583 9.917c.583 0 .875-.292.875-.7V5.833h1.167V9.25c0 1.167-.7 1.75-2.042 1.75-1.341 0-2.041-.583-2.041-1.75h1.166c0 .408.292.667.875.667zM3.5 9.917c.584 0 .875-.292.875-.7V5.833H5.54V9.25c0 1.167-.7 1.75-2.041 1.75S1.458 10.417 1.458 9.25h1.167c0 .408.292.667.875.667z" fill="#000"/>
+            </svg>
+            JavaScript
+          {% when 'typescript' or 'ts' %}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1.167" y="1.167" width="11.667" height="11.667" rx="1.167" fill="#3178C6"/>
+            </svg>
+            TypeScript
+          {% when 'bash' or 'shell' or 'sh' %}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.333 5.25L5.25 7l-2.917 1.75M6.417 9.917h3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Bash
+          {% when 'yaml' or 'yml' %}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3.5 2.333h7a1.167 1.167 0 011.167 1.167v7a1.167 1.167 0 01-1.167 1.167h-7A1.167 1.167 0 012.333 10.5v-7A1.167 1.167 0 013.5 2.333z" stroke="currentColor" stroke-width="1.2"/>
+            </svg>
+            YAML
+          {% when 'json' %}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5.833 3.5v7M8.167 5.25h2.916M8.167 8.75h2.916" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            JSON
+          {% when 'go' %}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 12.833A5.833 5.833 0 107 1.167a5.833 5.833 0 000 11.666z" stroke="currentColor" stroke-width="1.2"/>
+            </svg>
+            Go
+          {% else %}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.333 4.083h9.334M2.333 7h9.334M2.333 9.917h9.334" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            {{ lang | capitalize }}
+        {% endcase %}
+      </span>
+    </div>
+
+    <button class="code-copy-button" data-code-id="{{ code_id }}" aria-label="Copy code to clipboard">
+      <svg class="copy-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.667 5.333V3.333a1.333 1.333 0 00-1.334-1.333h-6a1.333 1.333 0 00-1.333 1.333v6a1.333 1.333 0 001.333 1.334h2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6.667 6.667h6a1.333 1.333 0 011.333 1.333v6A1.333 1.333 0 0112.667 15.333h-6A1.333 1.333 0 015.333 14V8a1.333 1.333 0 011.334-1.333z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <svg class="check-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <path d="M13.333 4L6 11.333 2.667 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="copy-text">Copy</span>
+    </button>
+  </div>
+
+  <div class="code-block-content">
+    <pre id="{{ code_id }}" class="highlight{% if show_line_numbers %} line-numbers{% endif %}"><code class="language-{{ lang }}">{{ code_content }}</code></pre>
+  </div>
+</div>

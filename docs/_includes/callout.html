@@ -1,0 +1,83 @@
+{% comment %}
+  Callout boxes for highlighting important information
+
+  Usage:
+    {% include callout.html
+       type="info"
+       title="Important Note"
+       content="This is important information to note."
+    %}
+
+  Parameters:
+    - type (string): Type of callout - info, warning, danger, success, tip (default: info)
+    - title (string, optional): Callout title/heading
+    - content (string): Callout content (supports HTML and Markdown)
+    - icon (bool, optional): Show icon (default: true)
+{% endcomment %}
+
+{% assign callout_type = include.type | default: "info" %}
+{% assign callout_title = include.title %}
+{% assign callout_content = include.content %}
+{% assign show_icon = include.icon | default: true %}
+
+<div class="callout callout-{{ callout_type }}" role="note">
+  <div class="callout-header">
+    {% if show_icon %}
+      <div class="callout-icon">
+        {% case callout_type %}
+          {% when 'info' %}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM10 6v4M10 14h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          {% when 'warning' %}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.257 3.099l-7.5 13A1.5 1.5 0 002.007 18h15a1.5 1.5 0 001.25-2.001l-7.5-13a1.5 1.5 0 00-2.5 0zM10 7v4M10 15h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          {% when 'danger' or 'error' %}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM12.5 7.5l-5 5M7.5 7.5l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          {% when 'success' %}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM13.5 7.5l-5 5-2.5-2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          {% when 'tip' or 'hint' %}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 14.167a3.333 3.333 0 100-6.667 3.333 3.333 0 000 6.667zM10 1.667v1.666M10 16.667v1.666M4.108 4.108l1.179 1.179M14.714 14.714l1.179 1.178M1.667 10h1.666M16.667 10h1.666M4.108 15.893l1.179-1.179M14.714 5.286l1.179-1.179" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          {% else %}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM10 6v4M10 14h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        {% endcase %}
+      </div>
+    {% endif %}
+
+    {% if callout_title %}
+      <div class="callout-title">
+        {{ callout_title }}
+      </div>
+    {% else %}
+      <div class="callout-title">
+        {% case callout_type %}
+          {% when 'info' %}
+            Note
+          {% when 'warning' %}
+            Warning
+          {% when 'danger' or 'error' %}
+            Danger
+          {% when 'success' %}
+            Success
+          {% when 'tip' or 'hint' %}
+            Tip
+          {% else %}
+            Note
+        {% endcase %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="callout-content">
+    {{ callout_content | markdownify }}
+  </div>
+</div>

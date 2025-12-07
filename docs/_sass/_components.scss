@@ -1,0 +1,969 @@
+// _components.scss
+// Component styles for AgentWeave SDK Documentation
+
+// ============================================================================
+// Buttons
+// ============================================================================
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-2;
+  padding: $spacing-2 $spacing-4;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  transition: all $transition-fast;
+  user-select: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  // Primary button
+  &.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-primary-hover);
+    }
+  }
+
+  // Secondary button
+  &.btn-secondary {
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+    border-color: var(--color-border);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-bg-secondary);
+      border-color: var(--color-border-hover);
+    }
+  }
+
+  // Accent button
+  &.btn-accent {
+    background-color: var(--color-accent);
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-accent-hover);
+    }
+  }
+
+  // Outline button
+  &.btn-outline {
+    background-color: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-primary);
+      color: white;
+    }
+  }
+
+  // Ghost button
+  &.btn-ghost {
+    background-color: transparent;
+    color: var(--color-text-secondary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-bg-tertiary);
+      color: var(--color-text-primary);
+    }
+  }
+
+  // Button sizes
+  &.btn-sm {
+    padding: $spacing-1 $spacing-3;
+    font-size: $font-size-sm;
+  }
+
+  &.btn-lg {
+    padding: $spacing-3 $spacing-6;
+    font-size: $font-size-lg;
+  }
+
+  // Block button
+  &.btn-block {
+    width: 100%;
+  }
+}
+
+// ============================================================================
+// Code Blocks with Syntax Highlighting
+// ============================================================================
+
+.code-block {
+  position: relative;
+  margin: $spacing-6 0;
+
+  pre {
+    margin: 0;
+    border-radius: $border-radius-lg;
+    background-color: var(--color-bg-code);
+  }
+
+  // Code block header
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-3 $spacing-5;
+    background-color: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-bottom: none;
+    border-radius: $border-radius-lg $border-radius-lg 0 0;
+
+    .code-language {
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+      text-transform: uppercase;
+      letter-spacing: $letter-spacing-wide;
+      color: var(--color-text-tertiary);
+    }
+
+    .code-filename {
+      font-family: $font-family-monospace;
+      font-size: $font-size-sm;
+      color: var(--color-text-secondary);
+    }
+  }
+
+  &.has-header pre {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  // Line numbers
+  .line-numbers {
+    pre {
+      padding-left: 3.5em;
+      counter-reset: line;
+    }
+
+    .line::before {
+      content: counter(line);
+      counter-increment: line;
+      display: inline-block;
+      width: 2.5em;
+      margin-left: -3em;
+      padding-right: 0.5em;
+      text-align: right;
+      color: var(--color-text-tertiary);
+      user-select: none;
+    }
+  }
+
+  // Highlighted lines
+  .line.highlight {
+    background-color: rgba(255, 255, 0, 0.1);
+    border-left: 3px solid var(--color-accent);
+    margin-left: -#{$spacing-5};
+    padding-left: calc(#{$spacing-5} - 3px);
+    display: block;
+  }
+}
+
+// Copy code button
+.copy-code-btn {
+  position: absolute;
+  top: $spacing-3;
+  right: $spacing-3;
+  padding: $spacing-2 $spacing-3;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: var(--color-text-tertiary);
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  opacity: 0;
+  transition: all $transition-fast;
+  z-index: 10;
+
+  .code-block:hover & {
+    opacity: 1;
+  }
+
+  &:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-tertiary);
+  }
+
+  &:active,
+  &.copied {
+    background-color: var(--color-accent);
+    color: white;
+    border-color: var(--color-accent);
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+  }
+}
+
+// Syntax highlighting tokens (compatible with Prism.js)
+.token {
+  &.comment,
+  &.prolog,
+  &.doctype,
+  &.cdata {
+    color: $color-code-comment;
+  }
+
+  &.punctuation {
+    color: var(--color-text-secondary);
+  }
+
+  &.property,
+  &.tag,
+  &.boolean,
+  &.number,
+  &.constant,
+  &.symbol,
+  &.deleted {
+    color: $color-code-number;
+  }
+
+  &.selector,
+  &.attr-name,
+  &.string,
+  &.char,
+  &.builtin,
+  &.inserted {
+    color: $color-code-string;
+  }
+
+  &.operator,
+  &.entity,
+  &.url,
+  .language-css &.string,
+  .style &.string {
+    color: $color-code-operator;
+  }
+
+  &.atrule,
+  &.attr-value,
+  &.keyword {
+    color: $color-code-keyword;
+  }
+
+  &.function,
+  &.class-name {
+    color: $color-code-function;
+  }
+
+  &.regex,
+  &.important,
+  &.variable {
+    color: $color-code-keyword;
+  }
+}
+
+// ============================================================================
+// Callout Boxes (Info, Warning, Danger, Success)
+// ============================================================================
+
+.callout {
+  position: relative;
+  padding: $spacing-4 $spacing-5;
+  padding-left: $spacing-12;
+  margin: $spacing-6 0;
+  border-left: 4px solid;
+  border-radius: $border-radius-md;
+  background-color: var(--color-bg-tertiary);
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: $spacing-4;
+    top: $spacing-4;
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .callout-title {
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-2;
+    color: var(--color-text-primary);
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  // Info callout
+  &.callout-info {
+    border-left-color: $color-info;
+    background-color: rgba($color-info-light, 0.3);
+
+    .callout-title {
+      color: $color-info-dark;
+    }
+
+    &::before {
+      content: "ℹ️";
+      font-size: $font-size-lg;
+    }
+  }
+
+  // Warning callout
+  &.callout-warning {
+    border-left-color: $color-warning;
+    background-color: rgba($color-warning-light, 0.3);
+
+    .callout-title {
+      color: $color-warning-dark;
+    }
+
+    &::before {
+      content: "⚠️";
+      font-size: $font-size-lg;
+    }
+  }
+
+  // Danger callout
+  &.callout-danger {
+    border-left-color: $color-danger;
+    background-color: rgba($color-danger-light, 0.3);
+
+    .callout-title {
+      color: $color-danger-dark;
+    }
+
+    &::before {
+      content: "❌";
+      font-size: $font-size-lg;
+    }
+  }
+
+  // Success callout
+  &.callout-success {
+    border-left-color: $color-success;
+    background-color: rgba($color-success-light, 0.3);
+
+    .callout-title {
+      color: $color-success-dark;
+    }
+
+    &::before {
+      content: "✅";
+      font-size: $font-size-lg;
+    }
+  }
+
+  // Note/Tip callout
+  &.callout-note,
+  &.callout-tip {
+    border-left-color: var(--color-accent);
+    background-color: rgba($color-accent-100, 0.3);
+
+    .callout-title {
+      color: $color-accent-900;
+    }
+
+    &::before {
+      content: "💡";
+      font-size: $font-size-lg;
+    }
+  }
+}
+
+// ============================================================================
+// Cards
+// ============================================================================
+
+.card {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: $border-radius-lg;
+  padding: $spacing-6;
+  box-shadow: var(--shadow-sm);
+  transition: all $transition-fast;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-border-hover);
+  }
+
+  .card-header {
+    margin-bottom: $spacing-4;
+    padding-bottom: $spacing-4;
+    border-bottom: 1px solid var(--color-border);
+
+    .card-title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      margin: 0;
+      color: var(--color-text-primary);
+    }
+
+    .card-subtitle {
+      font-size: $font-size-sm;
+      color: var(--color-text-tertiary);
+      margin-top: $spacing-2;
+    }
+  }
+
+  .card-body {
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .card-footer {
+    margin-top: $spacing-4;
+    padding-top: $spacing-4;
+    border-top: 1px solid var(--color-border);
+    font-size: $font-size-sm;
+    color: var(--color-text-tertiary);
+  }
+
+  // Card link (entire card is clickable)
+  &.card-link {
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+      transform: translateY(-2px);
+    }
+  }
+
+  // Feature card variant
+  &.card-feature {
+    text-align: center;
+
+    .card-icon {
+      font-size: $font-size-4xl;
+      margin-bottom: $spacing-4;
+    }
+
+    .card-title {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-3;
+    }
+  }
+}
+
+// ============================================================================
+// Tables (Enhanced)
+// ============================================================================
+
+.table-responsive {
+  overflow-x: auto;
+  margin: $spacing-6 0;
+  border-radius: $border-radius-md;
+  box-shadow: var(--shadow-sm);
+
+  table {
+    margin: 0;
+    min-width: 600px;
+  }
+}
+
+// Striped table variant
+.table-striped {
+  tbody tr:nth-child(even) {
+    background-color: var(--color-bg-tertiary);
+  }
+}
+
+// Bordered table variant
+.table-bordered {
+  border: 1px solid var(--color-border);
+
+  th,
+  td {
+    border: 1px solid var(--color-border);
+  }
+}
+
+// Compact table variant
+.table-compact {
+  th,
+  td {
+    padding: $spacing-2 $spacing-3;
+  }
+}
+
+// ============================================================================
+// Badges and Tags
+// ============================================================================
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  padding: 0.2em 0.6em;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: $border-radius-full;
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+
+  &.badge-primary {
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  &.badge-accent {
+    background-color: var(--color-accent);
+    color: white;
+  }
+
+  &.badge-success {
+    background-color: $color-success;
+    color: white;
+  }
+
+  &.badge-warning {
+    background-color: $color-warning;
+    color: white;
+  }
+
+  &.badge-danger {
+    background-color: $color-danger;
+    color: white;
+  }
+
+  &.badge-info {
+    background-color: $color-info;
+    color: white;
+  }
+
+  &.badge-outline {
+    background-color: transparent;
+    border: 1px solid currentColor;
+  }
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-1 $spacing-3;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  border-radius: $border-radius-md;
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: all $transition-fast;
+
+  &:hover {
+    background-color: var(--color-bg-secondary);
+    border-color: var(--color-border-hover);
+    text-decoration: none;
+  }
+
+  .tag-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  &.tag-clickable {
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-accent);
+      color: white;
+    }
+  }
+}
+
+// ============================================================================
+// Search Box
+// ============================================================================
+
+.search-box {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+
+  .search-input {
+    width: 100%;
+    padding: $spacing-2 $spacing-10 $spacing-2 $spacing-4;
+    font-size: $font-size-sm;
+    border: 1px solid var(--color-border);
+    border-radius: $border-radius-full;
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    transition: all $transition-fast;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+    }
+
+    &::placeholder {
+      color: var(--color-text-tertiary);
+    }
+  }
+
+  .search-icon {
+    position: absolute;
+    right: $spacing-3;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-tertiary);
+    pointer-events: none;
+  }
+
+  .search-results {
+    position: absolute;
+    top: calc(100% + #{$spacing-2});
+    left: 0;
+    right: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: $border-radius-lg;
+    box-shadow: var(--shadow-lg);
+    z-index: $z-index-dropdown;
+
+    .search-result {
+      padding: $spacing-3 $spacing-4;
+      border-bottom: 1px solid var(--color-border);
+      cursor: pointer;
+      transition: background-color $transition-fast;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover,
+      &.is-active {
+        background-color: var(--color-bg-tertiary);
+      }
+
+      .result-title {
+        font-weight: $font-weight-semibold;
+        color: var(--color-text-primary);
+        margin-bottom: $spacing-1;
+      }
+
+      .result-snippet {
+        font-size: $font-size-sm;
+        color: var(--color-text-secondary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+
+        mark {
+          background-color: rgba(var(--color-accent), 0.2);
+          color: var(--color-accent);
+          padding: 0 0.2em;
+        }
+      }
+
+      .result-meta {
+        font-size: $font-size-xs;
+        color: var(--color-text-tertiary);
+        margin-top: $spacing-1;
+      }
+    }
+
+    .no-results {
+      padding: $spacing-6 $spacing-4;
+      text-align: center;
+      color: var(--color-text-tertiary);
+    }
+  }
+}
+
+// ============================================================================
+// API Reference Components
+// ============================================================================
+
+.api-endpoint {
+  margin: $spacing-6 0;
+  padding: $spacing-4;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: $border-radius-lg;
+  box-shadow: var(--shadow-sm);
+
+  .endpoint-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    margin-bottom: $spacing-4;
+    flex-wrap: wrap;
+
+    .http-method {
+      padding: $spacing-1 $spacing-3;
+      font-family: $font-family-monospace;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-bold;
+      border-radius: $border-radius-md;
+      text-transform: uppercase;
+
+      &.method-get {
+        background-color: $color-info;
+        color: white;
+      }
+
+      &.method-post {
+        background-color: $color-success;
+        color: white;
+      }
+
+      &.method-put {
+        background-color: $color-warning;
+        color: white;
+      }
+
+      &.method-delete {
+        background-color: $color-danger;
+        color: white;
+      }
+
+      &.method-patch {
+        background-color: var(--color-accent);
+        color: white;
+      }
+    }
+
+    .endpoint-path {
+      font-family: $font-family-monospace;
+      font-size: $font-size-md;
+      font-weight: $font-weight-medium;
+      color: var(--color-text-primary);
+      flex: 1;
+    }
+  }
+
+  .endpoint-description {
+    color: var(--color-text-secondary);
+    margin-bottom: $spacing-4;
+  }
+
+  .endpoint-section {
+    margin-top: $spacing-4;
+
+    .section-title {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      text-transform: uppercase;
+      letter-spacing: $letter-spacing-wide;
+      color: var(--color-text-tertiary);
+      margin-bottom: $spacing-3;
+    }
+  }
+}
+
+.parameter {
+  padding: $spacing-3;
+  margin-bottom: $spacing-2;
+  background-color: var(--color-bg-tertiary);
+  border-radius: $border-radius-md;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .param-name {
+    font-family: $font-family-monospace;
+    font-weight: $font-weight-semibold;
+    color: var(--color-text-primary);
+    margin-right: $spacing-2;
+  }
+
+  .param-type {
+    font-family: $font-family-monospace;
+    font-size: $font-size-sm;
+    color: var(--color-accent);
+    margin-right: $spacing-2;
+  }
+
+  .param-required {
+    display: inline-block;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    padding: 0.2em 0.5em;
+    background-color: $color-danger;
+    color: white;
+    border-radius: $border-radius-full;
+  }
+
+  .param-description {
+    margin-top: $spacing-2;
+    font-size: $font-size-sm;
+    color: var(--color-text-secondary);
+  }
+}
+
+// ============================================================================
+// Tabs
+// ============================================================================
+
+.tabs {
+  margin: $spacing-6 0;
+
+  .tab-list {
+    display: flex;
+    gap: $spacing-2;
+    border-bottom: 2px solid var(--color-border);
+    margin-bottom: $spacing-4;
+    overflow-x: auto;
+
+    .tab-button {
+      padding: $spacing-3 $spacing-4;
+      font-weight: $font-weight-medium;
+      color: var(--color-text-secondary);
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      transition: all $transition-fast;
+      white-space: nowrap;
+
+      &:hover {
+        color: var(--color-text-primary);
+      }
+
+      &.active {
+        color: var(--color-accent);
+        border-bottom-color: var(--color-accent);
+      }
+    }
+  }
+
+  .tab-content {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
+}
+
+// ============================================================================
+// Accordion / Collapsible
+// ============================================================================
+
+.accordion {
+  margin: $spacing-6 0;
+  border: 1px solid var(--color-border);
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+
+  .accordion-item {
+    border-bottom: 1px solid var(--color-border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .accordion-header {
+    width: 100%;
+    padding: $spacing-4 $spacing-5;
+    text-align: left;
+    font-weight: $font-weight-semibold;
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-secondary);
+    border: none;
+    cursor: pointer;
+    transition: background-color $transition-fast;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:hover {
+      background-color: var(--color-bg-tertiary);
+    }
+
+    .accordion-icon {
+      transition: transform $transition-fast;
+    }
+
+    &.is-open .accordion-icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height $transition-base;
+
+    &.is-open {
+      max-height: 1000px;
+    }
+
+    .accordion-body {
+      padding: $spacing-4 $spacing-5;
+      background-color: var(--color-bg-tertiary);
+    }
+  }
+}
+
+// ============================================================================
+// Progress Bar
+// ============================================================================
+
+.progress {
+  height: 8px;
+  background-color: var(--color-bg-tertiary);
+  border-radius: $border-radius-full;
+  overflow: hidden;
+
+  .progress-bar {
+    height: 100%;
+    background-color: var(--color-accent);
+    border-radius: $border-radius-full;
+    transition: width $transition-slow;
+
+    &.progress-primary {
+      background-color: var(--color-primary);
+    }
+
+    &.progress-success {
+      background-color: $color-success;
+    }
+
+    &.progress-warning {
+      background-color: $color-warning;
+    }
+
+    &.progress-danger {
+      background-color: $color-danger;
+    }
+  }
+}

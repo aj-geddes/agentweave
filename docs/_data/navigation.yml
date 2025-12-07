@@ -1,0 +1,312 @@
+# AgentWeave SDK Documentation Navigation
+# This file defines the complete navigation structure for the documentation site
+
+main:
+  - title: "Getting Started"
+    url: /getting-started/
+    children:
+      - title: "Introduction"
+        url: /getting-started/introduction/
+        description: "Overview of AgentWeave SDK and core principles"
+      - title: "Installation"
+        url: /getting-started/installation/
+        description: "Install AgentWeave SDK and dependencies"
+      - title: "Quick Start"
+        url: /getting-started/quickstart/
+        description: "Build your first secure agent in 5 minutes"
+      - title: "Configuration"
+        url: /getting-started/configuration/
+        description: "Configure your agent with YAML"
+      - title: "First Steps"
+        url: /getting-started/first-steps/
+        description: "Next steps after installation"
+
+  - title: "Core Concepts"
+    url: /core-concepts/
+    children:
+      - title: "Architecture"
+        url: /core-concepts/architecture/
+        description: "System architecture and design patterns"
+      - title: "Agent Identity (SPIFFE)"
+        url: /core-concepts/identity/
+        description: "Cryptographic workload identity with SPIFFE/SPIRE"
+      - title: "Authorization (OPA)"
+        url: /core-concepts/authorization/
+        description: "Policy-based authorization with Open Policy Agent"
+      - title: "A2A Protocol"
+        url: /core-concepts/a2a-protocol/
+        description: "Agent-to-agent communication protocol (JSON-RPC 2.0)"
+      - title: "mTLS Transport"
+        url: /core-concepts/mtls/
+        description: "Mutual TLS for secure communication"
+      - title: "Agent Cards"
+        url: /core-concepts/agent-cards/
+        description: "Agent metadata and capability declarations"
+      - title: "Context Management"
+        url: /core-concepts/context/
+        description: "Managing request context and metadata"
+      - title: "Observability"
+        url: /core-concepts/observability/
+        description: "Metrics, tracing, and logging"
+
+  - title: "Tutorials"
+    url: /tutorials/
+    children:
+      - title: "Your First Agent"
+        url: /tutorials/first-agent/
+        description: "Step-by-step guide to building your first agent"
+      - title: "Multi-Agent System"
+        url: /tutorials/multi-agent/
+        description: "Build a system with multiple communicating agents"
+      - title: "Custom Authorization"
+        url: /tutorials/authorization/
+        description: "Implement custom authorization policies"
+      - title: "Cross-Cloud Deployment"
+        url: /tutorials/cross-cloud/
+        description: "Deploy agents across multiple cloud providers"
+      - title: "Tool Integration"
+        url: /tutorials/tools/
+        description: "Integrate external tools and APIs"
+      - title: "Secure Communication"
+        url: /tutorials/secure-communication/
+        description: "Set up secure agent-to-agent communication"
+      - title: "Advanced Patterns"
+        url: /tutorials/advanced-patterns/
+        description: "Advanced architectural patterns"
+
+  - title: "How-To Guides"
+    url: /guides/
+    children:
+      - title: "Configure Identity"
+        url: /guides/configure-identity/
+        description: "Set up SPIFFE identity for your agents"
+      - title: "Write Authorization Policies"
+        url: /guides/authorization-policies/
+        description: "Create and manage OPA policies"
+      - title: "Implement Custom Tools"
+        url: /guides/custom-tools/
+        description: "Build custom tools for your agents"
+      - title: "Handle Errors"
+        url: /guides/error-handling/
+        description: "Error handling best practices"
+      - title: "Monitor Agents"
+        url: /guides/monitoring/
+        description: "Set up monitoring and observability"
+      - title: "Secure Secrets"
+        url: /guides/secrets/
+        description: "Manage secrets and sensitive data"
+      - title: "Rate Limiting"
+        url: /guides/rate-limiting/
+        description: "Implement rate limiting for agents"
+
+  - title: "API Reference"
+    url: /api-reference/
+    children:
+      - title: "Agent"
+        url: /api-reference/agent/
+        description: "Core Agent class and methods"
+      - title: "Decorators"
+        url: /api-reference/decorators/
+        description: "Function decorators for agents"
+      - title: "Identity"
+        url: /api-reference/identity/
+        description: "SPIFFE identity management API"
+      - title: "Authorization"
+        url: /api-reference/authz/
+        description: "Authorization and policy evaluation API"
+      - title: "Transport"
+        url: /api-reference/transport/
+        description: "mTLS transport layer API"
+      - title: "A2A Protocol"
+        url: /api-reference/a2a/
+        description: "Agent-to-agent protocol API"
+      - title: "Context"
+        url: /api-reference/context/
+        description: "Request context management API"
+      - title: "Configuration"
+        url: /api-reference/configuration/
+        description: "Configuration loading and validation"
+      - title: "Exceptions"
+        url: /api-reference/exceptions/
+        description: "Exception classes and error handling"
+      - title: "CLI"
+        url: /api-reference/cli/
+        description: "Command-line interface tools"
+      - title: "Testing"
+        url: /api-reference/testing/
+        description: "Testing utilities and helpers"
+
+  - title: "Examples"
+    url: /examples/
+    children:
+      - title: "Basic Agent"
+        url: /examples/basic/
+        description: "Simple agent with identity and authorization"
+      - title: "Multi-Agent Chat"
+        url: /examples/multi-agent-chat/
+        description: "Chat system with multiple agents"
+      - title: "Research Assistant"
+        url: /examples/research-assistant/
+        description: "Research agent with tool integration"
+      - title: "Code Review Agent"
+        url: /examples/code-review/
+        description: "Automated code review agent"
+      - title: "Data Pipeline"
+        url: /examples/data-pipeline/
+        description: "Data processing pipeline with agents"
+      - title: "Kubernetes Operator"
+        url: /examples/k8s-operator/
+        description: "Kubernetes operator built with AgentWeave"
+      - title: "Workflow Orchestration"
+        url: /examples/workflow/
+        description: "Complex workflow orchestration"
+      - title: "API Gateway"
+        url: /examples/api-gateway/
+        description: "API gateway with agent-based routing"
+      - title: "Monitoring Dashboard"
+        url: /examples/monitoring/
+        description: "Real-time monitoring dashboard"
+      - title: "Policy Enforcement"
+        url: /examples/policy-enforcement/
+        description: "Policy enforcement and compliance"
+
+  - title: "Deployment"
+    url: /deployment/
+    children:
+      - title: "Docker"
+        url: /deployment/docker/
+        description: "Deploy agents with Docker"
+      - title: "Kubernetes"
+        url: /deployment/kubernetes/
+        description: "Deploy to Kubernetes clusters"
+      - title: "AWS ECS"
+        url: /deployment/aws-ecs/
+        description: "Deploy to Amazon ECS"
+      - title: "Google Cloud Run"
+        url: /deployment/gcp-cloudrun/
+        description: "Deploy to Google Cloud Run"
+      - title: "Azure Container Apps"
+        url: /deployment/azure-aca/
+        description: "Deploy to Azure Container Apps"
+      - title: "Helm Charts"
+        url: /deployment/helm/
+        description: "Deploy with Helm"
+      - title: "SPIRE Server Setup"
+        url: /deployment/spire/
+        description: "Set up SPIRE server for identity"
+      - title: "Production Best Practices"
+        url: /deployment/production/
+        description: "Production deployment guidelines"
+
+  - title: "Security"
+    url: /security/
+    children:
+      - title: "Security Model"
+        url: /security/model/
+        description: "Zero-trust security architecture"
+      - title: "Threat Model"
+        url: /security/threat-model/
+        description: "Threat analysis and mitigations"
+      - title: "Best Practices"
+        url: /security/best-practices/
+        description: "Security best practices and guidelines"
+      - title: "Compliance"
+        url: /security/compliance/
+        description: "Compliance and regulatory considerations"
+      - title: "Auditing"
+        url: /security/auditing/
+        description: "Security audit logging and monitoring"
+
+  - title: "Troubleshooting"
+    url: /troubleshooting/
+    children:
+      - title: "Common Issues"
+        url: /troubleshooting/common-issues/
+        description: "Frequently encountered problems and solutions"
+      - title: "Identity Problems"
+        url: /troubleshooting/identity/
+        description: "Debugging SPIFFE identity issues"
+      - title: "Authorization Failures"
+        url: /troubleshooting/authorization/
+        description: "Debugging OPA policy failures"
+      - title: "Connection Issues"
+        url: /troubleshooting/connections/
+        description: "Debugging mTLS and network issues"
+      - title: "Performance"
+        url: /troubleshooting/performance/
+        description: "Performance tuning and optimization"
+
+  - title: "Contributing"
+    url: /contributing/
+    children:
+      - title: "Development Guide"
+        url: /contributing/development/
+        description: "Set up development environment"
+      - title: "Code of Conduct"
+        url: /contributing/code-of-conduct/
+        description: "Community code of conduct"
+      - title: "Pull Request Process"
+        url: /contributing/pull-requests/
+        description: "How to submit contributions"
+
+# Footer navigation
+footer:
+  - title: "Resources"
+    links:
+      - title: "Documentation"
+        url: /
+      - title: "API Reference"
+        url: /api-reference/
+      - title: "Examples"
+        url: /examples/
+      - title: "GitHub"
+        url: https://github.com/aj-geddes/agentweave
+        external: true
+
+  - title: "Community"
+    links:
+      - title: "GitHub Discussions"
+        url: https://github.com/aj-geddes/agentweave/discussions
+        external: true
+      - title: "Issues"
+        url: https://github.com/aj-geddes/agentweave/issues
+        external: true
+      - title: "Contributing"
+        url: /contributing/
+      - title: "Code of Conduct"
+        url: /contributing/code-of-conduct/
+
+  - title: "Support"
+    links:
+      - title: "Troubleshooting"
+        url: /troubleshooting/
+      - title: "Security"
+        url: /security/
+      - title: "FAQ"
+        url: /faq/
+      - title: "Contact"
+        url: https://github.com/aj-geddes/agentweave/discussions
+        external: true
+
+# Quick links (shown in sidebar or header)
+quick_links:
+  - title: "Quick Start"
+    url: /getting-started/quickstart/
+    icon: rocket
+  - title: "API Reference"
+    url: /api-reference/
+    icon: book
+  - title: "Examples"
+    url: /examples/
+    icon: code
+  - title: "GitHub"
+    url: https://github.com/aj-geddes/agentweave
+    icon: github
+    external: true
+
+# Breadcrumb settings
+breadcrumbs:
+  enabled: true
+  home:
+    title: "Home"
+    url: /

@@ -1,0 +1,181 @@
+---
+layout: null
+sitemap:
+  exclude: 'yes'
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home Page -->
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Main Pages -->
+  {% for page in site.pages %}
+    {% unless page.sitemap.exclude == "yes" or page.url contains '/assets/' or page.url == '/404.html' %}
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}{{ page.url }}</loc>
+    {% if page.date %}
+    <lastmod>{{ page.date | date_to_xmlschema }}</lastmod>
+    {% else %}
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    {% endif %}
+    <changefreq>{{ page.sitemap.changefreq | default: 'monthly' }}</changefreq>
+    <priority>{{ page.sitemap.priority | default: '0.8' }}</priority>
+  </url>
+    {% endunless %}
+  {% endfor %}
+
+  <!-- Getting Started Pages -->
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/getting-started/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/getting-started/quickstart/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/getting-started/installation/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Core Concepts -->
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/core-concepts/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/core-concepts/identity/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/core-concepts/authorization/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/core-concepts/a2a-protocol/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Tutorials Collection -->
+  {% for tutorial in site.tutorials %}
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}{{ tutorial.url }}</loc>
+    {% if tutorial.date %}
+    <lastmod>{{ tutorial.date | date_to_xmlschema }}</lastmod>
+    {% else %}
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    {% endif %}
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  {% endfor %}
+
+  <!-- Guides Collection -->
+  {% for guide in site.guides %}
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}{{ guide.url }}</loc>
+    {% if guide.date %}
+    <lastmod>{{ guide.date | date_to_xmlschema }}</lastmod>
+    {% else %}
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    {% endif %}
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  {% endfor %}
+
+  <!-- Examples Collection -->
+  {% for example in site.examples %}
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}{{ example.url }}</loc>
+    {% if example.date %}
+    <lastmod>{{ example.date | date_to_xmlschema }}</lastmod>
+    {% else %}
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    {% endif %}
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  {% endfor %}
+
+  <!-- API Reference Collection -->
+  {% for api in site.api %}
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}{{ api.url }}</loc>
+    {% if api.date %}
+    <lastmod>{{ api.date | date_to_xmlschema }}</lastmod>
+    {% else %}
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    {% endif %}
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  {% endfor %}
+
+  <!-- API Reference Pages -->
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/api-reference/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Deployment Pages -->
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/deployment/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Security Pages -->
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/security/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Troubleshooting Pages -->
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/troubleshooting/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Search Page -->
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/search/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Contributing -->
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}/contributing/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>

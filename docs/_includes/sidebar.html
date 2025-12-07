@@ -1,0 +1,69 @@
+<aside class="page-sidebar" aria-label="Table of contents">
+  <div class="sidebar-container">
+    <div class="sidebar-sticky">
+      <!-- On This Page Header -->
+      <div class="sidebar-header">
+        <h2 class="sidebar-title">On This Page</h2>
+      </div>
+
+      <!-- Table of Contents -->
+      <nav class="sidebar-toc">
+        {% if page.content %}
+          {% include toc.html html=content h_min=2 h_max=4 %}
+        {% else %}
+          <p class="sidebar-empty">No headings found</p>
+        {% endif %}
+      </nav>
+
+      <!-- Edit This Page Link -->
+      {% if site.github_url and page.path %}
+      <div class="sidebar-footer">
+        <a href="{{ site.github_url }}/edit/main/docs/{{ page.path }}"
+           class="edit-link"
+           target="_blank"
+           rel="noopener noreferrer">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.333 2A2.827 2.827 0 0114 4.667L4.667 14H2v-2.667L11.333 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Edit this page
+        </a>
+
+        <a href="{{ site.github_url }}/issues/new?title=Issue%20with%20{{ page.title | uri_escape }}&body=Page:%20{{ site.url }}{{ page.url }}"
+           class="report-link"
+           target="_blank"
+           rel="noopener noreferrer">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 14A6 6 0 108 2a6 6 0 000 12zM8 5.333v2.667M8 11.333h.007" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Report an issue
+        </a>
+      </div>
+      {% endif %}
+
+      <!-- Page Metadata -->
+      {% if page.last_modified_at or page.date or page.author %}
+      <div class="sidebar-meta">
+        {% if page.last_modified_at or page.date %}
+        <div class="meta-item">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 2H3a1 1 0 00-1 1v8a1 1 0 001 1h8a1 1 0 001-1V3a1 1 0 00-1-1zM9.333 1v2M4.667 1v2M2 5h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <time datetime="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
+            Updated {{ page.last_modified_at | default: page.date | date: "%b %d, %Y" }}
+          </time>
+        </div>
+        {% endif %}
+
+        {% if page.author %}
+        <div class="meta-item">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 7a2.333 2.333 0 100-4.667A2.333 2.333 0 007 7zM11.667 11.667v-1.334a2.333 2.333 0 00-2.334-2.333h-4.666a2.333 2.333 0 00-2.334 2.333v1.334" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>{{ page.author }}</span>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</aside>

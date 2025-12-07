@@ -1,0 +1,276 @@
+---
+layout: default
+---
+
+<article class="api-documentation" itemscope itemtype="http://schema.org/TechArticle">
+  <!-- API Header -->
+  <header class="api-header">
+    {% if page.api_type %}
+    <span class="api-type-badge badge-{{ page.api_type | downcase }}">
+      {{ page.api_type }}
+    </span>
+    {% endif %}
+
+    <h1 class="api-title" itemprop="headline">
+      {% if page.module %}
+      <span class="module-name">{{ page.module }}</span>
+      <span class="separator">.</span>
+      {% endif %}
+      {{ page.title }}
+    </h1>
+
+    {% if page.description %}
+    <p class="api-description" itemprop="description">{{ page.description }}</p>
+    {% endif %}
+
+    <!-- Quick Info -->
+    <div class="api-quick-info">
+      {% if page.import_path %}
+      <div class="info-item import-path">
+        <span class="info-label">Import:</span>
+        <code class="info-value">{{ page.import_path }}</code>
+        <button class="copy-btn" data-copy="{{ page.import_path }}" aria-label="Copy import path">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>
+            <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>
+          </svg>
+        </button>
+      </div>
+      {% endif %}
+
+      {% if page.version %}
+      <div class="info-item version">
+        <span class="info-label">Since:</span>
+        <span class="info-value">v{{ page.version }}</span>
+      </div>
+      {% endif %}
+
+      {% if page.deprecated %}
+      <div class="info-item deprecated">
+        <svg class="warning-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"/>
+        </svg>
+        <strong>Deprecated:</strong> {{ page.deprecated }}
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Edit on GitHub -->
+    {% if site.github.repository_url and page.source_file %}
+    <a href="{{ site.github.repository_url }}/blob/main/{{ page.source_file }}" class="view-source-link" target="_blank" rel="noopener noreferrer">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+      </svg>
+      View source
+    </a>
+    {% endif %}
+  </header>
+
+  <!-- API Navigation (Module/Class/Method) -->
+  {% if page.api_items %}
+  <nav class="api-nav" role="navigation" aria-label="API reference navigation">
+    <h2 class="api-nav-title">Contents</h2>
+    <ul class="api-nav-list">
+      {% for item in page.api_items %}
+      <li class="api-nav-item">
+        <a href="#{{ item.id }}" class="api-nav-link">
+          <span class="item-type">{{ item.type }}</span>
+          <span class="item-name">{{ item.name }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+  {% endif %}
+
+  <!-- Main Content -->
+  <div class="api-content" itemprop="text">
+    {{ content }}
+  </div>
+
+  <!-- Related Links -->
+  {% if page.related %}
+  <aside class="related-links" role="complementary">
+    <h2 class="related-title">Related</h2>
+    <ul class="related-list">
+      {% for link in page.related %}
+      <li class="related-item">
+        <a href="{{ link.url | relative_url }}" class="related-link">
+          {{ link.title }}
+          {% if link.description %}
+          <span class="related-description">{{ link.description }}</span>
+          {% endif %}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </aside>
+  {% endif %}
+
+  <!-- See Also -->
+  {% if page.see_also %}
+  <aside class="see-also" role="complementary">
+    <h2 class="see-also-title">See Also</h2>
+    <ul class="see-also-list">
+      {% for item in page.see_also %}
+      <li>
+        <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </aside>
+  {% endif %}
+</article>
+
+<!-- API-specific Styles -->
+<style>
+  /* Signature blocks */
+  .api-signature {
+    background: var(--code-bg, #f6f8fa);
+    border: 1px solid var(--border-color, #d0d7de);
+    border-radius: 6px;
+    padding: 16px;
+    margin: 20px 0;
+    overflow-x: auto;
+  }
+
+  .api-signature code {
+    background: transparent;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Parameter tables */
+  .param-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+
+  .param-table th,
+  .param-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color, #d0d7de);
+  }
+
+  .param-table th {
+    font-weight: 600;
+    background: var(--table-header-bg, #f6f8fa);
+  }
+
+  .param-table code {
+    font-size: 13px;
+  }
+
+  .param-required {
+    color: var(--danger-color, #cf222e);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .param-optional {
+    color: var(--muted-color, #656d76);
+    font-size: 12px;
+  }
+
+  /* Return type */
+  .return-type {
+    background: var(--info-bg, #ddf4ff);
+    border-left: 4px solid var(--info-border, #0969da);
+    padding: 16px;
+    margin: 20px 0;
+    border-radius: 6px;
+  }
+
+  .return-type-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  /* Examples */
+  .api-example {
+    margin: 24px 0;
+  }
+
+  .example-title {
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 16px;
+  }
+
+  /* Raises/Exceptions */
+  .raises-section {
+    background: var(--warning-bg, #fff8c5);
+    border-left: 4px solid var(--warning-border, #bf8700);
+    padding: 16px;
+    margin: 20px 0;
+    border-radius: 6px;
+  }
+
+  .exception-item {
+    margin: 8px 0;
+  }
+
+  .exception-name {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-weight: 600;
+  }
+</style>
+
+<!-- API-specific JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Copy button functionality
+    const copyButtons = document.querySelectorAll('.copy-btn');
+    copyButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        const textToCopy = this.getAttribute('data-copy');
+        navigator.clipboard.writeText(textToCopy).then(function() {
+          button.classList.add('copied');
+          setTimeout(function() {
+            button.classList.remove('copied');
+          }, 2000);
+        });
+      });
+    });
+
+    // Smooth scroll for API navigation
+    const apiNavLinks = document.querySelectorAll('.api-nav-link');
+    apiNavLinks.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Update URL without scrolling
+          history.pushState(null, null, this.getAttribute('href'));
+        }
+      });
+    });
+
+    // Highlight current section in API nav
+    const sections = document.querySelectorAll('[id]');
+    const navLinks = document.querySelectorAll('.api-nav-link');
+
+    window.addEventListener('scroll', function() {
+      let current = '';
+      sections.forEach(function(section) {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (pageYOffset >= sectionTop - 100) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(function(link) {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  });
+</script>

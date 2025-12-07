@@ -1,0 +1,155 @@
+---
+layout: default
+---
+
+<article class="documentation-page" itemscope itemtype="http://schema.org/TechnicalArticle">
+  <!-- Breadcrumbs -->
+  <nav class="breadcrumbs" aria-label="Breadcrumb navigation">
+    <ol class="breadcrumb-list" vocab="https://schema.org/" typeof="BreadcrumbList">
+      <li property="itemListElement" typeof="ListItem">
+        <a property="item" typeof="WebPage" href="{{ '/' | relative_url }}">
+          <span property="name">Home</span>
+        </a>
+        <meta property="position" content="1">
+      </li>
+
+      {% if page.category %}
+      <li property="itemListElement" typeof="ListItem">
+        <span class="breadcrumb-separator" aria-hidden="true">/</span>
+        <a property="item" typeof="WebPage" href="{{ '/' | append: page.category | append: '/' | relative_url }}">
+          <span property="name">{{ page.category | capitalize }}</span>
+        </a>
+        <meta property="position" content="2">
+      </li>
+      {% endif %}
+
+      <li property="itemListElement" typeof="ListItem">
+        <span class="breadcrumb-separator" aria-hidden="true">/</span>
+        <span property="name" aria-current="page">{{ page.title }}</span>
+        <meta property="position" content="{% if page.category %}3{% else %}2{% endif %}">
+      </li>
+    </ol>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <h1 class="page-title" itemprop="headline">{{ page.title }}</h1>
+
+    {% if page.description %}
+    <p class="page-description" itemprop="description">{{ page.description }}</p>
+    {% endif %}
+
+    <div class="page-meta">
+      {% if page.version %}
+      <span class="meta-item version">
+        <span class="meta-label">Version:</span>
+        <span class="meta-value">{{ page.version }}</span>
+      </span>
+      {% endif %}
+
+      {% if page.last_modified_at or page.date %}
+      <span class="meta-item last-updated">
+        <span class="meta-label">Last updated:</span>
+        <time class="meta-value" datetime="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}" itemprop="dateModified">
+          {{ page.last_modified_at | default: page.date | date: "%B %d, %Y" }}
+        </time>
+      </span>
+      {% endif %}
+
+      {% if page.author %}
+      <span class="meta-item author">
+        <span class="meta-label">By:</span>
+        <span class="meta-value" itemprop="author">{{ page.author }}</span>
+      </span>
+      {% endif %}
+
+      {% if site.github.repository_url and page.path %}
+      <a href="{{ site.github.repository_url }}/edit/main/docs/{{ page.path }}" class="meta-item edit-link" target="_blank" rel="noopener noreferrer">
+        <svg class="icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M11.013 1.427a1.75 1.75 0 012.474 0l1.086 1.086a1.75 1.75 0 010 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 01-.927-.928l.929-3.25a1.75 1.75 0 01.445-.758l8.61-8.61zm1.414 1.06a.25.25 0 00-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 000-.354l-1.086-1.086zM11.189 6.25L9.75 4.81l-6.286 6.287a.25.25 0 00-.064.108l-.558 1.953 1.953-.558a.249.249 0 00.108-.064l6.286-6.286z"/>
+        </svg>
+        Edit on GitHub
+      </a>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="page-content" itemprop="articleBody">
+    {{ content }}
+  </div>
+
+  <!-- Tags/Labels -->
+  {% if page.tags %}
+  <footer class="page-footer">
+    <div class="page-tags">
+      <span class="tags-label">Tags:</span>
+      <ul class="tag-list">
+        {% for tag in page.tags %}
+        <li class="tag-item">
+          <a href="{{ '/tags/' | append: tag | downcase | replace: ' ', '-' | relative_url }}" class="tag-link">
+            {{ tag }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </footer>
+  {% endif %}
+
+  <!-- Previous/Next Navigation -->
+  {% if page.prev or page.next %}
+  <nav class="page-navigation" aria-label="Previous and next page navigation">
+    <div class="nav-links">
+      {% if page.prev %}
+      <a href="{{ page.prev.url | relative_url }}" class="nav-link nav-prev" rel="prev">
+        <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+        </svg>
+        <div class="nav-content">
+          <span class="nav-label">Previous</span>
+          <span class="nav-title">{{ page.prev.title }}</span>
+        </div>
+      </a>
+      {% else %}
+      <div class="nav-link nav-prev nav-disabled" aria-hidden="true"></div>
+      {% endif %}
+
+      {% if page.next %}
+      <a href="{{ page.next.url | relative_url }}" class="nav-link nav-next" rel="next">
+        <div class="nav-content">
+          <span class="nav-label">Next</span>
+          <span class="nav-title">{{ page.next.title }}</span>
+        </div>
+        <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+      {% else %}
+      <div class="nav-link nav-next nav-disabled" aria-hidden="true"></div>
+      {% endif %}
+    </div>
+  </nav>
+  {% endif %}
+
+  <!-- Feedback Section (Optional) -->
+  {% if page.feedback != false %}
+  <aside class="page-feedback" role="complementary">
+    <h3>Was this page helpful?</h3>
+    <div class="feedback-buttons">
+      <button type="button" class="feedback-btn feedback-yes" data-feedback="yes" aria-label="Yes, this page was helpful">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"/>
+        </svg>
+        Yes
+      </button>
+      <button type="button" class="feedback-btn feedback-no" data-feedback="no" aria-label="No, this page was not helpful">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path d="M18 9.5a1.5 1.5 0 11-3 0v-6a1.5 1.5 0 013 0v6zM14 9.667v-5.43a2 2 0 00-1.105-1.79l-.05-.025A4 4 0 0011.055 2H5.64a2 2 0 00-1.962 1.608l-1.2 6A2 2 0 004.44 12H8v4a2 2 0 002 2 1 1 0 001-1v-.667a4 4 0 01.8-2.4l1.4-1.866a4 4 0 00.8-2.4z"/>
+        </svg>
+        No
+      </button>
+    </div>
+  </aside>
+  {% endif %}
+</article>
