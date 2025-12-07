@@ -21,9 +21,9 @@ pip install agentweave
 For local development, you'll need SPIRE and OPA running:
 
 ```bash
-# Clone the starter template
-git clone https://github.com/agentweave/agentweave-starter
-cd agentweave-starter
+# Clone the repository
+git clone https://github.com/aj-geddes/agentweave
+cd agentweave
 
 # Start SPIRE Server, SPIRE Agent, and OPA
 docker-compose up -d
@@ -336,4 +336,4 @@ agentweave ping spiffe://my-domain.local/agent/hello-agent/dev
 
 - Browse [example agents](../examples/)
 - Read the [architecture overview](../README.md#architecture)
-- Join the [community discussions](https://github.com/agentweave/agentweave/discussions)
+- Join the [community discussions](https://github.com/aj-geddes/agentweave/discussions)

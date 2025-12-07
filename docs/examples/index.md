@@ -73,8 +73,8 @@ Each example includes a complete setup. The general pattern is:
 
 ```bash
 # 1. Clone the examples repository
-git clone https://github.com/agentweave/examples.git
-cd examples/<example-name>
+git clone https://github.com/aj-geddes/agentweave.git
+cd agentweave/examples/<example-name>
 
 # 2. Review the configuration
 cat config/agent.yaml
@@ -108,11 +108,11 @@ example-name/
 
 ## Example Code Repository
 
-All examples are available in the [AgentWeave Examples Repository](https://github.com/agentweave/examples):
+All examples are available in the [AgentWeave Repository](https://github.com/aj-geddes/agentweave):
 
 ```bash
-git clone https://github.com/agentweave/examples.git
-cd examples
+git clone https://github.com/aj-geddes/agentweave.git
+cd agentweave/examples
 ```
 
 The repository includes:
@@ -136,15 +136,15 @@ We recommend following examples in this order:
 
 ## Getting Help
 
-- **Documentation Issues**: [Open an issue](https://github.com/agentweave/agentweave/issues)
-- **Example Questions**: [GitHub Discussions](https://github.com/agentweave/examples/discussions)
+- **Documentation Issues**: [Open an issue](https://github.com/aj-geddes/agentweave/issues)
+- **Example Questions**: [GitHub Discussions](https://github.com/aj-geddes/agentweave/discussions)
 - **Community**: [Discord Server](https://discord.gg/agentweave)
 
 ## Contributing Examples
 
 Have a useful pattern or use case? We welcome contributions!
 
-See [Contributing Guide](https://github.com/agentweave/examples/blob/main/CONTRIBUTING.md) for:
+See [Contributing Guide](https://github.com/aj-geddes/agentweave/blob/main/CONTRIBUTING.md) for:
 - Example submission guidelines
 - Code quality standards
 - Documentation requirements

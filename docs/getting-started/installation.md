@@ -46,7 +46,7 @@ For the latest development version or to contribute:
 
 ```bash
 # Clone the repository
-git clone https://github.com/agentweave/agentweave.git
+git clone https://github.com/aj-geddes/agentweave.git
 cd agentweave
 
 # Install in editable mode with dev dependencies
@@ -131,9 +131,9 @@ AgentWeave requires supporting infrastructure for identity (SPIRE) and authoriza
 Clone the starter template:
 
 ```bash
-# Clone the starter repository
-git clone https://github.com/agentweave/agentweave-starter.git
-cd agentweave-starter
+# Clone the repository
+git clone https://github.com/aj-geddes/agentweave.git
+cd agentweave
 
 # Start all services
 docker-compose up -d

@@ -96,11 +96,11 @@ Uses the A2A (Agent-to-Agent) protocol, an open standard. Your AgentWeave agents
 
 ## Support and Resources
 
-- **Documentation**: Full reference at [docs.agentweave.io](https://docs.agentweave.io)
-- **Examples**: Check the [examples/](https://github.com/agentweave/agentweave/tree/main/examples) directory
-- **Issues**: Report bugs at [GitHub Issues](https://github.com/agentweave/agentweave/issues)
-- **Discussions**: Ask questions in [GitHub Discussions](https://github.com/agentweave/agentweave/discussions)
-- **Specification**: Read the full [spec.md](https://github.com/agentweave/agentweave/blob/main/spec.md)
+- **Documentation**: Full reference at [aj-geddes.github.io/agentweave](https://aj-geddes.github.io/agentweave/)
+- **Examples**: Check the [examples/](https://github.com/aj-geddes/agentweave/tree/main/examples) directory
+- **Issues**: Report bugs at [GitHub Issues](https://github.com/aj-geddes/agentweave/issues)
+- **Discussions**: Ask questions in [GitHub Discussions](https://github.com/aj-geddes/agentweave/discussions)
+- **Specification**: Read the full [spec.md](https://github.com/aj-geddes/agentweave/blob/main/spec.md)
 
 ## Ready to Start?
 

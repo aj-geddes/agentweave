@@ -163,7 +163,7 @@ Is there a permission issue with the hostPath mount?
 
 **Best for:** Bugs, regressions, unexpected behavior
 
-**URL:** [github.com/agentweave/agentweave/issues/new](https://github.com/agentweave/agentweave/issues/new)
+**URL:** [github.com/aj-geddes/agentweave/issues/new](https://github.com/aj-geddes/agentweave/issues/new)
 
 ### How to Write a Good Bug Report
 
@@ -313,7 +313,7 @@ After submitting a bug:
 
 **Best for:** Feature ideas and proposals
 
-**URL:** [github.com/agentweave/agentweave/discussions/categories/ideas](https://github.com/agentweave/agentweave/discussions/categories/ideas)
+**URL:** [github.com/aj-geddes/agentweave/discussions/categories/ideas](https://github.com/aj-geddes/agentweave/discussions/categories/ideas)
 
 ### How to Propose a Feature
 
@@ -441,8 +441,8 @@ We follow a 90-day disclosure timeline:
 
 ### Getting Started
 
-1. **Read the Contributing Guide**: [CONTRIBUTING.md](https://github.com/agentweave/agentweave/blob/main/CONTRIBUTING.md)
-2. **Set up development environment**: [Development Guide](https://github.com/agentweave/agentweave/blob/main/docs/development.md)
+1. **Read the Contributing Guide**: [CONTRIBUTING.md](https://github.com/aj-geddes/agentweave/blob/main/CONTRIBUTING.md)
+2. **Set up development environment**: [Development Guide](https://github.com/aj-geddes/agentweave/blob/main/docs/development.md)
 3. **Find an issue**: Look for `good first issue` label
 4. **Ask questions**: Comment on the issue before starting
 
@@ -513,8 +513,8 @@ For organizations requiring:
 ### Official Resources
 
 - **Website**: [agentweave.io](https://agentweave.io)
-- **Documentation**: [docs.agentweave.io](https://docs.agentweave.io)
-- **GitHub**: [github.com/agentweave/agentweave](https://github.com/agentweave/agentweave)
+- **Documentation**: [aj-geddes.github.io/agentweave](https://aj-geddes.github.io/agentweave/)
+- **GitHub**: [github.com/aj-geddes/agentweave](https://github.com/aj-geddes/agentweave)
 - **Blog**: [blog.agentweave.io](https://blog.agentweave.io)
 
 ### Community Resources
@@ -567,11 +567,11 @@ For organizations requiring:
 
 ## Next Steps
 
-**Found a bug?** [Report it on GitHub →](https://github.com/agentweave/agentweave/issues/new)
+**Found a bug?** [Report it on GitHub →](https://github.com/aj-geddes/agentweave/issues/new)
 
-**Have a question?** [Ask in Discussions →](https://github.com/agentweave/agentweave/discussions)
+**Have a question?** [Ask in Discussions →](https://github.com/aj-geddes/agentweave/discussions)
 
-**Want to contribute?** [Read Contributing Guide →](https://github.com/agentweave/agentweave/blob/main/CONTRIBUTING.md)
+**Want to contribute?** [Read Contributing Guide →](https://github.com/aj-geddes/agentweave/blob/main/CONTRIBUTING.md)
 
 **Need help now?** [Join Discord →](https://discord.gg/agentweave)
 

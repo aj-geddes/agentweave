@@ -276,19 +276,19 @@ If you can't resolve your issue:
 ### 1. Search Existing Issues
 
 Check if others have encountered the same problem:
-- [GitHub Issues](https://github.com/agentweave/agentweave/issues)
-- [GitHub Discussions](https://github.com/agentweave/agentweave/discussions)
+- [GitHub Issues](https://github.com/aj-geddes/agentweave/issues)
+- [GitHub Discussions](https://github.com/aj-geddes/agentweave/discussions)
 - [Stack Overflow](https://stackoverflow.com/questions/tagged/agentweave)
 
 ### 2. Ask the Community
 
 For questions and discussions:
-- [GitHub Discussions](https://github.com/agentweave/agentweave/discussions)
+- [GitHub Discussions](https://github.com/aj-geddes/agentweave/discussions)
 - [Discord Community](https://discord.gg/agentweave)
 
 ### 3. Report a Bug
 
-If you've found a bug, please [create an issue](https://github.com/agentweave/agentweave/issues/new) with:
+If you've found a bug, please [create an issue](https://github.com/aj-geddes/agentweave/issues/new) with:
 - AgentWeave version (`agentweave --version`)
 - Python version
 - Operating system
