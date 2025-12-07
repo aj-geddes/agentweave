@@ -182,7 +182,7 @@ Build a multi-cloud agent mesh spanning AWS, GCP, and Azure. Configure SPIFFE fe
 
 If you get stuck:
 
-1. **Check the documentation** - Review [Core Concepts](/concepts/) and [API Reference](/api/)
+1. **Check the documentation** - Review [Core Concepts](/concepts/) and [API Reference](/api-reference/)
 2. **Review examples** - See working code in [Examples](/examples/)
 3. **Read troubleshooting** - Common issues in [Troubleshooting](/troubleshooting/)
 4. **Ask the community** - Post in [GitHub Discussions](https://github.com/aj-geddes/agentweave/discussions)
@@ -192,7 +192,7 @@ If you get stuck:
 
 - **[How-To Guides](/guides/)** - Task-oriented guides for specific features
 - **[Examples Gallery](/examples/)** - Complete working examples
-- **[API Reference](/api/)** - Detailed API documentation
+- **[API Reference](/api-reference/)** - Detailed API documentation
 - **[Configuration Reference](/getting-started/configuration/)** - All configuration options
 
 ## What's Next?

@@ -13,7 +13,7 @@
   This should be customized based on your site structure
 {% endcomment %}
 
-{% assign all_pages = site.pages | where_exp: "page", "page.url contains '/getting-started/' or page.url contains '/core-concepts/' or page.url contains '/tutorials/' or page.url contains '/how-to/' or page.url contains '/api/' or page.url contains '/examples/' or page.url contains '/deployment/' or page.url contains '/security/' or page.url contains '/troubleshooting/'" | sort: "order" %}
+{% assign all_pages = site.pages | where_exp: "page", "page.url contains '/getting-started/' or page.url contains '/core-concepts/' or page.url contains '/tutorials/' or page.url contains '/how-to/' or page.url contains '/api/' or page.url contains '/api-reference/' or page.url contains '/examples/' or page.url contains '/deployment/' or page.url contains '/security/' or page.url contains '/troubleshooting/'" | sort: "order" %}
 
 {% assign prev_page = nil %}
 {% assign next_page = nil %}

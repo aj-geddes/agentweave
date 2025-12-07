@@ -152,26 +152,26 @@ navigation:
           url: /guides/testing/
 
     - title: "API Reference"
-      url: /api/
+      url: /api-reference/
       children:
         - title: "Agent"
-          url: /api/agent/
+          url: /api-reference/agent/
         - title: "Decorators"
-          url: /api/decorators/
+          url: /api-reference/decorators/
         - title: "Identity"
-          url: /api/identity/
+          url: /api-reference/identity/
         - title: "Authorization"
-          url: /api/authorization/
+          url: /api-reference/authz/
         - title: "Transport"
-          url: /api/transport/
+          url: /api-reference/transport/
         - title: "A2A Protocol"
-          url: /api/a2a/
+          url: /api-reference/comms/
         - title: "Context"
-          url: /api/context/
+          url: /api-reference/context/
         - title: "Configuration"
-          url: /api/configuration/
+          url: /api-reference/config/
         - title: "Exceptions"
-          url: /api/exceptions/
+          url: /api-reference/exceptions/
 
     - title: "Examples"
       url: /examples/

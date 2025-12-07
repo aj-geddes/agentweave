@@ -79,7 +79,7 @@ Found a problem not covered here? Want to add a guide? We welcome contributions:
 ## Related Documentation
 
 - [Tutorials](/tutorials/) - Step-by-step learning guides
-- [API Reference](/api/) - Detailed API documentation
+- [API Reference](/api-reference/) - Detailed API documentation
 - [Examples](/examples/) - Complete example applications
 - [Core Concepts](/core-concepts/) - Conceptual explanations
 
