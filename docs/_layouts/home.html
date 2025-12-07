@@ -27,13 +27,13 @@ layout: default
 
     <!-- CTA Buttons -->
     <div class="hero-actions">
-      <a href="{{ '/quickstart/' | relative_url }}" class="btn btn-primary">
+      <a href="{{ '/getting-started/quickstart/' | relative_url }}" class="btn btn-primary">
         Get Started
         <svg class="btn-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
           <path fill-rule="evenodd" d="M1 8a.5.5 0 01.5-.5h11.793l-3.147-3.146a.5.5 0 01.708-.708l4 4a.5.5 0 010 .708l-4 4a.5.5 0 01-.708-.708L13.293 8.5H1.5A.5.5 0 011 8z"/>
         </svg>
       </a>
-      <a href="{{ '/documentation/' | relative_url }}" class="btn btn-secondary">
+      <a href="{{ '/getting-started/' | relative_url }}" class="btn btn-secondary">
         View Documentation
       </a>
       <a href="{{ site.github.repository_url }}" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
@@ -191,7 +191,11 @@ layout: default
     
     <div class="community-grid">
       {% for item in page.community.items %}
+      {% if item.url contains "http" %}
       <a href="{{ item.url }}" class="community-card" target="_blank" rel="noopener noreferrer">
+      {% else %}
+      <a href="{{ item.url | relative_url }}" class="community-card">
+      {% endif %}
         <div class="community-icon">
           {% if item.icon == "github" %}
           <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">

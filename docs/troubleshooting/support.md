@@ -27,8 +27,8 @@ Before reaching out, try these steps:
 - **[Documentation](../index.md)** - Comprehensive guides and references
 - **[FAQ](faq.md)** - Frequently asked questions
 - **[Common Issues](common-issues.md)** - Quick solutions to known problems
-- **[GitHub Issues](https://github.com/agentweave/agentweave/issues)** - Known bugs and feature requests
-- **[GitHub Discussions](https://github.com/agentweave/agentweave/discussions)** - Community Q&A
+- **[GitHub Issues](https://github.com/aj-geddes/agentweave/issues)** - Known bugs and feature requests
+- **[GitHub Discussions](https://github.com/aj-geddes/agentweave/discussions)** - Community Q&A
 
 ### 2. Enable Debug Logging
 
@@ -74,7 +74,7 @@ agentweave health --verbose
 
 **Best for:** Questions, ideas, and general discussion
 
-**URL:** [github.com/agentweave/agentweave/discussions](https://github.com/agentweave/agentweave/discussions)
+**URL:** [github.com/aj-geddes/agentweave/discussions](https://github.com/aj-geddes/agentweave/discussions)
 
 **Categories:**
 - **Q&A** - Ask questions, get answers

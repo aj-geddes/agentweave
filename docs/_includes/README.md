@@ -264,8 +264,8 @@ license: "Apache 2.0"
 # URLs
 url: "https://agentweave.github.io"
 baseurl: "/hvs-agent"
-github_url: "https://github.com/agentweave/hvs-agent"
-pypi_url: "https://pypi.org/project/hvs-agent/"
+github_url: "https://github.com/aj-geddes/agentweave"
+pypi_url: "https://pypi.org/project/agentweave/"
 
 # Optional: Previous versions for version selector
 previous_versions:

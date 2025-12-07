@@ -835,7 +835,7 @@ helm diff upgrade my-agent agentweave/agentweave \
 helm create my-custom-agent
 
 # Or fork the official chart
-git clone https://github.com/agentweave/helm-charts.git
+git clone https://github.com/aj-geddes/helm-charts.git
 cd helm-charts/charts/agentweave
 ```
 

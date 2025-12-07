@@ -230,7 +230,7 @@ Choose your deployment target:
 
 ```bash
 # Clone starter template
-git clone https://github.com/agentweave/agentweave-starter.git
+git clone https://github.com/aj-geddes/agentweave-starter.git
 cd agentweave-starter
 
 # Start infrastructure
@@ -246,10 +246,10 @@ See [Docker Guide](docker.md) for details.
 
 ```bash
 # Install SPIRE
-kubectl apply -f https://github.com/agentweave/agentweave/releases/latest/download/spire.yaml
+kubectl apply -f https://github.com/aj-geddes/agentweave/releases/latest/download/spire.yaml
 
 # Install OPA
-kubectl apply -f https://github.com/agentweave/agentweave/releases/latest/download/opa.yaml
+kubectl apply -f https://github.com/aj-geddes/agentweave/releases/latest/download/opa.yaml
 
 # Deploy agent with Helm
 helm install my-agent agentweave/agentweave \

@@ -36,35 +36,35 @@ features:
       description: "Cryptographic workload identity via SPIRE. Automatic certificate rotation. No hardcoded secrets. Trust established through verifiable credentials."
       link:
         text: "Identity concepts"
-        url: "/concepts/identity/"
+        url: "/core-concepts/identity/"
 
     - icon: "code"
       title: "A2A Protocol"
       description: "Standardized agent-to-agent communication. Framework-agnostic. Built-in capability discovery via Agent Cards. Works with any A2A-compatible system."
       link:
         text: "A2A protocol guide"
-        url: "/concepts/a2a-protocol/"
+        url: "/core-concepts/communication/"
 
     - icon: "zap"
       title: "OPA Authorization"
       description: "Fine-grained policy-based access control. Policies as code with Rego. Audit every decision. Decouple authorization from business logic."
       link:
         text: "Authorization guide"
-        url: "/concepts/authorization/"
+        url: "/core-concepts/authorization/"
 
     - icon: "layers"
       title: "mTLS Transport"
       description: "Mutual TLS for all communication. TLS 1.3 enforced. Peer verification mandatory. Encrypted end-to-end with zero downgrade attacks."
       link:
         text: "Transport layer"
-        url: "/concepts/mtls/"
+        url: "/core-concepts/security-model/"
 
     - icon: "cloud"
       title: "Observability"
       description: "Built-in metrics, tracing, and audit logging. OpenTelemetry integration. Prometheus-compatible metrics. Debug and monitor production agents."
       link:
         text: "Observability guide"
-        url: "/concepts/observability/"
+        url: "/api-reference/observability/"
 
 technologies:
   title: "Built on Production-Proven Technologies"
@@ -183,6 +183,6 @@ Deploy agents anywhere—AWS, GCP, Azure, on-premises—and they can securely co
 Get your first secure agent running in 5 minutes.
 
 <div class="cta-box">
-  <a href="/getting-started/quickstart/" class="btn btn-primary btn-large">Get Started</a>
-  <a href="/examples/" class="btn btn-secondary btn-large">View Examples</a>
+  <a href="{{ '/getting-started/quickstart/' | relative_url }}" class="btn btn-primary btn-large">Get Started</a>
+  <a href="{{ '/examples/' | relative_url }}" class="btn btn-secondary btn-large">View Examples</a>
 </div>

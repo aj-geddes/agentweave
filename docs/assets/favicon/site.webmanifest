@@ -1,0 +1,19 @@
+{
+  "name": "AgentWeave SDK Documentation",
+  "short_name": "AgentWeave",
+  "description": "Secure, cross-cloud AI agents with cryptographic identity and automatic authorization",
+  "icons": [
+    {
+      "src": "/agentweave/assets/favicon/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/agentweave/",
+  "scope": "/agentweave/"
+}

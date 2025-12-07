@@ -46,47 +46,47 @@ permalink: /search/
 
       <h3>Popular Topics</h3>
       <div class="popular-topics">
-        <a href="/getting-started/quickstart/" class="topic-link">Quick Start</a>
-        <a href="/concepts/identity/" class="topic-link">Agent Identity</a>
-        <a href="/concepts/authorization/" class="topic-link">Authorization</a>
-        <a href="/concepts/a2a-protocol/" class="topic-link">A2A Protocol</a>
-        <a href="/tutorials/first-agent/" class="topic-link">First Agent Tutorial</a>
-        <a href="/api/agent/" class="topic-link">Agent API</a>
-        <a href="/deployment/kubernetes/" class="topic-link">Kubernetes Deployment</a>
-        <a href="/security/best-practices/" class="topic-link">Security Best Practices</a>
+        <a href="{{ '/getting-started/quickstart/' | relative_url }}" class="topic-link">Quick Start</a>
+        <a href="{{ '/core-concepts/identity/' | relative_url }}" class="topic-link">Agent Identity</a>
+        <a href="{{ '/core-concepts/authorization/' | relative_url }}" class="topic-link">Authorization</a>
+        <a href="{{ '/core-concepts/communication/' | relative_url }}" class="topic-link">A2A Protocol</a>
+        <a href="{{ '/tutorials/first-agent/' | relative_url }}" class="topic-link">First Agent Tutorial</a>
+        <a href="{{ '/api-reference/agent/' | relative_url }}" class="topic-link">Agent API</a>
+        <a href="{{ '/deployment/kubernetes/' | relative_url }}" class="topic-link">Kubernetes Deployment</a>
+        <a href="{{ '/security/best-practices/' | relative_url }}" class="topic-link">Security Best Practices</a>
       </div>
 
       <h3>Browse by Category</h3>
       <div class="category-grid">
-        <a href="/getting-started/" class="category-card">
+        <a href="{{ '/getting-started/' | relative_url }}" class="category-card">
           <h4>Getting Started</h4>
           <p>Installation, configuration, and quick start guides</p>
         </a>
-        <a href="/concepts/" class="category-card">
+        <a href="{{ '/core-concepts/' | relative_url }}" class="category-card">
           <h4>Core Concepts</h4>
           <p>Identity, authorization, protocols, and architecture</p>
         </a>
-        <a href="/tutorials/" class="category-card">
+        <a href="{{ '/tutorials/' | relative_url }}" class="category-card">
           <h4>Tutorials</h4>
           <p>Step-by-step guides for common tasks</p>
         </a>
-        <a href="/guides/" class="category-card">
+        <a href="{{ '/guides/' | relative_url }}" class="category-card">
           <h4>How-To Guides</h4>
           <p>Practical solutions for specific problems</p>
         </a>
-        <a href="/api/" class="category-card">
+        <a href="{{ '/api-reference/' | relative_url }}" class="category-card">
           <h4>API Reference</h4>
           <p>Complete API documentation and signatures</p>
         </a>
-        <a href="/examples/" class="category-card">
+        <a href="{{ '/examples/' | relative_url }}" class="category-card">
           <h4>Examples</h4>
           <p>Real-world code examples and patterns</p>
         </a>
-        <a href="/deployment/" class="category-card">
+        <a href="{{ '/deployment/' | relative_url }}" class="category-card">
           <h4>Deployment</h4>
           <p>Deploy to Docker, Kubernetes, and cloud platforms</p>
         </a>
-        <a href="/security/" class="category-card">
+        <a href="{{ '/security/' | relative_url }}" class="category-card">
           <h4>Security</h4>
           <p>Security model, best practices, and compliance</p>
         </a>

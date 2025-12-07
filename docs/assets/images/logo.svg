@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:0.8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Shield background -->
+  <path d="M100 20 L160 45 L160 100 C160 140, 140 165, 100 180 C60 165, 40 140, 40 100 L40 45 Z"
+        fill="url(#gradient1)" opacity="0.15"/>
+
+  <!-- Woven mesh pattern representing secure agent connections -->
+  <!-- Horizontal weave lines -->
+  <path d="M70 60 Q85 60, 100 65 T130 60"
+        stroke="url(#gradient1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M70 80 Q85 80, 100 85 T130 80"
+        stroke="url(#gradient1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M70 100 Q85 100, 100 105 T130 100"
+        stroke="url(#gradient2)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M70 120 Q85 120, 100 125 T130 120"
+        stroke="url(#gradient2)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M70 140 Q85 140, 100 145 T130 140"
+        stroke="url(#gradient2)" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Vertical weave lines -->
+  <path d="M70 60 Q70 75, 75 90 T70 120 Q70 130, 75 140"
+        stroke="url(#gradient1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M100 60 Q100 75, 105 90 T100 120 Q100 130, 105 140"
+        stroke="url(#gradient2)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M130 60 Q130 75, 125 90 T130 120 Q130 130, 125 140"
+        stroke="url(#gradient1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Connection nodes (representing agents) -->
+  <circle cx="70" cy="60" r="5" fill="#2563eb"/>
+  <circle cx="100" cy="65" r="5" fill="#7c3aed"/>
+  <circle cx="130" cy="60" r="5" fill="#2563eb"/>
+
+  <circle cx="70" cy="100" r="5" fill="#7c3aed"/>
+  <circle cx="100" cy="105" r="6" fill="#2563eb">
+    <!-- Central pulse animation -->
+    <animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="130" cy="100" r="5" fill="#7c3aed"/>
+
+  <circle cx="70" cy="140" r="5" fill="#2563eb"/>
+  <circle cx="100" cy="145" r="5" fill="#7c3aed"/>
+  <circle cx="130" cy="140" r="5" fill="#2563eb"/>
+
+  <!-- Shield outline with secure badge -->
+  <path d="M100 20 L160 45 L160 100 C160 140, 140 165, 100 180 C60 165, 40 140, 40 100 L40 45 Z"
+        stroke="url(#gradient1)" stroke-width="2.5" fill="none"/>
+
+  <!-- Lock icon in shield (security symbol) -->
+  <rect x="95" y="35" width="10" height="8" rx="5"
+        stroke="#2563eb" stroke-width="2" fill="none"/>
+  <rect x="92" y="40" width="16" height="12" rx="2"
+        fill="#2563eb"/>
+  <circle cx="100" cy="46" r="2" fill="white"/>
+</svg>
