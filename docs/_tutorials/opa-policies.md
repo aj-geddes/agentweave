@@ -900,7 +900,7 @@ You've mastered OPA policy writing! You've learned:
 Continue learning:
 
 - **[Adding Observability](/tutorials/observability/)** - Monitor policy decisions
-- **[How-To: Authorization Policies](/guides/authorization-policies/)** - Advanced patterns
+- **[How-To: Policy Patterns](/guides/policy-patterns/)** - Advanced patterns
 - **[Security Best Practices](/security/best-practices/)** - Production security
 - **[OPA Documentation](https://www.openpolicyagent.org/docs/)** - Official OPA docs
 
@@ -924,4 +924,4 @@ Continue learning:
 - Profile policies with `opa test --bench`
 - Consider caching in external systems
 
-See [Troubleshooting: Authorization](/troubleshooting/authorization/) for more help.
+See [Troubleshooting Guide](/troubleshooting/) for more help.

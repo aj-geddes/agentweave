@@ -838,7 +838,7 @@ Continue learning:
 - **[Writing OPA Policies](/tutorials/opa-policies/)** - Master authorization
 - **[Adding Observability](/tutorials/observability/)** - Monitor distributed systems
 - **[How-To: Error Handling](/guides/error-handling/)** - Production error patterns
-- **[Examples: Multi-Agent Chat](/examples/multi-agent-chat/)** - Complex orchestration
+- **[Examples: Multi-Agent](/examples/multi-agent/)** - Complex orchestration
 
 ## Troubleshooting
 
@@ -857,4 +857,4 @@ Continue learning:
 - Increase timeouts in `call_agent()`
 - Review worker performance/resource usage
 
-See [Troubleshooting: Connection Issues](/troubleshooting/connections/) for more help.
+See [Troubleshooting: Common Issues](/troubleshooting/common-issues/) for more help.

@@ -585,7 +585,7 @@ agentweave_task_duration_seconds_bucket{capability="echo",le="0.01"} 1.0
 
 - **Add More Capabilities**: Extend with `@capability` decorators
 - **Multi-Agent**: See [Multi-Agent Example](multi-agent/) to call other agents
-- **Custom Policies**: Learn [Authorization Guide](/guides/authorization-policies/)
+- **Custom Policies**: Learn [Authorization Guide](/guides/policy-patterns/)
 - **Production Deploy**: See [Kubernetes Deployment](/deployment/kubernetes/)
 
 ## Troubleshooting

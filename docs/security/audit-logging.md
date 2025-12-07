@@ -902,6 +902,6 @@ Audit logging provides:
 ## Next Steps
 
 - Configure audit logging: See [Configuration Reference](../configuration/)
-- Set up monitoring: See [Observability Guide](../guides/monitoring/)
+- Set up monitoring: See [Observability Guide](../tutorials/observability/)
 - Review compliance: See [Compliance](compliance/)
 - Understand threats: See [Threat Model](threat-model/)

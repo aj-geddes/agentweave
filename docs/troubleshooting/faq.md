@@ -534,7 +534,7 @@ agentweave_opa_errors_total
 https://grafana.com/grafana/dashboards/agentweave
 ```
 
-See [Monitoring Guide](../guides/monitoring.md) for details.
+See [Observability Tutorial](/tutorials/observability/) for details.
 
 ### How do I scale agents?
 
@@ -615,7 +615,7 @@ histogram_quantile(0.99,
 ) > 1
 ```
 
-See [Monitoring Guide](../guides/monitoring.md) for complete alert rules.
+See [Observability Tutorial](/tutorials/observability/) for complete alert rules.
 
 ### How do I upgrade agents?
 
@@ -698,7 +698,7 @@ secrets = AWSSecretsProvider(region="us-east-1")
 api_key = await secrets.get_secret("openai-api-key")
 ```
 
-See [Secrets Guide](../guides/secrets.md) for details.
+See [Identity Providers Guide](/guides/identity-providers/) for details.
 
 ---
 

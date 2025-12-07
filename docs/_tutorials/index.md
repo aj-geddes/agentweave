@@ -182,7 +182,7 @@ Build a multi-cloud agent mesh spanning AWS, GCP, and Azure. Configure SPIFFE fe
 
 If you get stuck:
 
-1. **Check the documentation** - Review [Core Concepts](/concepts/) and [API Reference](/api-reference/)
+1. **Check the documentation** - Review [Core Concepts](/core-concepts/) and [API Reference](/api-reference/)
 2. **Review examples** - See working code in [Examples](/examples/)
 3. **Read troubleshooting** - Common issues in [Troubleshooting](/troubleshooting/)
 4. **Ask the community** - Post in [GitHub Discussions](https://github.com/aj-geddes/agentweave/discussions)
@@ -193,13 +193,13 @@ If you get stuck:
 - **[How-To Guides](/guides/)** - Task-oriented guides for specific features
 - **[Examples Gallery](/examples/)** - Complete working examples
 - **[API Reference](/api-reference/)** - Detailed API documentation
-- **[Configuration Reference](/getting-started/configuration/)** - All configuration options
+- **[Configuration Reference](/api-reference/config/)** - All configuration options
 
 ## What's Next?
 
 Ready to start? Jump into [Building Your First Agent](/tutorials/first-agent/) and create your first secure AI agent in 30 minutes!
 
 Already experienced? Explore advanced topics:
-- [Multi-Agent Communication Patterns](/guides/communication-patterns/)
-- [Advanced Authorization Policies](/guides/authorization-policies/)
-- [Production Operations](/guides/operations/)
+- [Multi-Agent Communication Patterns](/core-concepts/communication/)
+- [Advanced Authorization Policies](/guides/policy-patterns/)
+- [Production Operations](/guides/production-checklist/)

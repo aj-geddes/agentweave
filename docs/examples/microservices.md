@@ -896,4 +896,4 @@ result = await self.call_agent(
 
 ---
 
-**Complete Code**: [GitHub Repository](https://github.com/agentweave/examples/tree/main/microservices)
+**Complete Code**: [GitHub Repository](https://github.com/aj-geddes/agentweave/tree/main/examples/microservices)

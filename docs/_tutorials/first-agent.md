@@ -631,8 +631,8 @@ Now that you've built a basic agent, explore:
 
 - **[Agent-to-Agent Communication](/tutorials/agent-communication/)** - Build multi-agent systems
 - **[Writing OPA Policies](/tutorials/opa-policies/)** - Master authorization
-- **[How-To: Custom Tools](/guides/custom-tools/)** - Give your agent advanced capabilities
-- **[Examples: Research Assistant](/examples/research-assistant/)** - See a real-world agent
+- **[How-To: Custom Tools](/api-reference/decorators/)** - Give your agent advanced capabilities
+- **[Examples Gallery](/examples/)** - See real-world agents
 
 ## Troubleshooting
 

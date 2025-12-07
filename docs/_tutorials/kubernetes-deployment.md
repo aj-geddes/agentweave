@@ -1001,9 +1001,9 @@ You've deployed AgentWeave to Kubernetes! You've learned:
 ## What's Next?
 
 - **[Cross-Cloud Agent Mesh](/tutorials/multi-cloud/)** - Multi-cloud deployment
-- **[How-To: Kubernetes Operations](/guides/k8s-operations/)** - Day 2 operations
+- **[How-To: Production Checklist](/guides/production-checklist/)** - Day 2 operations
 - **[Security: Best Practices](/security/best-practices/)** - Production security
-- **[Examples: K8s Operator](/examples/k8s-operator/)** - Build operators
+- **[Examples Gallery](/examples/)** - Build operators
 
 ## Troubleshooting
 

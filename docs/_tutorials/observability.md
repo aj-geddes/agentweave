@@ -693,9 +693,9 @@ You've set up comprehensive observability! You've learned:
 Continue learning:
 
 - **[Deploying to Kubernetes](/tutorials/kubernetes-deployment/)** - Production deployment
-- **[How-To: Monitoring](/guides/monitoring/)** - Advanced monitoring patterns
-- **[Security: Auditing](/security/auditing/)** - Compliance and audit trails
-- **[Troubleshooting: Performance](/troubleshooting/performance/)** - Debug performance issues
+- **[Tutorial: Observability](/tutorials/observability/)** - Advanced monitoring patterns
+- **[Security: Audit Logging](/security/audit-logging/)** - Compliance and audit trails
+- **[How-To: Performance](/guides/performance/)** - Debug performance issues
 
 ## Troubleshooting
 

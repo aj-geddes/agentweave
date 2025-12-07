@@ -793,10 +793,10 @@ You've built a cross-cloud agent mesh! You've learned:
 
 ## What's Next?
 
-- **[How-To: Multi-Cloud Operations](/guides/multi-cloud-ops/)** - Advanced patterns
+- **[Tutorial: Multi-Cloud](/tutorials/multi-cloud/)** - Advanced patterns
 - **[Security: Compliance](/security/compliance/)** - Multi-cloud compliance
-- **[Examples: Global Data Pipeline](/examples/global-pipeline/)** - Real-world multi-cloud
-- **[Troubleshooting: Connections](/troubleshooting/connections/)** - Debug cross-cloud issues
+- **[Examples: Data Pipeline](/examples/data-pipeline/)** - Real-world multi-cloud
+- **[Troubleshooting: Common Issues](/troubleshooting/common-issues/)** - Debug cross-cloud issues
 
 ## Troubleshooting
 
