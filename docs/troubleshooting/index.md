@@ -320,7 +320,7 @@ Avoid common issues by following these practices:
 ### Production
 
 - **Health checks**: Implement readiness and liveness probes
-- **Monitoring**: Set up metrics and alerts (see [Monitoring Guide](../guides/monitoring.md))
+- **Monitoring**: Set up metrics and alerts (see [Monitoring Guide](/agentweave/guides/monitoring/))
 - **Log aggregation**: Send logs to centralized logging system
 - **Audit trails**: Enable audit logging for security events
 - **Graceful degradation**: Handle SPIRE/OPA failures appropriately

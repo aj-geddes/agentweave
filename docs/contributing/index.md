@@ -102,9 +102,9 @@ Join the conversation:
 ### 1. Read the Documentation
 
 Familiarize yourself with AgentWeave:
-- [Quickstart Guide](../getting-started/quickstart.md) - Build your first agent
-- [Core Concepts](../core-concepts/index.md) - Understand the architecture
-- [Security Model](../security/index.md) - Learn about security principles
+- [Quickstart Guide](/agentweave/getting-started/quickstart/) - Build your first agent
+- [Core Concepts](/agentweave/core-concepts/) - Understand the architecture
+- [Security Model](/agentweave/security/) - Learn about security principles
 - [Product Specification](../../spec.md) - Read the detailed spec
 
 ### 2. Set Up Your Development Environment
@@ -130,7 +130,7 @@ Comment on the issue to let others know you're working on it!
 Please adhere to:
 - **[Code of Conduct](code-of-conduct.md)** - Be respectful and inclusive
 - **[Development Guide](development.md)** - Follow coding standards and practices
-- **[Changelog](../changelog.md)** - See how we track changes
+- **[Changelog](/agentweave/changelog/)** - See how we track changes
 
 ### 5. Submit Your Contribution
 
@@ -169,4 +169,4 @@ Happy coding! 🚀
 **Next Steps:**
 - [Development Setup →](development.md)
 - [Code of Conduct →](code-of-conduct.md)
-- [View Changelog →](../changelog.md)
+- [View Changelog →](/agentweave/changelog/)

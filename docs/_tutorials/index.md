@@ -28,7 +28,7 @@ We recommend following the tutorials in order, but you can jump to specific topi
 
 Start here if you're new to AgentWeave or building AI agents.
 
-#### [Building Your First Agent](/tutorials/first-agent/)
+#### [Building Your First Agent](/agentweave/tutorials/first-agent/)
 **Time:** 30 minutes | **Level:** Beginner
 
 Build a complete, secure agent from scratch. Learn the fundamentals of agent configuration, capability definition, and secure communication.
@@ -36,7 +36,7 @@ Build a complete, secure agent from scratch. Learn the fundamentals of agent con
 **Prerequisites:**
 - AgentWeave SDK installed
 - Basic Python knowledge
-- SPIRE server running (see [Installation Guide](/getting-started/installation/))
+- SPIRE server running (see [Installation Guide](/agentweave/getting-started/installation/))
 
 **What you'll learn:**
 - Project structure for agents
@@ -49,7 +49,7 @@ Build a complete, secure agent from scratch. Learn the fundamentals of agent con
 
 Once you've built your first agent, these tutorials explore key AgentWeave features.
 
-#### [Agent-to-Agent Communication](/tutorials/agent-communication/)
+#### [Agent-to-Agent Communication](/agentweave/tutorials/agent-communication/)
 **Time:** 45 minutes | **Level:** Intermediate
 
 Build a two-agent system where agents communicate securely using the A2A protocol. Create an orchestrator agent that delegates work to a worker agent.
@@ -66,7 +66,7 @@ Build a two-agent system where agents communicate securely using the A2A protoco
 - Request/response patterns
 - Debugging agent communication
 
-#### [Writing OPA Policies](/tutorials/opa-policies/)
+#### [Writing OPA Policies](/agentweave/tutorials/opa-policies/)
 **Time:** 45 minutes | **Level:** Intermediate
 
 Master authorization by writing custom OPA policies in Rego. Learn to control who can call your agents and what they can do.
@@ -84,7 +84,7 @@ Master authorization by writing custom OPA policies in Rego. Learn to control wh
 - Integrating policies with agents
 - Best practices for policy design
 
-#### [Adding Observability](/tutorials/observability/)
+#### [Adding Observability](/agentweave/tutorials/observability/)
 **Time:** 30 minutes | **Level:** Intermediate
 
 Instrument your agents with metrics, tracing, and structured logging. Set up a complete observability stack for monitoring production agents.
@@ -106,7 +106,7 @@ Instrument your agents with metrics, tracing, and structured logging. Set up a c
 
 These tutorials cover production deployment scenarios and advanced architectures.
 
-#### [Deploying to Kubernetes](/tutorials/kubernetes-deployment/)
+#### [Deploying to Kubernetes](/agentweave/tutorials/kubernetes-deployment/)
 **Time:** 60 minutes | **Level:** Advanced
 
 Deploy agents to Kubernetes with SPIRE, OPA, and full observability. Learn production-ready configurations, health checks, and scaling strategies.
@@ -127,7 +127,7 @@ Deploy agents to Kubernetes with SPIRE, OPA, and full observability. Learn produ
 - Horizontal scaling
 - Production best practices
 
-#### [Cross-Cloud Agent Mesh](/tutorials/multi-cloud/)
+#### [Cross-Cloud Agent Mesh](/agentweave/tutorials/multi-cloud/)
 **Time:** 90 minutes | **Level:** Advanced
 
 Build a multi-cloud agent mesh spanning AWS, GCP, and Azure. Configure SPIFFE federation and optional Tailscale integration for seamless cross-cloud communication.
@@ -182,24 +182,24 @@ Build a multi-cloud agent mesh spanning AWS, GCP, and Azure. Configure SPIFFE fe
 
 If you get stuck:
 
-1. **Check the documentation** - Review [Core Concepts](/core-concepts/) and [API Reference](/api-reference/)
-2. **Review examples** - See working code in [Examples](/examples/)
-3. **Read troubleshooting** - Common issues in [Troubleshooting](/troubleshooting/)
+1. **Check the documentation** - Review [Core Concepts](/agentweave/core-concepts/) and [API Reference](/agentweave/api-reference/)
+2. **Review examples** - See working code in [Examples](/agentweave/examples/)
+3. **Read troubleshooting** - Common issues in [Troubleshooting](/agentweave/troubleshooting/)
 4. **Ask the community** - Post in [GitHub Discussions](https://github.com/aj-geddes/agentweave/discussions)
 5. **Report bugs** - File issues at [GitHub Issues](https://github.com/aj-geddes/agentweave/issues)
 
 ## Additional Resources
 
-- **[How-To Guides](/guides/)** - Task-oriented guides for specific features
-- **[Examples Gallery](/examples/)** - Complete working examples
-- **[API Reference](/api-reference/)** - Detailed API documentation
-- **[Configuration Reference](/api-reference/config/)** - All configuration options
+- **[How-To Guides](/agentweave/guides/)** - Task-oriented guides for specific features
+- **[Examples Gallery](/agentweave/examples/)** - Complete working examples
+- **[API Reference](/agentweave/api-reference/)** - Detailed API documentation
+- **[Configuration Reference](/agentweave/api-reference/config/)** - All configuration options
 
 ## What's Next?
 
-Ready to start? Jump into [Building Your First Agent](/tutorials/first-agent/) and create your first secure AI agent in 30 minutes!
+Ready to start? Jump into [Building Your First Agent](/agentweave/tutorials/first-agent/) and create your first secure AI agent in 30 minutes!
 
 Already experienced? Explore advanced topics:
-- [Multi-Agent Communication Patterns](/core-concepts/communication/)
-- [Advanced Authorization Policies](/guides/policy-patterns/)
-- [Production Operations](/guides/production-checklist/)
+- [Multi-Agent Communication Patterns](/agentweave/core-concepts/communication/)
+- [Advanced Authorization Policies](/agentweave/guides/policy-patterns/)
+- [Production Operations](/agentweave/guides/production-checklist/)

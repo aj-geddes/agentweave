@@ -1134,11 +1134,11 @@ kubectl apply -f network-policy.yaml
 
 - **[Helm Deployment](helm.md)** - Use Helm charts for templated deployments
 - **[Cloud-Specific Guides](aws.md)** - AWS, GCP, Azure deployments
-- **[Monitoring Setup](../guides/observability.md)** - Full observability stack
+- **[Monitoring Setup](/agentweave/guides/observability/)** - Full observability stack
 
 ---
 
 **Related Documentation**:
-- [Configuration Reference](../configuration.md)
-- [Security Best Practices](../security.md)
-- [High Availability Guide](../guides/ha.md)
+- [Configuration Reference](/agentweave/configuration/)
+- [Security Best Practices](/agentweave/security/)
+- [High Availability Guide](/agentweave/guides/ha/)

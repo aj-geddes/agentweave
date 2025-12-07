@@ -24,7 +24,7 @@ Before reaching out, try these steps:
 
 ### 1. Search Existing Resources
 
-- **[Documentation](../index.md)** - Comprehensive guides and references
+- **[Documentation](/agentweave/)** - Comprehensive guides and references
 - **[FAQ](faq.md)** - Frequently asked questions
 - **[Common Issues](common-issues.md)** - Quick solutions to known problems
 - **[GitHub Issues](https://github.com/aj-geddes/agentweave/issues)** - Known bugs and feature requests

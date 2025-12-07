@@ -25,7 +25,7 @@ By completing this tutorial, you will:
 ## Prerequisites
 
 Before starting, ensure you have:
-- **Completed** [Building Your First Agent](/tutorials/first-agent/)
+- **Completed** [Building Your First Agent](/agentweave/tutorials/first-agent/)
 - **SPIRE and OPA running** with proper configuration
 - **Basic networking knowledge** (ports, hosts, protocols)
 - **Two terminal windows** to run both agents simultaneously
@@ -835,10 +835,10 @@ You've successfully built a multi-agent system! You've learned:
 
 Continue learning:
 
-- **[Writing OPA Policies](/tutorials/opa-policies/)** - Master authorization
-- **[Adding Observability](/tutorials/observability/)** - Monitor distributed systems
-- **[How-To: Error Handling](/guides/error-handling/)** - Production error patterns
-- **[Examples: Multi-Agent](/examples/multi-agent/)** - Complex orchestration
+- **[Writing OPA Policies](/agentweave/tutorials/opa-policies/)** - Master authorization
+- **[Adding Observability](/agentweave/tutorials/observability/)** - Monitor distributed systems
+- **[How-To: Error Handling](/agentweave/guides/error-handling/)** - Production error patterns
+- **[Examples: Multi-Agent](/agentweave/examples/multi-agent/)** - Complex orchestration
 
 ## Troubleshooting
 
@@ -857,4 +857,4 @@ Continue learning:
 - Increase timeouts in `call_agent()`
 - Review worker performance/resource usage
 
-See [Troubleshooting: Common Issues](/troubleshooting/common-issues/) for more help.
+See [Troubleshooting: Common Issues](/agentweave/troubleshooting/common-issues/) for more help.

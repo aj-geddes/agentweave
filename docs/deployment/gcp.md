@@ -804,11 +804,11 @@ gcloud secrets get-iam-policy agentweave-api-key
 
 - **[Azure Deployment](azure.md)** - Deploy to Microsoft Azure
 - **[Hybrid Deployment](hybrid.md)** - Multi-cloud architecture
-- **[Monitoring Guide](../guides/observability.md)** - Advanced monitoring
+- **[Monitoring Guide](/agentweave/guides/observability/)** - Advanced monitoring
 
 ---
 
 **Related Documentation**:
 - [Kubernetes Deployment](kubernetes.md)
 - [Helm Charts](helm.md)
-- [Security Best Practices](../security.md)
+- [Security Best Practices](/agentweave/security/)

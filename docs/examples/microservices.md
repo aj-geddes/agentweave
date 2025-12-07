@@ -889,10 +889,10 @@ result = await self.call_agent(
 
 ## Next Steps
 
-- **Production Deployment**: See [Kubernetes Guide](/deployment/kubernetes/)
+- **Production Deployment**: See [Kubernetes Guide](/agentweave/deployment/kubernetes/)
 - **Advanced Patterns**: Saga pattern for distributed transactions
 - **Monitoring**: Set up Grafana dashboards for agent metrics
-- **Security**: Learn [Security Best Practices](/security/best-practices/)
+- **Security**: Learn [Security Best Practices](/agentweave/security/best-practices/)
 
 ---
 

@@ -128,8 +128,8 @@ Some examples have additional requirements (databases, message queues, etc.) doc
 ## Getting Help
 
 - **Example-specific questions**: Each example has a GitHub Discussions thread
-- **General AgentWeave questions**: [Main documentation](/getting-started/)
-- **Security concerns**: [Security guide](/security/)
+- **General AgentWeave questions**: [Main documentation](/agentweave/getting-started/)
+- **Security concerns**: [Security guide](/agentweave/security/)
 - **Compliance questions**: Consult with your compliance team
 
 ---

@@ -633,7 +633,7 @@ If you need help:
 
 - [Contributing Guide](index.md)
 - [Code of Conduct](code-of-conduct.md)
-- [Changelog](../changelog.md)
+- [Changelog](/agentweave/changelog/)
 - [Product Specification](../../spec.md)
 - [GitHub Repository](https://github.com/aj-geddes/agentweave)
 

@@ -901,7 +901,7 @@ Audit logging provides:
 
 ## Next Steps
 
-- Configure audit logging: See [Configuration Reference](../configuration/)
-- Set up monitoring: See [Observability Guide](../tutorials/observability/)
+- Configure audit logging: See [Configuration Reference](/agentweave/configuration/)
+- Set up monitoring: See [Observability Guide](/agentweave/tutorials/observability/)
 - Review compliance: See [Compliance](compliance/)
 - Understand threats: See [Threat Model](threat-model/)

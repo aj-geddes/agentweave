@@ -803,11 +803,11 @@ sudo chmod 666 /run/spire/sockets/agent.sock
 
 - **[Kubernetes Deployment](kubernetes.md)** - Scale to production with Kubernetes
 - **[Helm Charts](helm.md)** - Template-based deployments
-- **[Security Best Practices](../security.md)** - Harden your deployment
+- **[Security Best Practices](/agentweave/security/)** - Harden your deployment
 
 ---
 
 **Related Documentation**:
-- [Configuration Reference](../configuration.md)
-- [Observability Guide](../guides/observability.md)
-- [Development Workflow](../guides/development.md)
+- [Configuration Reference](/agentweave/configuration/)
+- [Observability Guide](/agentweave/guides/observability/)
+- [Development Workflow](/agentweave/guides/development/)

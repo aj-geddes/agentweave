@@ -881,8 +881,8 @@ ConnectionError: Cannot connect to OPA at http://localhost:8181
 
 Now that you understand authorization, see how agents communicate:
 
-- [A2A Protocol](/core-concepts/communication/): Agent-to-agent communication with A2A
-- [Security Model](/core-concepts/security-model/): How authorization fits into the overall security architecture
+- [A2A Protocol](/agentweave/core-concepts/communication/): Agent-to-agent communication with A2A
+- [Security Model](/agentweave/core-concepts/security-model/): How authorization fits into the overall security architecture
 
 {: .note }
 OPA is incredibly powerful. This guide covers AgentWeave integration. For advanced Rego features (comprehensions, recursion, external data), see the [OPA documentation](https://www.openpolicyagent.org/docs/).

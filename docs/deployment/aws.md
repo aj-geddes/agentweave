@@ -859,4 +859,4 @@ aws iam get-role-policy --role-name agentweave-agent-role --policy-name logs-pol
 **Related Documentation**:
 - [Kubernetes Deployment](kubernetes.md)
 - [Helm Charts](helm.md)
-- [Security Best Practices](../security.md)
+- [Security Best Practices](/agentweave/security/)

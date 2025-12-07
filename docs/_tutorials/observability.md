@@ -25,7 +25,7 @@ By completing this tutorial, you will:
 ## Prerequisites
 
 Before starting, ensure you have:
-- **Completed** [Building Your First Agent](/tutorials/first-agent/)
+- **Completed** [Building Your First Agent](/agentweave/tutorials/first-agent/)
 - **Docker or Kubernetes** for running observability tools
 - **Basic monitoring knowledge** (metrics, logs, traces)
 - **8GB RAM minimum** for running the observability stack
@@ -692,10 +692,10 @@ You've set up comprehensive observability! You've learned:
 
 Continue learning:
 
-- **[Deploying to Kubernetes](/tutorials/kubernetes-deployment/)** - Production deployment
-- **[Tutorial: Observability](/tutorials/observability/)** - Advanced monitoring patterns
-- **[Security: Audit Logging](/security/audit-logging/)** - Compliance and audit trails
-- **[How-To: Performance](/guides/performance/)** - Debug performance issues
+- **[Deploying to Kubernetes](/agentweave/tutorials/kubernetes-deployment/)** - Production deployment
+- **[Tutorial: Observability](/agentweave/tutorials/observability/)** - Advanced monitoring patterns
+- **[Security: Audit Logging](/agentweave/security/audit-logging/)** - Compliance and audit trails
+- **[How-To: Performance](/agentweave/guides/performance/)** - Debug performance issues
 
 ## Troubleshooting
 
@@ -716,4 +716,4 @@ Continue learning:
 - Use histograms for latency, not separate metrics per request
 - Review label usage
 
-See [Troubleshooting Guide](/troubleshooting/) for more help.
+See [Troubleshooting Guide](/agentweave/troubleshooting/) for more help.

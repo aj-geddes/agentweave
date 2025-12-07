@@ -987,5 +987,5 @@ externalSecrets:
 
 **Related Documentation**:
 - [Kubernetes Deployment](kubernetes.md)
-- [Configuration Reference](../configuration.md)
-- [Operations Guide](../guides/operations.md)
+- [Configuration Reference](/agentweave/configuration/)
+- [Operations Guide](/agentweave/guides/operations/)

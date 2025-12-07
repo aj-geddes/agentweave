@@ -241,4 +241,4 @@ AgentWeave is built on industry-standard security technologies:
 - Review [Best Practices](best-practices/) for operational security
 - Check [Compliance](compliance/) for your regulatory requirements
 - Set up [Audit Logging](audit-logging/) for security monitoring
-- See the main [Security Guide](../security.md) for deployment details
+- See the main [Security Guide](/agentweave/security/) for deployment details

@@ -1000,10 +1000,10 @@ You've deployed AgentWeave to Kubernetes! You've learned:
 
 ## What's Next?
 
-- **[Cross-Cloud Agent Mesh](/tutorials/multi-cloud/)** - Multi-cloud deployment
-- **[How-To: Production Checklist](/guides/production-checklist/)** - Day 2 operations
+- **[Cross-Cloud Agent Mesh](/agentweave/tutorials/multi-cloud/)** - Multi-cloud deployment
+- **[How-To: Production Checklist](/agentweave/guides/production-checklist/)** - Day 2 operations
 - **[Security: Best Practices](/security/best-practices/)** - Production security
-- **[Examples Gallery](/examples/)** - Build operators
+- **[Examples Gallery](/agentweave/examples/)** - Build operators
 
 ## Troubleshooting
 
@@ -1021,4 +1021,4 @@ You've deployed AgentWeave to Kubernetes! You've learned:
 - Verify certificates from SPIRE are valid
 - Test health endpoint manually
 
-See [Troubleshooting Guide](/troubleshooting/) for more help.
+See [Troubleshooting Guide](/agentweave/troubleshooting/) for more help.

@@ -750,11 +750,11 @@ Congratulations! You've built a complete multi-agent system with:
 
 ### Go Deeper
 
-- **[Configuration Reference](../configuration.md)** - All config options explained
-- **[Security Guide](../security.md)** - Production hardening checklist
-- **[A2A Protocol](../a2a-protocol.md)** - Deep dive into communication
-- **[Deployment Guide](../deployment/kubernetes.md)** - Deploy to Kubernetes
-- **[Testing Guide](../testing/unit-tests.md)** - Write tests for your agents
+- **[Configuration Reference](/agentweave/configuration/)** - All config options explained
+- **[Security Guide](/agentweave/security/)** - Production hardening checklist
+- **[A2A Protocol](/agentweave/a2a-protocol/)** - Deep dive into communication
+- **[Deployment Guide](/agentweave/deployment/kubernetes/)** - Deploy to Kubernetes
+- **[Testing Guide](/agentweave/testing/unit-tests/)** - Write tests for your agents
 
 ### Explore Examples
 
@@ -765,4 +765,4 @@ Congratulations! You've built a complete multi-agent system with:
 
 ---
 
-**Previous**: [← Core Concepts](concepts.md) | **Next**: [Configuration Reference →](../configuration.md)
+**Previous**: [← Core Concepts](concepts.md) | **Next**: [Configuration Reference →](/agentweave/configuration/)

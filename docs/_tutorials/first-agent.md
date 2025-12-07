@@ -24,7 +24,7 @@ By completing this tutorial, you will:
 ## Prerequisites
 
 Before starting, ensure you have:
-- **AgentWeave SDK installed** - See [Installation Guide](/getting-started/installation/)
+- **AgentWeave SDK installed** - See [Installation Guide](/agentweave/getting-started/installation/)
 - **SPIRE server running** - For cryptographic identity
 - **OPA running** - For authorization (optional for this tutorial)
 - **Python 3.9+** installed
@@ -206,7 +206,7 @@ This Rego policy:
 3. **Allows specific math operations** if the caller has a valid identity
 
 {: .tip }
-> OPA policies use the Rego language. Don't worry if it looks unfamiliar - we'll cover policies in depth in the [Writing OPA Policies](/tutorials/opa-policies/) tutorial.
+> OPA policies use the Rego language. Don't worry if it looks unfamiliar - we'll cover policies in depth in the [Writing OPA Policies](/agentweave/tutorials/opa-policies/) tutorial.
 
 ## Step 4: Implement the Agent
 
@@ -629,10 +629,10 @@ Try these exercises to deepen your understanding:
 
 Now that you've built a basic agent, explore:
 
-- **[Agent-to-Agent Communication](/tutorials/agent-communication/)** - Build multi-agent systems
-- **[Writing OPA Policies](/tutorials/opa-policies/)** - Master authorization
-- **[How-To: Custom Tools](/api-reference/decorators/)** - Give your agent advanced capabilities
-- **[Examples Gallery](/examples/)** - See real-world agents
+- **[Agent-to-Agent Communication](/agentweave/tutorials/agent-communication/)** - Build multi-agent systems
+- **[Writing OPA Policies](/agentweave/tutorials/opa-policies/)** - Master authorization
+- **[How-To: Custom Tools](/agentweave/api-reference/decorators/)** - Give your agent advanced capabilities
+- **[Examples Gallery](/agentweave/examples/)** - See real-world agents
 
 ## Troubleshooting
 
@@ -651,4 +651,4 @@ Now that you've built a basic agent, explore:
 - Change `server.port` in config
 - Or stop the other agent
 
-See the [Troubleshooting Guide](/troubleshooting/) for more help.
+See the [Troubleshooting Guide](/agentweave/troubleshooting/) for more help.

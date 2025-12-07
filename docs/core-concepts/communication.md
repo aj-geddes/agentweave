@@ -870,8 +870,8 @@ async def aggregate(self, sources: list[str]) -> TaskResult:
 
 Now that you understand A2A communication, see how it all fits together:
 
-- [Security Model](/core-concepts/security-model/): How A2A, identity, and authorization work together for zero-trust
-- [System Architecture](/core-concepts/architecture/): See the complete request flow with all layers
+- [Security Model](/agentweave/core-concepts/security-model/): How A2A, identity, and authorization work together for zero-trust
+- [System Architecture](/agentweave/core-concepts/architecture/): See the complete request flow with all layers
 
 {: .note }
 The A2A protocol specification is evolving. AgentWeave tracks the latest spec and provides backward compatibility when possible.

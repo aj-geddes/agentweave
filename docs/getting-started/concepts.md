@@ -394,9 +394,9 @@ Use case: Multi-cloud, B2B integration, hybrid deployments
 Now that you understand the core concepts:
 
 - **[Hello World Tutorial](hello-world.md)** - Build a complete agent with explanations
-- **[Configuration Reference](../configuration.md)** - Deep dive into config options
-- **[Security Guide](../security.md)** - Production hardening best practices
-- **[A2A Protocol](../a2a-protocol.md)** - Detailed protocol specification
+- **[Configuration Reference](/agentweave/configuration/)** - Deep dive into config options
+- **[Security Guide](/agentweave/security/)** - Production hardening best practices
+- **[A2A Protocol](/agentweave/a2a-protocol/)** - Detailed protocol specification
 
 ---
 

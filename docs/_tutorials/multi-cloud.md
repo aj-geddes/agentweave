@@ -25,7 +25,7 @@ By completing this tutorial, you will:
 ## Prerequisites
 
 Before starting, ensure you have:
-- **Completed** [Deploying to Kubernetes](/tutorials/kubernetes-deployment/)
+- **Completed** [Deploying to Kubernetes](/agentweave/tutorials/kubernetes-deployment/)
 - **Access to multiple cloud providers** (AWS, GCP, Azure)
 - **Cloud CLI tools installed** (aws-cli, gcloud, az)
 - **Advanced Kubernetes knowledge**
@@ -793,10 +793,10 @@ You've built a cross-cloud agent mesh! You've learned:
 
 ## What's Next?
 
-- **[Tutorial: Multi-Cloud](/tutorials/multi-cloud/)** - Advanced patterns
-- **[Security: Compliance](/security/compliance/)** - Multi-cloud compliance
-- **[Examples: Data Pipeline](/examples/data-pipeline/)** - Real-world multi-cloud
-- **[Troubleshooting: Common Issues](/troubleshooting/common-issues/)** - Debug cross-cloud issues
+- **[Tutorial: Multi-Cloud](/agentweave/tutorials/multi-cloud/)** - Advanced patterns
+- **[Security: Compliance](/agentweave/security/compliance/)** - Multi-cloud compliance
+- **[Examples: Data Pipeline](/agentweave/examples/data-pipeline/)** - Real-world multi-cloud
+- **[Troubleshooting: Common Issues](/agentweave/troubleshooting/common-issues/)** - Debug cross-cloud issues
 
 ## Troubleshooting
 
@@ -818,4 +818,4 @@ You've built a cross-cloud agent mesh! You've learned:
 - Deploy agents closer to users
 - Use async patterns where possible
 
-See [Troubleshooting Guide](/troubleshooting/) for more help.
+See [Troubleshooting Guide](/agentweave/troubleshooting/) for more help.

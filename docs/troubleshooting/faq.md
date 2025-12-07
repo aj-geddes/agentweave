@@ -85,7 +85,7 @@ AgentWeave enforces security by default:
 - No security bypasses possible
 - Comprehensive audit logging
 
-See [Security Guide](../security.md) for production deployment guidelines.
+See [Security Guide](/agentweave/security/) for production deployment guidelines.
 
 ### How does AgentWeave compare to other agent frameworks?
 
@@ -468,7 +468,7 @@ curl -X DELETE http://localhost:8181/v1/policies/authz-v1
 
 ### What's the threat model?
 
-See [Security Guide - Threat Model](../security/threat-model.md) for full details.
+See [Security Guide - Threat Model](/agentweave/security/threat-model/) for full details.
 
 **Protected against:**
 - Man-in-the-middle attacks (mTLS)
@@ -534,7 +534,7 @@ agentweave_opa_errors_total
 https://grafana.com/grafana/dashboards/agentweave
 ```
 
-See [Observability Tutorial](/tutorials/observability/) for details.
+See [Observability Tutorial](/agentweave/tutorials/observability/) for details.
 
 ### How do I scale agents?
 
@@ -615,7 +615,7 @@ histogram_quantile(0.99,
 ) > 1
 ```
 
-See [Observability Tutorial](/tutorials/observability/) for complete alert rules.
+See [Observability Tutorial](/agentweave/tutorials/observability/) for complete alert rules.
 
 ### How do I upgrade agents?
 
@@ -698,7 +698,7 @@ secrets = AWSSecretsProvider(region="us-east-1")
 api_key = await secrets.get_secret("openai-api-key")
 ```
 
-See [Identity Providers Guide](/guides/identity-providers/) for details.
+See [Identity Providers Guide](/agentweave/guides/identity-providers/) for details.
 
 ---
 
@@ -800,7 +800,7 @@ curl -X POST https://agent:8443/a2a/v1/tasks \
 - Java: AWS Bedrock AgentCore
 - TypeScript: Community implementation
 
-See [A2A Protocol](../a2a-protocol.md) for spec.
+See [A2A Protocol](/agentweave/a2a-protocol/) for spec.
 
 ---
 
@@ -809,4 +809,4 @@ See [A2A Protocol](../a2a-protocol.md) for spec.
 - **[Common Issues](common-issues.md)** - Quick solutions
 - **[Debugging Guide](debugging.md)** - Deep troubleshooting
 - **[Support](support.md)** - Get help
-- **[Security Guide](../security.md)** - Production security
+- **[Security Guide](/agentweave/security/)** - Production security

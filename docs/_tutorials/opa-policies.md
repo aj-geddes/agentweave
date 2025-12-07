@@ -25,7 +25,7 @@ By completing this tutorial, you will:
 ## Prerequisites
 
 Before starting, ensure you have:
-- **Completed** [Building Your First Agent](/tutorials/first-agent/)
+- **Completed** [Building Your First Agent](/agentweave/tutorials/first-agent/)
 - **OPA installed** - Download from [openpolicyagent.org](https://www.openpolicyagent.org/docs/latest/#running-opa)
 - **Basic understanding** of authorization concepts (allow/deny, identity, permissions)
 - **JSON knowledge** - Rego works with JSON data
@@ -899,9 +899,9 @@ You've mastered OPA policy writing! You've learned:
 
 Continue learning:
 
-- **[Adding Observability](/tutorials/observability/)** - Monitor policy decisions
-- **[How-To: Policy Patterns](/guides/policy-patterns/)** - Advanced patterns
-- **[Security Best Practices](/security/best-practices/)** - Production security
+- **[Adding Observability](/agentweave/tutorials/observability/)** - Monitor policy decisions
+- **[How-To: Policy Patterns](/agentweave/guides/policy-patterns/)** - Advanced patterns
+- **[Security Best Practices](/agentweave/security/best-practices/)** - Production security
 - **[OPA Documentation](https://www.openpolicyagent.org/docs/)** - Official OPA docs
 
 ## Troubleshooting
@@ -924,4 +924,4 @@ Continue learning:
 - Profile policies with `opa test --bench`
 - Consider caching in external systems
 
-See [Troubleshooting Guide](/troubleshooting/) for more help.
+See [Troubleshooting Guide](/agentweave/troubleshooting/) for more help.

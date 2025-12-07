@@ -868,4 +868,4 @@ resources:
 - Review [Threat Model](threat-model/) to understand what you're protecting against
 - Set up [Audit Logging](audit-logging/) for security monitoring
 - Check [Compliance](compliance/) for regulatory requirements
-- See main [Security Guide](../security.md) for deployment details
+- See main [Security Guide](/agentweave/security/) for deployment details

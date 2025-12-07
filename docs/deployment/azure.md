@@ -808,12 +808,12 @@ az keyvault secret show \
 ## Next Steps
 
 - **[Hybrid Deployment](hybrid.md)** - Multi-cloud architecture
-- **[Monitoring Guide](../guides/observability.md)** - Advanced monitoring
-- **[High Availability](../guides/ha.md)** - HA configuration
+- **[Monitoring Guide](/agentweave/guides/observability/)** - Advanced monitoring
+- **[High Availability](/agentweave/guides/ha/)** - HA configuration
 
 ---
 
 **Related Documentation**:
 - [Kubernetes Deployment](kubernetes.md)
 - [Helm Charts](helm.md)
-- [Security Best Practices](../security.md)
+- [Security Best Practices](/agentweave/security/)

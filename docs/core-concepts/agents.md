@@ -737,9 +737,9 @@ async def search(self, query: str, max_results: int = 10) -> TaskResult:
 
 Now that you understand agents, explore the security layers:
 
-- [Identity & SPIFFE](/core-concepts/identity/): How agents get cryptographic identity
-- [Authorization & OPA](/core-concepts/authorization/): How agents enforce access control
-- [A2A Protocol](/core-concepts/communication/): How agents communicate with each other
+- [Identity & SPIFFE](/agentweave/core-concepts/identity/): How agents get cryptographic identity
+- [Authorization & OPA](/agentweave/core-concepts/authorization/): How agents enforce access control
+- [A2A Protocol](/agentweave/core-concepts/communication/): How agents communicate with each other
 
 {: .note }
 The agent abstraction is designed to feel like writing a regular Python class. The SDK handles all security concerns automatically, letting you focus on business logic.

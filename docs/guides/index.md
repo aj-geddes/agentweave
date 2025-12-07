@@ -64,9 +64,9 @@ How-To Guides are **task-oriented** documentation that help you solve specific p
 ## Before You Start
 
 Make sure you've completed:
-1. [Installation](/getting-started/installation/) - AgentWeave SDK installed
-2. [5-Minute Quickstart](/getting-started/quickstart/) - Built your first agent
-3. [Core Concepts](/core-concepts/) - Understand identity, authorization, and A2A protocol
+1. [Installation](/agentweave/getting-started/installation/) - AgentWeave SDK installed
+2. [5-Minute Quickstart](/agentweave/getting-started/quickstart/) - Built your first agent
+3. [Core Concepts](/agentweave/core-concepts/) - Understand identity, authorization, and A2A protocol
 
 ## Contributing
 
@@ -78,10 +78,10 @@ Found a problem not covered here? Want to add a guide? We welcome contributions:
 
 ## Related Documentation
 
-- [Tutorials](/tutorials/) - Step-by-step learning guides
-- [API Reference](/api-reference/) - Detailed API documentation
-- [Examples](/examples/) - Complete example applications
-- [Core Concepts](/core-concepts/) - Conceptual explanations
+- [Tutorials](/agentweave/tutorials/) - Step-by-step learning guides
+- [API Reference](/agentweave/api-reference/) - Detailed API documentation
+- [Examples](/agentweave/examples/) - Complete example applications
+- [Core Concepts](/agentweave/core-concepts/) - Conceptual explanations
 
 ---
 

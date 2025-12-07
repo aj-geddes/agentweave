@@ -377,13 +377,13 @@ kubectl logs -l app=spire-agent | grep attestation
 ## Next Steps
 
 1. Choose your deployment environment from the guides above
-2. Review [Security Best Practices](../security.md)
-3. Set up [Monitoring and Observability](../guides/observability.md)
-4. Plan your [High Availability](../guides/ha.md) strategy
+2. Review [Security Best Practices](../security/)
+3. Set up [Monitoring and Observability](/agentweave/guides/observability/)
+4. Plan your [High Availability](/agentweave/guides/ha/) strategy
 
 ---
 
 **Related Documentation**:
-- [Configuration Reference](../configuration.md)
-- [Security Guide](../security.md)
-- [Operations Guide](../guides/operations.md)
+- [Configuration Reference](/agentweave/configuration/)
+- [Security Guide](../security/)
+- [Operations Guide](/agentweave/guides/operations/)

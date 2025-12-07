@@ -240,7 +240,7 @@ You've just run your first secure agent! Here's where to go next:
 ### Learn More
 - **[Core Concepts](concepts.md)** - Understand SPIFFE, A2A, and the security model
 - **[Hello World Tutorial](hello-world.md)** - Build a complete multi-agent system
-- **[Configuration Reference](../configuration.md)** - Detailed config options
+- **[Configuration Reference](/agentweave/configuration/)** - Detailed config options
 
 ### Try Examples
 - **Multi-agent orchestration** - See `examples/orchestrator/`
@@ -248,9 +248,9 @@ You've just run your first secure agent! Here's where to go next:
 - **LLM integration** - See `examples/llm_agent/`
 
 ### Production Readiness
-- **[Security Guide](../security.md)** - Harden for production
-- **[Deployment](../deployment/kubernetes.md)** - Deploy to Kubernetes
-- **[Monitoring](../observability/metrics.md)** - Set up metrics and tracing
+- **[Security Guide](/agentweave/security/)** - Harden for production
+- **[Deployment](/agentweave/deployment/kubernetes/)** - Deploy to Kubernetes
+- **[Monitoring](/agentweave/observability/metrics/)** - Set up metrics and tracing
 
 ## Common Issues
 

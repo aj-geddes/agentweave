@@ -153,5 +153,5 @@ See [Contributing Guide](https://github.com/aj-geddes/agentweave/blob/main/CONTR
 
 **Next Steps:**
 - Start with [Simple Agent](simple-agent/) to learn the basics
-- Review [Core Concepts](/core-concepts/) for deeper understanding
+- Review [Core Concepts](/agentweave/core-concepts/) for deeper understanding
 - Check out [Real-World Examples](real-world/) for production patterns

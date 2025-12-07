@@ -706,10 +706,10 @@ Secure the underlying infrastructure:
 
 You now understand AgentWeave's security model. To see it in action:
 
-- [System Architecture](/core-concepts/architecture/): See how security layers fit into the overall architecture
-- [Identity & SPIFFE](/core-concepts/identity/): Deep dive into Layer 1 (Identity)
-- [Authorization & OPA](/core-concepts/authorization/): Deep dive into Layer 3 (Authorization)
-- [A2A Protocol](/core-concepts/communication/): How security is enforced during agent calls
+- [System Architecture](/agentweave/core-concepts/architecture/): See how security layers fit into the overall architecture
+- [Identity & SPIFFE](/agentweave/core-concepts/identity/): Deep dive into Layer 1 (Identity)
+- [Authorization & OPA](/agentweave/core-concepts/authorization/): Deep dive into Layer 3 (Authorization)
+- [A2A Protocol](/agentweave/core-concepts/communication/): How security is enforced during agent calls
 
 {: .note }
 Security is a journey, not a destination. AgentWeave provides a strong foundation, but security requires ongoing vigilance, monitoring, and updates. Stay informed about security advisories and keep your dependencies updated.

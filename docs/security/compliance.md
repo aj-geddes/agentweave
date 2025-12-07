@@ -756,7 +756,7 @@ When preparing for compliance audits, collect:
 - Review [Best Practices](best-practices/) for operational security
 - Set up [Audit Logging](audit-logging/) for evidence collection
 - See [Threat Model](threat-model/) for risk assessment
-- Read main [Security Guide](../security.md) for implementation details
+- Read main [Security Guide](/agentweave/security/) for implementation details
 
 ## References
 

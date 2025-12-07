@@ -895,9 +895,9 @@ networking:
 
 ## Next Steps
 
-- **[Operations Guide](../guides/operations.md)** - Day-2 operations
-- **[High Availability](../guides/ha.md)** - HA best practices
-- **[Disaster Recovery](../guides/disaster-recovery.md)** - DR planning
+- **[Operations Guide](/agentweave/guides/operations/)** - Day-2 operations
+- **[High Availability](/agentweave/guides/ha/)** - HA best practices
+- **[Disaster Recovery](/agentweave/guides/disaster-recovery/)** - DR planning
 
 ---
 
@@ -905,4 +905,4 @@ networking:
 - [AWS Deployment](aws.md)
 - [GCP Deployment](gcp.md)
 - [Azure Deployment](azure.md)
-- [Security Best Practices](../security.md)
+- [Security Best Practices](/agentweave/security/)
