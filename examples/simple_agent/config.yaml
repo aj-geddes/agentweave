@@ -1,0 +1,58 @@
+# AgentWeave Configuration - Simple Echo Agent
+# This is the minimal configuration needed to run a secure agent
+
+agent:
+  name: "echo-agent"
+  trust_domain: "hvs.solutions"
+  description: "Simple echo agent for demonstration"
+  capabilities:
+    - name: "echo"
+      description: "Echo back a message"
+      input_modes: ["application/json"]
+      output_modes: ["application/json"]
+
+identity:
+  provider: "spiffe"
+  # Auto-detects from SPIFFE_ENDPOINT_SOCKET env var
+  # Default: unix:///run/spire/sockets/agent.sock
+  spiffe_endpoint: "unix:///run/spire/sockets/agent.sock"
+  allowed_trust_domains:
+    - "hvs.solutions"
+
+authorization:
+  provider: "opa"
+  opa_endpoint: "http://localhost:8181"
+  policy_path: "hvs/authz"
+  default_action: "deny"
+  audit:
+    enabled: true
+    destination: "stdout"
+
+transport:
+  tls_min_version: "1.3"
+  peer_verification: "strict"
+  connection_pool:
+    max_connections: 50
+    idle_timeout_seconds: 60
+  circuit_breaker:
+    failure_threshold: 5
+    recovery_timeout_seconds: 30
+  retry:
+    max_attempts: 3
+    backoff_base_seconds: 1.0
+    backoff_max_seconds: 30.0
+
+server:
+  host: "0.0.0.0"
+  port: 8443
+  protocol: "a2a"
+
+observability:
+  metrics:
+    enabled: true
+    port: 9090
+  tracing:
+    enabled: false
+  logging:
+    level: "INFO"
+    format: "json"

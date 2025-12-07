@@ -1,0 +1,326 @@
+# Docker Compose Development Stack
+# AgentWeave SDK - Complete local development environment
+#
+# This stack provides:
+# - SPIRE server and agent for workload identity
+# - OPA server for policy enforcement
+# - Example agent containers
+# - Proper volume mounts and networking
+#
+# Usage:
+#   docker-compose up -d          # Start all services
+#   docker-compose logs -f        # View logs
+#   docker-compose down           # Stop all services
+#   docker-compose down -v        # Stop and remove volumes
+
+version: '3.8'
+
+networks:
+  agentweave-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+volumes:
+  spire-server-data:
+  spire-agent-socket:
+  opa-data:
+
+services:
+  # SPIRE Server
+  # Manages workload identities and issues SVIDs
+  spire-server:
+    image: ghcr.io/spiffe/spire-server:1.9.0
+    hostname: spire-server
+    container_name: agentweave-spire-server
+    networks:
+      agentweave-network:
+        ipv4_address: 172.28.0.10
+    ports:
+      - "8081:8081"  # SPIRE server API
+      - "8080:8080"  # Health checks
+    volumes:
+      - spire-server-data:/opt/spire/data
+      - ./config/spire/server.conf:/opt/spire/conf/server.conf:ro
+    command: ["-config", "/opt/spire/conf/server.conf"]
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  # SPIRE Agent
+  # Runs on each node/container to provide Workload API
+  spire-agent:
+    image: ghcr.io/spiffe/spire-agent:1.9.0
+    hostname: spire-agent
+    container_name: agentweave-spire-agent
+    networks:
+      agentweave-network:
+        ipv4_address: 172.28.0.11
+    depends_on:
+      spire-server:
+        condition: service_healthy
+    volumes:
+      - spire-agent-socket:/run/spire/sockets
+      - ./config/spire/agent.conf:/opt/spire/conf/agent.conf:ro
+    command: ["-config", "/opt/spire/conf/agent.conf"]
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+
+  # OPA Server
+  # Policy engine for authorization decisions
+  opa:
+    image: openpolicyagent/opa:0.62.0
+    hostname: opa
+    container_name: agentweave-opa
+    networks:
+      agentweave-network:
+        ipv4_address: 172.28.0.20
+    ports:
+      - "8181:8181"  # OPA API
+    volumes:
+      - opa-data:/data
+      - ./config/opa/policies:/policies:ro
+      - ./config/opa/config.yaml:/config.yaml:ro
+    command:
+      - "run"
+      - "--server"
+      - "--addr=0.0.0.0:8181"
+      - "--config-file=/config.yaml"
+      - "--log-level=info"
+      - "--log-format=json"
+      - "/policies"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8181/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  # OPA Bundle Server
+  # Serves policy bundles for distribution
+  opa-bundle-server:
+    image: nginx:alpine
+    hostname: opa-bundle-server
+    container_name: agentweave-opa-bundle-server
+    networks:
+      agentweave-network:
+        ipv4_address: 172.28.0.21
+    ports:
+      - "8888:80"
+    volumes:
+      - ./config/opa/bundles:/usr/share/nginx/html/bundles:ro
+      - ./config/opa/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+
+  # Example Search Agent
+  # Demonstrates agent deployment with SPIRE + OPA
+  agent-search:
+    image: agentweave/search-agent:latest
+    build:
+      context: ../examples/search-agent
+      dockerfile: Dockerfile
+    hostname: agent-search
+    container_name: agentweave-agent-search
+    networks:
+      agentweave-network:
+        ipv4_address: 172.28.0.100
+    depends_on:
+      spire-agent:
+        condition: service_healthy
+      opa:
+        condition: service_healthy
+    ports:
+      - "8443:8443"  # Agent HTTPS
+      - "9090:9090"  # Metrics
+    environment:
+      # SPIRE configuration
+      - SPIFFE_ENDPOINT_SOCKET=unix:///run/spire/sockets/agent.sock
+      - AGENTWEAVE_SPIFFE_ID=spiffe://hvs.solutions/agent/search/dev
+
+      # OPA configuration
+      - OPA_ENDPOINT=http://opa:8181
+
+      # Agent configuration
+      - AGENTWEAVE_CONFIG_PATH=/etc/agentweave/config.yaml
+      - AGENTWEAVE_LOG_LEVEL=INFO
+      - AGENTWEAVE_LOG_FORMAT=json
+
+      # Environment
+      - AGENTWEAVE_ENVIRONMENT=dev
+    volumes:
+      - spire-agent-socket:/run/spire/sockets:ro
+      - ./config/agents/search-agent.yaml:/etc/agentweave/config.yaml:ro
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "--no-check-certificate", "https://localhost:8443/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  # Example Processor Agent
+  # Processes data from search agent
+  agent-processor:
+    image: agentweave/processor-agent:latest
+    build:
+      context: ../examples/processor-agent
+      dockerfile: Dockerfile
+    hostname: agent-processor
+    container_name: agentweave-agent-processor
+    networks:
+      agentweave-network:
+        ipv4_address: 172.28.0.101
+    depends_on:
+      spire-agent:
+        condition: service_healthy
+      opa:
+        condition: service_healthy
+    ports:
+      - "8444:8443"  # Agent HTTPS
+      - "9091:9090"  # Metrics
+    environment:
+      - SPIFFE_ENDPOINT_SOCKET=unix:///run/spire/sockets/agent.sock
+      - AGENTWEAVE_SPIFFE_ID=spiffe://hvs.solutions/agent/processor/dev
+      - OPA_ENDPOINT=http://opa:8181
+      - AGENTWEAVE_CONFIG_PATH=/etc/agentweave/config.yaml
+      - AGENTWEAVE_LOG_LEVEL=INFO
+      - AGENTWEAVE_LOG_FORMAT=json
+      - AGENTWEAVE_ENVIRONMENT=dev
+    volumes:
+      - spire-agent-socket:/run/spire/sockets:ro
+      - ./config/agents/processor-agent.yaml:/etc/agentweave/config.yaml:ro
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "--no-check-certificate", "https://localhost:8443/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  # Example Orchestrator Agent
+  # Coordinates search and processor agents
+  agent-orchestrator:
+    image: agentweave/orchestrator-agent:latest
+    build:
+      context: ../examples/orchestrator-agent
+      dockerfile: Dockerfile
+    hostname: agent-orchestrator
+    container_name: agentweave-agent-orchestrator
+    networks:
+      agentweave-network:
+        ipv4_address: 172.28.0.102
+    depends_on:
+      spire-agent:
+        condition: service_healthy
+      opa:
+        condition: service_healthy
+      agent-search:
+        condition: service_healthy
+      agent-processor:
+        condition: service_healthy
+    ports:
+      - "8445:8443"  # Agent HTTPS
+      - "9092:9090"  # Metrics
+    environment:
+      - SPIFFE_ENDPOINT_SOCKET=unix:///run/spire/sockets/agent.sock
+      - AGENTWEAVE_SPIFFE_ID=spiffe://hvs.solutions/agent/orchestrator/dev
+      - OPA_ENDPOINT=http://opa:8181
+      - AGENTWEAVE_CONFIG_PATH=/etc/agentweave/config.yaml
+      - AGENTWEAVE_LOG_LEVEL=INFO
+      - AGENTWEAVE_LOG_FORMAT=json
+      - AGENTWEAVE_ENVIRONMENT=dev
+
+      # Other agent endpoints
+      - AGENTWEAVE_SEARCH_AGENT=https://agent-search:8443
+      - AGENTWEAVE_PROCESSOR_AGENT=https://agent-processor:8443
+    volumes:
+      - spire-agent-socket:/run/spire/sockets:ro
+      - ./config/agents/orchestrator-agent.yaml:/etc/agentweave/config.yaml:ro
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "--no-check-certificate", "https://localhost:8443/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  # Prometheus for metrics collection (optional)
+  prometheus:
+    image: prom/prometheus:latest
+    hostname: prometheus
+    container_name: agentweave-prometheus
+    networks:
+      agentweave-network:
+        ipv4_address: 172.28.0.30
+    ports:
+      - "9093:9090"
+    volumes:
+      - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    restart: unless-stopped
+
+  # Grafana for visualization (optional)
+  grafana:
+    image: grafana/grafana:latest
+    hostname: grafana
+    container_name: agentweave-grafana
+    networks:
+      agentweave-network:
+        ipv4_address: 172.28.0.31
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=admin
+    volumes:
+      - ./config/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./config/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+  # SPIRE Registration Helper
+  # Registers agents with SPIRE server on startup
+  spire-registration:
+    image: ghcr.io/spiffe/spire-server:1.9.0
+    container_name: agentweave-spire-registration
+    networks:
+      - agentweave-network
+    depends_on:
+      spire-server:
+        condition: service_healthy
+    volumes:
+      - spire-server-data:/opt/spire/data
+      - ./scripts/register-agents.sh:/scripts/register-agents.sh:ro
+    command: ["/bin/sh", "/scripts/register-agents.sh"]
+    restart: "no"
+
+# Configuration file locations:
+# - ./config/spire/server.conf - SPIRE server configuration
+# - ./config/spire/agent.conf - SPIRE agent configuration
+# - ./config/opa/policies/ - OPA policy files (.rego)
+# - ./config/opa/config.yaml - OPA runtime configuration
+# - ./config/agents/*.yaml - Agent-specific configurations
+# - ./scripts/register-agents.sh - SPIRE registration script
+#
+# To create these config files, see the examples in /deploy/kubernetes/base/

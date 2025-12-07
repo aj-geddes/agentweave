@@ -1,0 +1,95 @@
+{{- if .Values.networkPolicy.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "agentweave.fullname" . }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "agentweave.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "agentweave.selectorLabels" . | nindent 6 }}
+  policyTypes:
+    - Ingress
+    - Egress
+
+  ingress:
+    {{- if .Values.networkPolicy.ingress.fromAgents }}
+    # Allow connections from other agents (mTLS enforced at application level)
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/component: agent
+      ports:
+        - protocol: TCP
+          port: {{ .Values.server.port }}
+    {{- end }}
+
+    {{- if .Values.networkPolicy.ingress.fromMonitoring }}
+    # Allow Prometheus scraping
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              {{- toYaml .Values.networkPolicy.ingress.monitoringNamespaceSelector | nindent 14 }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.observability.metrics.port }}
+    {{- end }}
+
+  egress:
+    {{- if .Values.networkPolicy.egress.toAgents }}
+    # Allow connections to other agents
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/component: agent
+      ports:
+        - protocol: TCP
+          port: {{ .Values.server.port }}
+    {{- end }}
+
+    {{- if .Values.networkPolicy.egress.toSpireServer }}
+    # Allow SPIRE server communication
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: spire-server
+      ports:
+        - protocol: TCP
+          port: 8081
+    {{- end }}
+
+    {{- if .Values.networkPolicy.egress.toOpaBundle }}
+    # Allow OPA bundle server
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: opa-bundle-server
+      ports:
+        - protocol: TCP
+          port: 8080
+    {{- end }}
+
+    {{- if .Values.networkPolicy.egress.toOtelCollector }}
+    # Allow OpenTelemetry collector
+    - to:
+        - podSelector:
+            matchLabels:
+              {{- toYaml .Values.networkPolicy.egress.otelCollectorSelector | nindent 14 }}
+      ports:
+        - protocol: TCP
+          port: 4317
+    {{- end }}
+
+    {{- if .Values.networkPolicy.egress.allowDNS }}
+    # Allow DNS
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: kube-system
+      ports:
+        - protocol: UDP
+          port: 53
+    {{- end }}
+{{- end }}

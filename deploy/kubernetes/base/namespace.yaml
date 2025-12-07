@@ -1,0 +1,65 @@
+---
+# AgentWeave SDK - Namespace Configuration
+# This namespace isolates all AgentWeave agents and their infrastructure components
+# including SPIRE server, SPIRE agents, and OPA sidecars
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: agentweave
+  labels:
+    app.kubernetes.io/name: agentweave
+    app.kubernetes.io/part-of: agentweave-sdk
+    app.kubernetes.io/managed-by: kubectl
+    security.istio.io/tlsMode: strict
+  annotations:
+    description: "AgentWeave SDK - Multi-agent namespace with SPIFFE/SPIRE identity"
+
+---
+# Network policy to restrict external access by default
+# Agents can only communicate within the namespace and with SPIRE server
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-external
+  namespace: agentweave
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+  # Allow DNS queries
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: kube-system
+      ports:
+        - protocol: UDP
+          port: 53
+
+---
+# Allow ingress from other agents in the namespace
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-agent-to-agent
+  namespace: agentweave
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: agent
+  policyTypes:
+    - Ingress
+  ingress:
+    # Allow communication from other agents on agent port
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              app.kubernetes.io/name: agentweave
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/component: agent
+      ports:
+        - protocol: TCP
+          port: 8443

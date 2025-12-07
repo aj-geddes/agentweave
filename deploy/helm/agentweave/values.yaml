@@ -1,0 +1,416 @@
+# Default values for AgentWeave SDK
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Global settings
+global:
+  # Trust domain for SPIFFE identities
+  # This should match your SPIRE server configuration
+  trustDomain: "hvs.solutions"
+
+  # Namespace where agents will be deployed
+  namespace: "agentweave"
+
+  # Image pull secrets for private registries
+  imagePullSecrets: []
+  # - name: regcred
+
+# Agent configuration
+agent:
+  # Agent name - must be unique within the trust domain
+  # This becomes part of the SPIFFE ID: spiffe://{trustDomain}/agent/{name}/{environment}
+  name: "example-agent"
+
+  # Environment (dev, staging, prod)
+  environment: "prod"
+
+  # Agent description
+  description: "Example AgentWeave Agent"
+
+  # Agent capabilities (A2A protocol)
+  capabilities:
+    - name: "example_capability"
+      description: "Example capability"
+      inputModes:
+        - "application/json"
+      outputModes:
+        - "application/json"
+
+  # Additional labels for all resources
+  labels: {}
+
+  # Additional annotations for all resources
+  annotations: {}
+
+# Container image configuration
+image:
+  # Image repository
+  repository: agentweave/agent
+
+  # Image pull policy
+  pullPolicy: IfNotPresent
+
+  # Image tag (defaults to chart appVersion if not specified)
+  tag: ""
+
+# Deployment configuration
+replicaCount: 2
+
+# Service account configuration
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+
+  # Annotations to add to the service account
+  annotations: {}
+
+  # The name of the service account to use
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# SPIFFE/SPIRE configuration
+spiffe:
+  # Enable SPIFFE identity
+  enabled: true
+
+  # SPIRE agent socket path
+  # This is mounted from the host where SPIRE agent DaemonSet runs
+  socketPath: "/run/spire/sockets/agent.sock"
+
+  # SPIFFE endpoint socket URI
+  endpointSocket: "unix:///run/spire/sockets/agent.sock"
+
+  # Allowed trust domains for federation
+  allowedTrustDomains:
+    - "hvs.solutions"
+
+  # SPIRE registration entry selectors
+  # These are used to create the SPIRE entry for this agent
+  selectors:
+    k8s:
+      namespace: true
+      serviceAccount: true
+      podLabel: {}
+      # Example: podLabel:
+      #   app.kubernetes.io/name: "{{ .Values.agent.name }}"
+
+# OPA (Open Policy Agent) sidecar configuration
+opa:
+  # Enable OPA sidecar
+  enabled: true
+
+  # OPA image configuration
+  image:
+    repository: openpolicyagent/opa
+    tag: "0.62.0"
+    pullPolicy: IfNotPresent
+
+  # OPA endpoint (localhost for sidecar)
+  endpoint: "http://localhost:8181"
+
+  # OPA policy path
+  policyPath: "hvs/authz"
+
+  # Default action (deny or log-only for debugging)
+  defaultAction: "deny"
+
+  # OPA bundle server configuration
+  bundleServer:
+    enabled: true
+    url: "http://opa-bundle-server:8080"
+
+  # Resource limits for OPA sidecar
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "50m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+
+# Transport/Communication configuration
+transport:
+  # TLS minimum version (1.2 or 1.3)
+  tlsMinVersion: "1.3"
+
+  # Peer verification mode (strict, log-only)
+  # NEVER use 'none' - it's not allowed by the SDK
+  peerVerification: "strict"
+
+  # Connection pool settings
+  connectionPool:
+    maxConnections: 100
+    idleTimeoutSeconds: 60
+
+  # Circuit breaker configuration
+  circuitBreaker:
+    failureThreshold: 5
+    recoveryTimeoutSeconds: 30
+
+  # Retry configuration
+  retry:
+    maxAttempts: 3
+    backoffBaseSeconds: 1.0
+    backoffMaxSeconds: 30.0
+
+# Server configuration
+server:
+  # Host to bind to
+  host: "0.0.0.0"
+
+  # Port for agent communication
+  port: 8443
+
+  # Protocol (a2a or grpc)
+  protocol: "a2a"
+
+# Service configuration
+service:
+  # Service type
+  type: ClusterIP
+
+  # Service port
+  port: 8443
+
+  # Additional ports
+  # metrics:
+  #   port: 9090
+
+  # Service annotations
+  annotations: {}
+
+  # Service labels
+  labels: {}
+
+# Observability configuration
+observability:
+  # Metrics configuration
+  metrics:
+    enabled: true
+    port: 9090
+
+    # Prometheus annotations
+    prometheus:
+      scrape: true
+      path: "/metrics"
+
+  # Tracing configuration
+  tracing:
+    enabled: true
+    exporter: "otlp"
+    endpoint: "http://otel-collector:4317"
+
+  # Logging configuration
+  logging:
+    level: "INFO"
+    format: "json"
+
+# Authorization configuration
+authorization:
+  # Enable audit logging
+  audit:
+    enabled: true
+    destination: "stdout"
+
+# Resource limits and requests
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "100m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+# Autoscaling configuration
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+  # Scale down behavior
+  scaleDown:
+    stabilizationWindowSeconds: 300
+    policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+
+  # Scale up behavior
+  scaleUp:
+    stabilizationWindowSeconds: 60
+    policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 30
+
+# Pod Disruption Budget
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+  # maxUnavailable: 1
+
+# Pod security context
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+  seccompProfile:
+    type: RuntimeDefault
+
+# Container security context
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+
+# Node selector
+nodeSelector: {}
+
+# Tolerations
+tolerations: []
+
+# Affinity and anti-affinity
+affinity:
+  # Pod anti-affinity to spread replicas across nodes
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - "{{ include \"agentweave.name\" . }}"
+          topologyKey: kubernetes.io/hostname
+
+# Network policy configuration
+networkPolicy:
+  enabled: true
+
+  # Ingress rules
+  ingress:
+    # Allow from other agents
+    fromAgents: true
+
+    # Allow from monitoring (Prometheus)
+    fromMonitoring: true
+    monitoringNamespaceSelector:
+      name: monitoring
+
+  # Egress rules
+  egress:
+    # Allow to other agents
+    toAgents: true
+
+    # Allow to SPIRE server
+    toSpireServer: true
+
+    # Allow to OPA bundle server
+    toOpaBundle: true
+
+    # Allow to OpenTelemetry collector
+    toOtelCollector: true
+    otelCollectorSelector:
+      app.kubernetes.io/name: otel-collector
+
+    # Allow DNS
+    allowDNS: true
+
+# Health check configuration
+healthChecks:
+  liveness:
+    enabled: true
+    path: "/health/live"
+    scheme: HTTPS
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+  readiness:
+    enabled: true
+    path: "/health/ready"
+    scheme: HTTPS
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3
+
+# Init containers
+initContainers:
+  # Wait for SPIRE agent socket
+  waitForSpire:
+    enabled: true
+    image:
+      repository: busybox
+      tag: latest
+      pullPolicy: IfNotPresent
+
+# Extra environment variables
+extraEnv: []
+# - name: CUSTOM_VAR
+#   value: "custom-value"
+
+# Extra environment variables from secrets/configmaps
+extraEnvFrom: []
+# - secretRef:
+#     name: agent-secrets
+# - configMapRef:
+#     name: agent-config
+
+# Extra volumes
+extraVolumes: []
+# - name: custom-volume
+#   emptyDir: {}
+
+# Extra volume mounts
+extraVolumeMounts: []
+# - name: custom-volume
+#   mountPath: /custom/path
+
+# ConfigMap for agent configuration
+config:
+  # Create ConfigMap
+  create: true
+
+  # ConfigMap name (generated if not specified)
+  name: ""
+
+  # Additional configuration data
+  data: {}
+
+# SPIRE registration entry
+spireRegistration:
+  # Automatically create SPIRE registration entry
+  # This creates a Job that registers the agent with SPIRE server
+  enabled: true
+
+  # Parent SPIFFE ID (usually the Kubernetes node)
+  parentID: "spiffe://hvs.solutions/k8s-node"
+
+  # TTL for the SVID (default: 1 hour)
+  svid_ttl: "1h"
+
+  # DNS names to include in the SVID
+  dnsNames: []
+
+  # Federated trust bundles
+  federatesWith: []
+  # - "partner.example.com"
+
+# Development/debugging options
+debug:
+  # Enable debug mode
+  enabled: false
+
+  # Log level override
+  logLevel: "DEBUG"
+
+  # Disable peer verification (WARNING: insecure, dev only)
+  # The SDK will reject this in production
+  disablePeerVerification: false

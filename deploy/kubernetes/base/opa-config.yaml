@@ -1,0 +1,340 @@
+---
+# OPA (Open Policy Agent) Configuration
+# Provides policy-based authorization for agent-to-agent communication
+# Each agent pod runs an OPA sidecar for local policy enforcement
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opa-default-policies
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: opa
+    app.kubernetes.io/component: authorization
+data:
+  # Default authorization policy
+  # Implements SPIFFE-based identity verification and action authorization
+  authz.rego: |
+    package hvs.authz
+
+    import rego.v1
+
+    # Default deny - security first
+    default allow := false
+    default reason := "No matching policy rule"
+
+    # Allow agents within the same trust domain to communicate
+    allow if {
+      same_trust_domain
+      valid_action
+    }
+
+    # Allow explicitly federated trust domains
+    allow if {
+      federated_trust_domain
+      valid_action
+    }
+
+    # Check if caller and callee share the same trust domain
+    same_trust_domain if {
+      caller_domain := extract_trust_domain(input.caller_spiffe_id)
+      callee_domain := extract_trust_domain(input.callee_spiffe_id)
+      caller_domain == callee_domain
+      caller_domain == data.config.trust_domain
+    }
+
+    # Check if caller is from an allowed federated domain
+    federated_trust_domain if {
+      caller_domain := extract_trust_domain(input.caller_spiffe_id)
+      caller_domain in data.config.federated_domains
+    }
+
+    # Validate the requested action is allowed
+    valid_action if {
+      # Extract agent name from callee SPIFFE ID
+      callee_parts := split(input.callee_spiffe_id, "/")
+      agent_name := callee_parts[count(callee_parts) - 2]
+
+      # Check if action is in allowed list for this agent
+      input.action in data.allowed_actions[agent_name]
+    }
+
+    # Extract trust domain from SPIFFE ID
+    # Example: spiffe://hvs.solutions/agent/search -> hvs.solutions
+    extract_trust_domain(spiffe_id) := domain if {
+      startswith(spiffe_id, "spiffe://")
+      parts := split(spiffe_id, "/")
+      domain := parts[2]
+    }
+
+    # Provide detailed reason for debugging
+    reason := msg if {
+      not same_trust_domain
+      not federated_trust_domain
+      msg := sprintf("Trust domain mismatch or not federated: caller=%v", [input.caller_spiffe_id])
+    } else := msg if {
+      not valid_action
+      msg := sprintf("Action '%v' not allowed for callee=%v", [input.action, input.callee_spiffe_id])
+    }
+
+  # OPA configuration for runtime behavior
+  config.yaml: |
+    services:
+      - name: bundle-server
+        url: http://opa-bundle-server:8080
+
+    bundles:
+      hvs-policies:
+        service: bundle-server
+        resource: bundles/hvs-policies.tar.gz
+        persist: true
+        polling:
+          min_delay_seconds: 60
+          max_delay_seconds: 120
+
+    decision_logs:
+      console: true
+      reporting:
+        min_delay_seconds: 300
+        max_delay_seconds: 600
+
+    status:
+      console: true
+
+    # Default decision for authz queries
+    default_decision: /hvs/authz/allow
+
+  # Default configuration data
+  # This is loaded into OPA's data.config namespace
+  config-data.json: |
+    {
+      "config": {
+        "trust_domain": "hvs.solutions",
+        "federated_domains": [
+          "partner.example.com"
+        ],
+        "default_action": "deny"
+      },
+      "allowed_actions": {
+        "search": ["search", "query", "discover"],
+        "processor": ["process", "transform", "validate"],
+        "orchestrator": ["orchestrate", "coordinate", "manage"],
+        "storage": ["store", "retrieve", "delete"]
+      }
+    }
+
+  # Example of agent-specific policy
+  # Override default behavior for specific agents
+  agent-overrides.rego: |
+    package hvs.authz.overrides
+
+    import rego.v1
+
+    # Allow orchestrator to call any agent
+    allow if {
+      input.caller_spiffe_id == "spiffe://hvs.solutions/agent/orchestrator/prod"
+      startswith(input.callee_spiffe_id, "spiffe://hvs.solutions/agent/")
+    }
+
+    # Restrict sensitive operations to specific callers
+    deny if {
+      input.action == "delete"
+      not input.caller_spiffe_id in data.admin_agents
+    }
+
+---
+# OPA Bundle Server
+# Serves policy bundles to OPA sidecars for consistent policy distribution
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opa-bundle-server-config
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: opa-bundle-server
+data:
+  # Simple HTTP server configuration for bundle distribution
+  bundles.json: |
+    {
+      "bundles": {
+        "hvs-policies": {
+          "revision": "v1.0.0"
+        }
+      }
+    }
+
+---
+# Service for OPA bundle distribution
+apiVersion: v1
+kind: Service
+metadata:
+  name: opa-bundle-server
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: opa-bundle-server
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: opa-bundle-server
+
+---
+# OPA Bundle Server Deployment
+# Centralized policy distribution point
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opa-bundle-server
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: opa-bundle-server
+    app.kubernetes.io/component: authorization
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: opa-bundle-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: opa-bundle-server
+        app.kubernetes.io/component: authorization
+    spec:
+      containers:
+        - name: bundle-server
+          image: nginx:alpine
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: bundles
+              mountPath: /usr/share/nginx/html/bundles
+              readOnly: true
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
+              readOnly: true
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+      volumes:
+        - name: bundles
+          configMap:
+            name: opa-default-policies
+        - name: nginx-config
+          configMap:
+            name: opa-bundle-server-nginx
+
+---
+# Nginx configuration for bundle server
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opa-bundle-server-nginx
+  namespace: agentweave
+data:
+  default.conf: |
+    server {
+        listen 8080;
+        server_name _;
+
+        location /bundles/ {
+            root /usr/share/nginx/html;
+            autoindex on;
+
+            # Enable CORS for OPA clients
+            add_header Access-Control-Allow-Origin *;
+            add_header Access-Control-Allow-Methods "GET, OPTIONS";
+            add_header Access-Control-Allow-Headers "Content-Type";
+        }
+
+        location /health {
+            access_log off;
+            return 200 "healthy\n";
+            add_header Content-Type text/plain;
+        }
+    }
+
+---
+# Policy enforcement audit log aggregation
+# Collects OPA decision logs for security monitoring
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opa-audit-config
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: opa-audit
+data:
+  fluent-bit.conf: |
+    [SERVICE]
+        Flush        5
+        Daemon       Off
+        Log_Level    info
+
+    [INPUT]
+        Name              tail
+        Path              /var/log/opa/decisions.log
+        Parser            json
+        Tag               opa.decisions
+        Refresh_Interval  5
+
+    [OUTPUT]
+        Name   stdout
+        Match  opa.decisions
+        Format json_lines
+
+    # Configure additional outputs for your logging backend:
+    # - Elasticsearch
+    # - CloudWatch
+    # - Stackdriver
+    # - Splunk
+
+---
+# Network policy for OPA components
+# Restrict OPA sidecar communication
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: opa-policy
+  namespace: agentweave
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: opa-sidecar
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    # Allow queries from agent containers in same pod
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/component: agent
+      ports:
+        - protocol: TCP
+          port: 8181
+  egress:
+    # Allow OPA to fetch bundles
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: opa-bundle-server
+      ports:
+        - protocol: TCP
+          port: 8080
+    # Allow DNS
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: kube-system
+      ports:
+        - protocol: UDP
+          port: 53

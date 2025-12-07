@@ -1,0 +1,74 @@
+{{- if .Values.config.create }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "agentweave.configMapName" . }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "agentweave.labels" . | nindent 4 }}
+data:
+  config.yaml: |
+    # HVS Secure Agent Configuration
+    # Generated from Helm chart values
+
+    agent:
+      name: "{{ .Values.agent.name }}"
+      trust_domain: "{{ .Values.global.trustDomain }}"
+      description: "{{ .Values.agent.description }}"
+      capabilities:
+        {{- toYaml .Values.agent.capabilities | nindent 8 }}
+
+    identity:
+      provider: "{{ .Values.spiffe.enabled | ternary "spiffe" "mtls-static" }}"
+      {{- if .Values.spiffe.enabled }}
+      spiffe_endpoint: "{{ .Values.spiffe.endpointSocket }}"
+      allowed_trust_domains:
+        {{- toYaml .Values.spiffe.allowedTrustDomains | nindent 8 }}
+      {{- end }}
+
+    authorization:
+      provider: "{{ .Values.opa.enabled | ternary "opa" "allow-all" }}"
+      {{- if .Values.opa.enabled }}
+      opa_endpoint: "{{ .Values.opa.endpoint }}"
+      policy_path: "{{ .Values.opa.policyPath }}"
+      default_action: "{{ .Values.opa.defaultAction }}"
+      {{- end }}
+      audit:
+        enabled: {{ .Values.authorization.audit.enabled }}
+        destination: "{{ .Values.authorization.audit.destination }}"
+
+    transport:
+      tls_min_version: "{{ .Values.transport.tlsMinVersion }}"
+      peer_verification: "{{ .Values.transport.peerVerification }}"
+      connection_pool:
+        max_connections: {{ .Values.transport.connectionPool.maxConnections }}
+        idle_timeout_seconds: {{ .Values.transport.connectionPool.idleTimeoutSeconds }}
+      circuit_breaker:
+        failure_threshold: {{ .Values.transport.circuitBreaker.failureThreshold }}
+        recovery_timeout_seconds: {{ .Values.transport.circuitBreaker.recoveryTimeoutSeconds }}
+      retry:
+        max_attempts: {{ .Values.transport.retry.maxAttempts }}
+        backoff_base_seconds: {{ .Values.transport.retry.backoffBaseSeconds }}
+        backoff_max_seconds: {{ .Values.transport.retry.backoffMaxSeconds }}
+
+    server:
+      host: "{{ .Values.server.host }}"
+      port: {{ .Values.server.port }}
+      protocol: "{{ .Values.server.protocol }}"
+
+    observability:
+      metrics:
+        enabled: {{ .Values.observability.metrics.enabled }}
+        port: {{ .Values.observability.metrics.port }}
+      tracing:
+        enabled: {{ .Values.observability.tracing.enabled }}
+        exporter: "{{ .Values.observability.tracing.exporter }}"
+        endpoint: "{{ .Values.observability.tracing.endpoint }}"
+      logging:
+        level: "{{ .Values.observability.logging.level }}"
+        format: "{{ .Values.observability.logging.format }}"
+
+  {{- with .Values.config.data }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+{{- end }}

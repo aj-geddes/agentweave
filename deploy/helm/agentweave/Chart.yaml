@@ -1,0 +1,97 @@
+apiVersion: v2
+name: agentweave
+description: |
+  Helm chart for deploying AgentWeave SDK agents with SPIFFE/SPIRE identity
+  and OPA policy enforcement. This chart provides a complete security stack for
+  building secure, multi-agent AI systems.
+
+# Chart type: application (default)
+type: application
+
+# Chart version - increment when making changes to the chart
+version: 1.0.0
+
+# Application version - the version of the AgentWeave SDK being deployed
+appVersion: "1.0.0"
+
+# Keywords for chart discovery
+keywords:
+  - agentweave
+  - agent
+  - spiffe
+  - spire
+  - opa
+  - security
+  - ai
+  - multi-agent
+  - a2a
+
+# Chart maintainers
+maintainers:
+  - name: High Velocity Solutions
+    email: support@hvs.solutions
+    url: https://hvs.solutions
+
+# Links and documentation
+home: https://github.com/hvs-solutions/hvs-agent-pathfinder
+sources:
+  - https://github.com/hvs-solutions/hvs-agent-pathfinder
+  - https://github.com/spiffe/spire
+  - https://github.com/open-policy-agent/opa
+
+# Icon for the chart (optional)
+# icon: https://hvs.solutions/images/hvs-agent-icon.svg
+
+# Dependencies
+# Uncomment if you want to bundle SPIRE and OPA as dependencies
+# dependencies:
+#   - name: spire
+#     version: "0.1.0"
+#     repository: "https://spiffe.github.io/helm-charts-hardened/"
+#     condition: spire.enabled
+#   - name: opa
+#     version: "0.14.0"
+#     repository: "https://open-policy-agent.github.io/helm-charts"
+#     condition: opa.enabled
+
+# Annotations for additional metadata
+annotations:
+  # Category for artifact hub
+  category: Security
+
+  # License
+  licenses: Apache-2.0
+
+  # Images used by this chart (for security scanning)
+  images: |
+    - name: agentweave-agent
+      image: agentweave/agent:1.0.0
+    - name: opa
+      image: openpolicyagent/opa:0.62.0
+
+  # Changelog
+  artifacthub.io/changes: |
+    - kind: added
+      description: Initial release of AgentWeave Helm chart
+    - kind: added
+      description: SPIFFE/SPIRE integration for workload identity
+    - kind: added
+      description: OPA sidecar for policy enforcement
+    - kind: added
+      description: Network policies for secure communication
+    - kind: added
+      description: Horizontal Pod Autoscaler support
+    - kind: added
+      description: Pod Disruption Budget for high availability
+
+  # Security and compliance
+  artifacthub.io/containsSecurityUpdates: "true"
+  artifacthub.io/prerelease: "false"
+
+  # Operator information
+  artifacthub.io/operator: "false"
+
+  # Recommendations
+  artifacthub.io/recommendations: |
+    - url: https://artifacthub.io/packages/helm/spiffe/spire
+    - url: https://artifacthub.io/packages/helm/opa/opa

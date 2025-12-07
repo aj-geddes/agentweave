@@ -1,0 +1,290 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "agentweave.fullname" . }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "agentweave.labels" . | nindent 4 }}
+    app.kubernetes.io/component: agent
+    {{- with .Values.agent.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.agent.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "agentweave.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "agentweave.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: agent
+        {{- if .Values.opa.enabled }}
+        opa-sidecar: "true"
+        {{- end }}
+        {{- with .Values.agent.labels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- if .Values.observability.metrics.enabled }}
+        prometheus.io/scrape: "{{ .Values.observability.metrics.prometheus.scrape }}"
+        prometheus.io/port: "{{ .Values.observability.metrics.port }}"
+        prometheus.io/path: "{{ .Values.observability.metrics.prometheus.path }}"
+        {{- end }}
+        {{- with .Values.agent.annotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "agentweave.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
+      {{- if .Values.initContainers.waitForSpire.enabled }}
+      initContainers:
+        - name: wait-for-spire
+          image: "{{ .Values.initContainers.waitForSpire.image.repository }}:{{ .Values.initContainers.waitForSpire.image.tag }}"
+          imagePullPolicy: {{ .Values.initContainers.waitForSpire.image.pullPolicy }}
+          command:
+            - sh
+            - -c
+            - |
+              echo "Waiting for SPIRE agent socket..."
+              while [ ! -S {{ .Values.spiffe.socketPath }} ]; do
+                sleep 1
+              done
+              echo "SPIRE agent socket is ready"
+          volumeMounts:
+            - name: spire-agent-socket
+              mountPath: /run/spire/sockets
+              readOnly: true
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+      {{- end }}
+
+      containers:
+        # Main agent container
+        - name: agent
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          ports:
+            - name: https
+              containerPort: {{ .Values.server.port }}
+              protocol: TCP
+            {{- if .Values.observability.metrics.enabled }}
+            - name: metrics
+              containerPort: {{ .Values.observability.metrics.port }}
+              protocol: TCP
+            {{- end }}
+
+          env:
+            # SPIFFE configuration
+            {{- if .Values.spiffe.enabled }}
+            - name: SPIFFE_ENDPOINT_SOCKET
+              value: "{{ .Values.spiffe.endpointSocket }}"
+            {{- end }}
+
+            # OPA configuration
+            {{- if .Values.opa.enabled }}
+            - name: OPA_ENDPOINT
+              value: "{{ .Values.opa.endpoint }}"
+            {{- end }}
+
+            # Agent configuration
+            - name: AGENTWEAVE_CONFIG_PATH
+              value: "/etc/agentweave/config.yaml"
+
+            # Kubernetes metadata
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+
+            {{- if .Values.debug.enabled }}
+            - name: AGENTWEAVE_DEBUG
+              value: "true"
+            - name: AGENTWEAVE_LOG_LEVEL
+              value: "{{ .Values.debug.logLevel }}"
+            {{- end }}
+
+            {{- with .Values.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+
+          {{- with .Values.extraEnvFrom }}
+          envFrom:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+
+          volumeMounts:
+            # SPIRE agent socket
+            {{- if .Values.spiffe.enabled }}
+            - name: spire-agent-socket
+              mountPath: /run/spire/sockets
+              readOnly: true
+            {{- end }}
+
+            # Agent configuration
+            - name: agent-config
+              mountPath: /etc/agentweave
+              readOnly: true
+
+            # Temporary directory
+            - name: tmp
+              mountPath: /tmp
+
+            {{- with .Values.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
+          {{- if .Values.healthChecks.liveness.enabled }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.healthChecks.liveness.path }}
+              port: {{ .Values.server.port }}
+              scheme: {{ .Values.healthChecks.liveness.scheme }}
+            initialDelaySeconds: {{ .Values.healthChecks.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.healthChecks.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.healthChecks.liveness.timeoutSeconds }}
+            failureThreshold: {{ .Values.healthChecks.liveness.failureThreshold }}
+          {{- end }}
+
+          {{- if .Values.healthChecks.readiness.enabled }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.healthChecks.readiness.path }}
+              port: {{ .Values.server.port }}
+              scheme: {{ .Values.healthChecks.readiness.scheme }}
+            initialDelaySeconds: {{ .Values.healthChecks.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.healthChecks.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.healthChecks.readiness.timeoutSeconds }}
+            failureThreshold: {{ .Values.healthChecks.readiness.failureThreshold }}
+          {{- end }}
+
+        {{- if .Values.opa.enabled }}
+        # OPA sidecar
+        - name: opa
+          image: "{{ .Values.opa.image.repository }}:{{ .Values.opa.image.tag }}"
+          imagePullPolicy: {{ .Values.opa.image.pullPolicy }}
+
+          args:
+            - "run"
+            - "--server"
+            - "--addr=0.0.0.0:8181"
+            - "--config-file=/etc/opa/config.yaml"
+            - "--log-level={{ .Values.observability.logging.level | lower }}"
+            - "--log-format={{ .Values.observability.logging.format }}"
+            - "/etc/opa/policies"
+
+          ports:
+            - name: http
+              containerPort: 8181
+              protocol: TCP
+
+          volumeMounts:
+            - name: opa-policies
+              mountPath: /etc/opa/policies
+              readOnly: true
+            - name: opa-config
+              mountPath: /etc/opa
+              readOnly: true
+
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+
+          resources:
+            {{- toYaml .Values.opa.resources | nindent 12 }}
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8181
+            initialDelaySeconds: 15
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /health?bundle=true
+              port: 8181
+            initialDelaySeconds: 5
+            periodSeconds: 5
+        {{- end }}
+
+      volumes:
+        # SPIRE agent socket
+        {{- if .Values.spiffe.enabled }}
+        - name: spire-agent-socket
+          hostPath:
+            path: {{ .Values.spiffe.socketPath }}
+            type: Directory
+        {{- end }}
+
+        # Agent configuration
+        - name: agent-config
+          configMap:
+            name: {{ include "agentweave.configMapName" . }}
+
+        {{- if .Values.opa.enabled }}
+        # OPA policies
+        - name: opa-policies
+          configMap:
+            name: opa-default-policies
+
+        # OPA configuration
+        - name: opa-config
+          configMap:
+            name: opa-default-policies
+            items:
+              - key: config.yaml
+                path: config.yaml
+              - key: config-data.json
+                path: config-data.json
+        {{- end }}
+
+        # Temporary directory
+        - name: tmp
+          emptyDir: {}
+
+        {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

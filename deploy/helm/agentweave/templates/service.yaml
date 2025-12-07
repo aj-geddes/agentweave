@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "agentweave.fullname" . }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "agentweave.labels" . | nindent 4 }}
+    {{- with .Values.service.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    # Expose SPIFFE ID for service discovery
+    spiffe.io/service-id: "spiffe://{{ .Values.global.trustDomain }}/agent/{{ .Values.agent.name }}/{{ .Values.agent.environment }}"
+    {{- with .Values.service.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: https
+      port: {{ .Values.service.port }}
+      protocol: TCP
+      targetPort: https
+    {{- if .Values.observability.metrics.enabled }}
+    - name: metrics
+      port: {{ .Values.observability.metrics.port }}
+      protocol: TCP
+      targetPort: metrics
+    {{- end }}
+  selector:
+    {{- include "agentweave.selectorLabels" . | nindent 4 }}

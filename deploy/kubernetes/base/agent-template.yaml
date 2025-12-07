@@ -1,0 +1,507 @@
+---
+# AgentWeave Agent Deployment Template
+# This is a reference template for deploying agents with full security stack
+# Customize this for each agent type (search, processor, orchestrator, etc.)
+
+# Service Account for the agent
+# Used for Kubernetes RBAC and SPIRE workload attestation
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: agentweave-example
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: agentweave-example
+    app.kubernetes.io/component: agent
+  annotations:
+    description: "Service account for example AgentWeave agent"
+
+---
+# Agent configuration
+# Mounted as a volume in the agent container
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: agentweave-example-config
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: agentweave-example
+    app.kubernetes.io/component: agent
+data:
+  config.yaml: |
+    # AgentWeave Agent Configuration
+    agent:
+      name: "example-agent"
+      trust_domain: "hvs.solutions"
+      description: "Example agent demonstrating AgentWeave SDK deployment"
+      capabilities:
+        - name: "example_capability"
+          description: "Example capability"
+          input_modes: ["application/json"]
+          output_modes: ["application/json"]
+
+    identity:
+      provider: "spiffe"
+      spiffe_endpoint: "unix:///run/spire/sockets/agent.sock"
+      allowed_trust_domains:
+        - "hvs.solutions"
+
+    authorization:
+      provider: "opa"
+      opa_endpoint: "http://localhost:8181"
+      policy_path: "hvs/authz"
+      default_action: "deny"
+      audit:
+        enabled: true
+        destination: "stdout"
+
+    transport:
+      tls_min_version: "1.3"
+      peer_verification: "strict"
+      connection_pool:
+        max_connections: 100
+        idle_timeout_seconds: 60
+      circuit_breaker:
+        failure_threshold: 5
+        recovery_timeout_seconds: 30
+      retry:
+        max_attempts: 3
+        backoff_base_seconds: 1.0
+        backoff_max_seconds: 30.0
+
+    server:
+      host: "0.0.0.0"
+      port: 8443
+      protocol: "a2a"
+
+    observability:
+      metrics:
+        enabled: true
+        port: 9090
+      tracing:
+        enabled: true
+        exporter: "otlp"
+        endpoint: "http://otel-collector:4317"
+      logging:
+        level: "INFO"
+        format: "json"
+
+---
+# Agent Service
+# Exposes the agent for agent-to-agent communication
+apiVersion: v1
+kind: Service
+metadata:
+  name: agentweave-example
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: agentweave-example
+    app.kubernetes.io/component: agent
+  annotations:
+    # Expose SPIFFE ID as service annotation for discovery
+    spiffe.io/service-id: "spiffe://hvs.solutions/agent/example/prod"
+spec:
+  type: ClusterIP
+  ports:
+    - name: https
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: 9090
+  selector:
+    app.kubernetes.io/name: agentweave-example
+    app.kubernetes.io/component: agent
+
+---
+# Agent Deployment
+# Multi-container pod with agent, OPA sidecar, and SPIRE agent socket mount
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agentweave-example
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: agentweave-example
+    app.kubernetes.io/component: agent
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: agentweave-example
+      app.kubernetes.io/component: agent
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: agentweave-example
+        app.kubernetes.io/component: agent
+        app.kubernetes.io/version: "1.0.0"
+        # Label for OPA sidecar network policy
+        opa-sidecar: "true"
+      annotations:
+        # Prometheus scrape annotations
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: agentweave-example
+
+      # Security context for the pod
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+
+      # Init container to verify SPIRE agent socket is available
+      initContainers:
+        - name: wait-for-spire
+          image: busybox:latest
+          command:
+            - sh
+            - -c
+            - |
+              echo "Waiting for SPIRE agent socket..."
+              while [ ! -S /run/spire/sockets/agent.sock ]; do
+                sleep 1
+              done
+              echo "SPIRE agent socket is ready"
+          volumeMounts:
+            - name: spire-agent-socket
+              mountPath: /run/spire/sockets
+              readOnly: true
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+
+      containers:
+        # Main agent container
+        - name: agent
+          image: agentweave/example-agent:1.0.0
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - name: https
+              containerPort: 8443
+              protocol: TCP
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+
+          env:
+            # SPIRE configuration
+            - name: SPIFFE_ENDPOINT_SOCKET
+              value: "unix:///run/spire/sockets/agent.sock"
+
+            # OPA configuration
+            - name: OPA_ENDPOINT
+              value: "http://localhost:8181"
+
+            # Agent configuration
+            - name: AGENTWEAVE_CONFIG_PATH
+              value: "/etc/agentweave/config.yaml"
+
+            # Kubernetes metadata
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+
+          volumeMounts:
+            # SPIRE agent socket (read-only)
+            - name: spire-agent-socket
+              mountPath: /run/spire/sockets
+              readOnly: true
+
+            # Agent configuration
+            - name: agent-config
+              mountPath: /etc/agentweave
+              readOnly: true
+
+            # Temporary directory for caching
+            - name: tmp
+              mountPath: /tmp
+
+          # Security context for agent container
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+
+          # Resource limits
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+          # Health probes
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: 8443
+              scheme: HTTPS
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 8443
+              scheme: HTTPS
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+
+        # OPA sidecar for policy enforcement
+        - name: opa
+          image: openpolicyagent/opa:0.62.0
+          imagePullPolicy: IfNotPresent
+
+          args:
+            - "run"
+            - "--server"
+            - "--addr=0.0.0.0:8181"
+            - "--config-file=/etc/opa/config.yaml"
+            - "--log-level=info"
+            - "--log-format=json"
+            - "/etc/opa/policies"
+
+          ports:
+            - name: http
+              containerPort: 8181
+              protocol: TCP
+
+          volumeMounts:
+            - name: opa-policies
+              mountPath: /etc/opa/policies
+              readOnly: true
+            - name: opa-config
+              mountPath: /etc/opa
+              readOnly: true
+
+          # Security context for OPA container
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+
+          # Resource limits for OPA
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "50m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+
+          # Health probes for OPA
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8181
+            initialDelaySeconds: 15
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /health?bundle=true
+              port: 8181
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+      volumes:
+        # SPIRE agent socket from host
+        - name: spire-agent-socket
+          hostPath:
+            path: /run/spire/sockets
+            type: Directory
+
+        # Agent configuration
+        - name: agent-config
+          configMap:
+            name: agentweave-example-config
+
+        # OPA policies
+        - name: opa-policies
+          configMap:
+            name: opa-default-policies
+
+        # OPA configuration
+        - name: opa-config
+          configMap:
+            name: opa-default-policies
+            items:
+              - key: config.yaml
+                path: config.yaml
+              - key: config-data.json
+                path: config-data.json
+
+        # Temporary directory
+        - name: tmp
+          emptyDir: {}
+
+---
+# Network Policy for this agent
+# Restricts ingress and egress to secure communication only
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: agentweave-example-netpol
+  namespace: agentweave
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: agentweave-example
+  policyTypes:
+    - Ingress
+    - Egress
+
+  ingress:
+    # Allow connections from other agents (mTLS enforced at application level)
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/component: agent
+      ports:
+        - protocol: TCP
+          port: 8443
+
+    # Allow Prometheus scraping
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: monitoring
+      ports:
+        - protocol: TCP
+          port: 9090
+
+  egress:
+    # Allow connections to other agents
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/component: agent
+      ports:
+        - protocol: TCP
+          port: 8443
+
+    # Allow SPIRE server communication
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: spire-server
+      ports:
+        - protocol: TCP
+          port: 8081
+
+    # Allow OPA bundle server
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: opa-bundle-server
+      ports:
+        - protocol: TCP
+          port: 8080
+
+    # Allow DNS
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: kube-system
+      ports:
+        - protocol: UDP
+          port: 53
+
+    # Allow OpenTelemetry collector (if using)
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: otel-collector
+      ports:
+        - protocol: TCP
+          port: 4317
+
+---
+# Horizontal Pod Autoscaler
+# Scale based on CPU and memory usage
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: agentweave-example
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: agentweave-example
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: agentweave-example
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 50
+          periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 30
+
+---
+# Pod Disruption Budget
+# Ensure high availability during maintenance
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: agentweave-example
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: agentweave-example
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: agentweave-example
+      app.kubernetes.io/component: agent

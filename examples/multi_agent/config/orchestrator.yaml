@@ -1,0 +1,61 @@
+# AgentWeave Configuration - Orchestrator Agent
+
+agent:
+  name: "orchestrator"
+  trust_domain: "hvs.solutions"
+  description: "Orchestrator agent that coordinates worker agents"
+  capabilities:
+    - name: "process_batch"
+      description: "Process a batch of items using worker agents"
+      input_modes: ["application/json"]
+      output_modes: ["application/json"]
+    - name: "health_check"
+      description: "Check health of all worker agents"
+      input_modes: ["application/json"]
+      output_modes: ["application/json"]
+
+identity:
+  provider: "spiffe"
+  spiffe_endpoint: "unix:///run/spire/sockets/agent.sock"
+  allowed_trust_domains:
+    - "hvs.solutions"
+
+authorization:
+  provider: "opa"
+  opa_endpoint: "http://opa:8181"
+  policy_path: "hvs/authz"
+  default_action: "deny"
+  audit:
+    enabled: true
+    destination: "file:///var/log/agentweave/orchestrator-audit.log"
+
+transport:
+  tls_min_version: "1.3"
+  peer_verification: "strict"
+  connection_pool:
+    max_connections: 100
+    idle_timeout_seconds: 60
+  circuit_breaker:
+    failure_threshold: 5
+    recovery_timeout_seconds: 30
+  retry:
+    max_attempts: 3
+    backoff_base_seconds: 1.0
+    backoff_max_seconds: 30.0
+
+server:
+  host: "0.0.0.0"
+  port: 8443
+  protocol: "a2a"
+
+observability:
+  metrics:
+    enabled: true
+    port: 9090
+  tracing:
+    enabled: true
+    exporter: "otlp"
+    endpoint: "http://otel-collector:4317"
+  logging:
+    level: "INFO"
+    format: "json"

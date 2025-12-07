@@ -1,0 +1,415 @@
+---
+# SPIRE Server Configuration
+# Provides cryptographic workload identity for all agents
+# Trust domain: hvs.solutions (customize for your organization)
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spire-server-config
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: spire-server
+    app.kubernetes.io/component: identity
+data:
+  server.conf: |
+    server {
+      bind_address = "0.0.0.0"
+      bind_port = "8081"
+      trust_domain = "hvs.solutions"
+      data_dir = "/run/spire/data"
+      log_level = "INFO"
+
+      # Socket path for SPIRE agent registration API
+      socket_path = "/tmp/spire-server/private/api.sock"
+
+      # CA configuration - uses built-in disk-based CA
+      # For production, consider using AWS KMS, GCP Cloud KMS, or Vault
+      ca_subject {
+        country = ["US"]
+        organization = ["HVS Solutions"]
+        common_name = "hvs.solutions"
+      }
+
+      # Default TTL for SVIDs (1 hour, auto-rotates at 30min)
+      default_x509_svid_ttl = "1h"
+      default_jwt_svid_ttl = "5m"
+    }
+
+    plugins {
+      # DataStore: Store SPIRE server state
+      # For production, use SQL database (PostgreSQL, MySQL)
+      DataStore "sql" {
+        plugin_data {
+          database_type = "sqlite3"
+          connection_string = "/run/spire/data/datastore.sqlite3"
+        }
+      }
+
+      # KeyManager: Manage CA private keys
+      # For production, use AWS KMS, GCP Cloud KMS, or Vault
+      KeyManager "disk" {
+        plugin_data {
+          keys_path = "/run/spire/data/keys.json"
+        }
+      }
+
+      # NodeAttestor: Verify SPIRE agent identity
+      # Using Kubernetes PSAT (Projected Service Account Token)
+      NodeAttestor "k8s_psat" {
+        plugin_data {
+          clusters = {
+            "hvs-cluster" = {
+              # Kubernetes service account token path
+              service_account_allow_list = ["agentweave:spire-agent"]
+            }
+          }
+        }
+      }
+
+      # NodeResolver: Discover additional node properties
+      NodeResolver "k8s" {
+        plugin_data {
+          # Add pod labels and namespace as selectors
+          add_pod_dns_names = true
+        }
+      }
+
+      # Notifier: Send notifications on registration events
+      Notifier "k8sbundle" {
+        plugin_data {
+          namespace = "agentweave"
+          config_map = "spire-bundle"
+        }
+      }
+    }
+
+    # Health check configuration
+    health_checks {
+      listener_enabled = true
+      bind_address = "0.0.0.0"
+      bind_port = "8080"
+      live_path = "/live"
+      ready_path = "/ready"
+    }
+
+  # Federation configuration for cross-cloud trust
+  # Uncomment and configure for multi-cloud deployments
+  # federation.conf: |
+  #   federates_with "partner.example.com" {
+  #     bundle_endpoint_url = "https://spire-server.partner.example.com/bundle"
+  #     bundle_endpoint_profile "https_spiffe" {
+  #       endpoint_spiffe_id = "spiffe://partner.example.com/spire/server"
+  #     }
+  #   }
+
+---
+# SPIRE Agent Configuration
+# Runs as DaemonSet on each node, provides Workload API to pods
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spire-agent-config
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: spire-agent
+    app.kubernetes.io/component: identity
+data:
+  agent.conf: |
+    agent {
+      data_dir = "/run/spire/data"
+      log_level = "INFO"
+      server_address = "spire-server"
+      server_port = "8081"
+      socket_path = "/run/spire/sockets/agent.sock"
+      trust_domain = "hvs.solutions"
+
+      # Agent can authenticate to SPIRE server using Kubernetes PSAT
+      # This happens automatically via NodeAttestor configuration
+    }
+
+    plugins {
+      # NodeAttestor: Prove identity to SPIRE server
+      NodeAttestor "k8s_psat" {
+        plugin_data {
+          cluster = "hvs-cluster"
+        }
+      }
+
+      # KeyManager: Manage agent's private keys
+      KeyManager "disk" {
+        plugin_data {
+          directory = "/run/spire/data"
+        }
+      }
+
+      # WorkloadAttestor: Identify workloads (pods)
+      # Uses Kubernetes API to discover pod metadata
+      WorkloadAttestor "k8s" {
+        plugin_data {
+          # Enable these selectors to identify pods
+          # Examples: k8s:ns:<namespace>, k8s:sa:<serviceaccount>, k8s:pod-label:<label>
+          skip_kubelet_verification = true
+          node_name_env = "MY_NODE_NAME"
+        }
+      }
+    }
+
+    # Health check configuration
+    health_checks {
+      listener_enabled = true
+      bind_address = "0.0.0.0"
+      bind_port = "8080"
+      live_path = "/live"
+      ready_path = "/ready"
+    }
+
+---
+# SPIRE Server Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: spire-server
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: spire-server
+spec:
+  type: ClusterIP
+  ports:
+    - name: grpc
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+    - name: healthz
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: spire-server
+
+---
+# SPIRE Server StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: spire-server
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: spire-server
+    app.kubernetes.io/component: identity
+spec:
+  serviceName: spire-server
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: spire-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: spire-server
+        app.kubernetes.io/component: identity
+    spec:
+      serviceAccountName: spire-server
+      containers:
+        - name: spire-server
+          image: ghcr.io/spiffe/spire-server:1.9.0
+          args:
+            - -config
+            - /run/spire/config/server.conf
+          ports:
+            - containerPort: 8081
+              name: grpc
+            - containerPort: 8080
+              name: healthz
+          volumeMounts:
+            - name: spire-config
+              mountPath: /run/spire/config
+              readOnly: true
+            - name: spire-data
+              mountPath: /run/spire/data
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: spire-config
+          configMap:
+            name: spire-server-config
+  volumeClaimTemplates:
+    - metadata:
+        name: spire-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+
+---
+# SPIRE Agent DaemonSet
+# Runs on every node to provide Workload API
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: spire-agent
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: spire-agent
+    app.kubernetes.io/component: identity
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: spire-agent
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: spire-agent
+        app.kubernetes.io/component: identity
+    spec:
+      hostPID: true
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      serviceAccountName: spire-agent
+      initContainers:
+        # Initialize the socket directory
+        - name: init
+          image: ghcr.io/spiffe/spire-agent:1.9.0
+          command:
+            - /bin/sh
+            - -c
+            - |
+              mkdir -p /run/spire/sockets
+              chmod 777 /run/spire/sockets
+          volumeMounts:
+            - name: spire-agent-socket
+              mountPath: /run/spire/sockets
+      containers:
+        - name: spire-agent
+          image: ghcr.io/spiffe/spire-agent:1.9.0
+          args:
+            - -config
+            - /run/spire/config/agent.conf
+          env:
+            - name: MY_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          volumeMounts:
+            - name: spire-config
+              mountPath: /run/spire/config
+              readOnly: true
+            - name: spire-agent-socket
+              mountPath: /run/spire/sockets
+            - name: spire-data
+              mountPath: /run/spire/data
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: spire-config
+          configMap:
+            name: spire-agent-config
+        - name: spire-agent-socket
+          hostPath:
+            path: /run/spire/sockets
+            type: DirectoryOrCreate
+        - name: spire-data
+          emptyDir: {}
+
+---
+# Service Accounts
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: spire-server
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: spire-server
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: spire-agent
+  namespace: agentweave
+  labels:
+    app.kubernetes.io/name: spire-agent
+
+---
+# RBAC for SPIRE Server
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: spire-server
+  labels:
+    app.kubernetes.io/name: spire-server
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "nodes"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["authentication.k8s.io"]
+    resources: ["tokenreviews"]
+    verbs: ["create"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: spire-server
+  labels:
+    app.kubernetes.io/name: spire-server
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: spire-server
+subjects:
+  - kind: ServiceAccount
+    name: spire-server
+    namespace: agentweave
+
+---
+# RBAC for SPIRE Agent
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: spire-agent
+  labels:
+    app.kubernetes.io/name: spire-agent
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "nodes", "nodes/proxy"]
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: spire-agent
+  labels:
+    app.kubernetes.io/name: spire-agent
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: spire-agent
+subjects:
+  - kind: ServiceAccount
+    name: spire-agent
+    namespace: agentweave

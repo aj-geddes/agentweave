@@ -1,0 +1,123 @@
+{{- if .Values.spireRegistration.enabled }}
+---
+# SPIRE Registration Job
+# This job creates a SPIRE registration entry for the agent
+# It runs once during installation/upgrade to register the agent with SPIRE server
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "agentweave.fullname" . }}-spire-registration
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "agentweave.labels" . | nindent 4 }}
+    app.kubernetes.io/component: spire-registration
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "5"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  ttlSecondsAfterFinished: 300
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        {{- include "agentweave.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: spire-registration
+    spec:
+      restartPolicy: OnFailure
+      serviceAccountName: {{ include "agentweave.serviceAccountName" . }}
+
+      containers:
+        - name: spire-register
+          image: ghcr.io/spiffe/spire-server:1.9.0
+          imagePullPolicy: IfNotPresent
+
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+
+              echo "Registering agent with SPIRE server..."
+              echo "SPIFFE ID: spiffe://{{ .Values.global.trustDomain }}/agent/{{ .Values.agent.name }}/{{ .Values.agent.environment }}"
+              echo "Parent ID: {{ .Values.spireRegistration.parentID }}"
+
+              # Check if entry already exists
+              EXISTING_ENTRY=$(spire-server entry show \
+                -socketPath /run/spire/sockets/server.sock \
+                -spiffeID "spiffe://{{ .Values.global.trustDomain }}/agent/{{ .Values.agent.name }}/{{ .Values.agent.environment }}" \
+                2>/dev/null || true)
+
+              if [ -n "$EXISTING_ENTRY" ]; then
+                echo "Registration entry already exists, skipping creation"
+                exit 0
+              fi
+
+              # Create registration entry
+              spire-server entry create \
+                -socketPath /run/spire/sockets/server.sock \
+                -spiffeID "spiffe://{{ .Values.global.trustDomain }}/agent/{{ .Values.agent.name }}/{{ .Values.agent.environment }}" \
+                -parentID "{{ .Values.spireRegistration.parentID }}" \
+                {{- if .Values.spiffe.selectors.k8s.namespace }}
+                -selector k8s:ns:{{ .Values.global.namespace }} \
+                {{- end }}
+                {{- if .Values.spiffe.selectors.k8s.serviceAccount }}
+                -selector k8s:sa:{{ include "agentweave.serviceAccountName" . }} \
+                {{- end }}
+                {{- range $key, $value := .Values.spiffe.selectors.k8s.podLabel }}
+                -selector k8s:pod-label:{{ $key }}:{{ $value }} \
+                {{- end }}
+                {{- range .Values.spireRegistration.dnsNames }}
+                -dns {{ . }} \
+                {{- end }}
+                {{- range .Values.spireRegistration.federatesWith }}
+                -federatesWith {{ . }} \
+                {{- end }}
+                -ttl {{ .Values.spireRegistration.svid_ttl }}
+
+              echo "Registration successful!"
+              echo "Agent can now request SVIDs from SPIRE"
+
+          volumeMounts:
+            - name: spire-server-socket
+              mountPath: /run/spire/sockets
+              readOnly: false
+
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+
+      volumes:
+        - name: spire-server-socket
+          hostPath:
+            path: /tmp/spire-server/private
+            type: DirectoryOrCreate
+
+---
+# ConfigMap with registration information for reference
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "agentweave.fullname" . }}-spire-info
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "agentweave.labels" . | nindent 4 }}
+data:
+  spiffe-id: "spiffe://{{ .Values.global.trustDomain }}/agent/{{ .Values.agent.name }}/{{ .Values.agent.environment }}"
+  parent-id: "{{ .Values.spireRegistration.parentID }}"
+  trust-domain: "{{ .Values.global.trustDomain }}"
+  selectors: |
+    {{- if .Values.spiffe.selectors.k8s.namespace }}
+    k8s:ns:{{ .Values.global.namespace }}
+    {{- end }}
+    {{- if .Values.spiffe.selectors.k8s.serviceAccount }}
+    k8s:sa:{{ include "agentweave.serviceAccountName" . }}
+    {{- end }}
+    {{- range $key, $value := .Values.spiffe.selectors.k8s.podLabel }}
+    k8s:pod-label:{{ $key }}:{{ $value }}
+    {{- end }}
+
+{{- end }}

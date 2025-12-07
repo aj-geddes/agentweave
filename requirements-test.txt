@@ -1,0 +1,45 @@
+# Testing dependencies for AgentWeave SDK
+# Install with: pip install -r requirements-test.txt
+
+# Core testing framework
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+pytest-cov>=4.1.0
+pytest-timeout>=2.2.0
+pytest-mock>=3.12.0
+
+# Async testing utilities
+anyio>=4.0.0
+asyncio-testing>=0.0.1
+
+# Cryptography for SVID generation in mocks
+cryptography>=41.0.0
+
+# Docker for integration tests
+docker>=7.0.0
+
+# YAML for config file handling
+PyYAML>=6.0.1
+
+# Type checking for tests
+mypy>=1.8.0
+types-PyYAML>=6.0.12
+
+# Code quality
+black>=24.0.0
+ruff>=0.1.0
+isort>=5.13.0
+
+# Optional: For real SPIFFE integration tests
+# spiffe>=0.2.2
+
+# Optional: For HTTP mocking in integration tests
+# responses>=0.24.0
+# httpx>=0.27.0
+
+# Optional: For OPA policy testing (requires OPA CLI)
+# Note: OPA CLI must be installed separately from https://www.openpolicyagent.org/
+
+# Optional: For test reporting
+# pytest-html>=4.1.0
+# pytest-json-report>=1.5.0

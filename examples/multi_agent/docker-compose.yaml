@@ -1,0 +1,177 @@
+version: '3.8'
+
+services:
+  # SPIRE Server - Issues identities to agents
+  spire-server:
+    image: ghcr.io/spiffe/spire-server:1.9.0
+    hostname: spire-server
+    volumes:
+      - ./spire/server:/opt/spire/conf
+      - spire-data:/opt/spire/data
+    networks:
+      - hvs-network
+    command: ["-config", "/opt/spire/conf/server.conf"]
+    healthcheck:
+      test: ["CMD", "/opt/spire/bin/spire-server", "healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # SPIRE Agent - Workload API for identity provisioning
+  spire-agent:
+    image: ghcr.io/spiffe/spire-agent:1.9.0
+    hostname: spire-agent
+    depends_on:
+      spire-server:
+        condition: service_healthy
+    volumes:
+      - ./spire/agent:/opt/spire/conf
+      - spire-socket:/run/spire/sockets
+    networks:
+      - hvs-network
+    command: ["-config", "/opt/spire/conf/agent.conf"]
+    healthcheck:
+      test: ["CMD", "/opt/spire/bin/spire-agent", "healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # OPA - Policy engine for authorization
+  opa:
+    image: openpolicyagent/opa:latest
+    hostname: opa
+    volumes:
+      - ./policies:/policies
+    networks:
+      - hvs-network
+    command:
+      - "run"
+      - "--server"
+      - "--addr=0.0.0.0:8181"
+      - "/policies"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8181/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Orchestrator Agent
+  orchestrator:
+    build:
+      context: .
+      dockerfile: Dockerfile.orchestrator
+    hostname: orchestrator
+    depends_on:
+      spire-agent:
+        condition: service_healthy
+      opa:
+        condition: service_healthy
+    environment:
+      - SPIFFE_ENDPOINT_SOCKET=unix:///run/spire/sockets/agent.sock
+      - AGENTWEAVE_CONFIG_PATH=/etc/agentweave/config.yaml
+    volumes:
+      - spire-socket:/run/spire/sockets:ro
+      - ./config/orchestrator.yaml:/etc/agentweave/config.yaml:ro
+    networks:
+      - hvs-network
+    ports:
+      - "8443:8443"
+      - "9090:9090"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8443/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Worker Agent 1
+  worker-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    hostname: worker-1
+    depends_on:
+      spire-agent:
+        condition: service_healthy
+      opa:
+        condition: service_healthy
+    environment:
+      - SPIFFE_ENDPOINT_SOCKET=unix:///run/spire/sockets/agent.sock
+      - AGENTWEAVE_CONFIG_PATH=/etc/agentweave/config.yaml
+      - AGENTWEAVE_AGENT_NAME=worker-1
+    volumes:
+      - spire-socket:/run/spire/sockets:ro
+      - ./config/worker.yaml:/etc/agentweave/config.yaml:ro
+    networks:
+      - hvs-network
+    ports:
+      - "8444:8443"
+      - "9091:9090"
+
+  # Worker Agent 2
+  worker-2:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    hostname: worker-2
+    depends_on:
+      spire-agent:
+        condition: service_healthy
+      opa:
+        condition: service_healthy
+    environment:
+      - SPIFFE_ENDPOINT_SOCKET=unix:///run/spire/sockets/agent.sock
+      - AGENTWEAVE_CONFIG_PATH=/etc/agentweave/config.yaml
+      - AGENTWEAVE_AGENT_NAME=worker-2
+    volumes:
+      - spire-socket:/run/spire/sockets:ro
+      - ./config/worker.yaml:/etc/agentweave/config.yaml:ro
+    networks:
+      - hvs-network
+    ports:
+      - "8445:8443"
+      - "9092:9090"
+
+  # Worker Agent 3
+  worker-3:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    hostname: worker-3
+    depends_on:
+      spire-agent:
+        condition: service_healthy
+      opa:
+        condition: service_healthy
+    environment:
+      - SPIFFE_ENDPOINT_SOCKET=unix:///run/spire/sockets/agent.sock
+      - AGENTWEAVE_CONFIG_PATH=/etc/agentweave/config.yaml
+      - AGENTWEAVE_AGENT_NAME=worker-3
+    volumes:
+      - spire-socket:/run/spire/sockets:ro
+      - ./config/worker.yaml:/etc/agentweave/config.yaml:ro
+    networks:
+      - hvs-network
+    ports:
+      - "8446:8443"
+      - "9093:9090"
+
+  # OpenTelemetry Collector (optional)
+  otel-collector:
+    image: otel/opentelemetry-collector:latest
+    hostname: otel-collector
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    networks:
+      - hvs-network
+    ports:
+      - "4317:4317"  # OTLP gRPC receiver
+      - "4318:4318"  # OTLP HTTP receiver
+
+networks:
+  hvs-network:
+    driver: bridge
+
+volumes:
+  spire-data:
+  spire-socket:
