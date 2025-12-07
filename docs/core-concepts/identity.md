@@ -645,9 +645,9 @@ IdentityError: Trust bundle for trust domain 'partner.com' not found
 
 Now that you understand identity, learn how it's used for authorization:
 
-- [Authorization & OPA](authorization/): Policy-based access control using SPIFFE IDs
-- [A2A Protocol](communication/): How agents use mTLS with SPIFFE for secure communication
-- [Security Model](security-model/): How identity fits into the overall security architecture
+- [Authorization & OPA](/core-concepts/authorization/): Policy-based access control using SPIFFE IDs
+- [A2A Protocol](/core-concepts/communication/): How agents use mTLS with SPIFFE for secure communication
+- [Security Model](/core-concepts/security-model/): How identity fits into the overall security architecture
 
 {: .note }
 SPIFFE/SPIRE is a deep topic. This guide covers what you need to build agents. For SPIRE administration (setup, federation, policy), see the [SPIRE documentation](https://spiffe.io/docs/).

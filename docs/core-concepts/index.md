@@ -65,22 +65,22 @@ Every agent request flows through these security layers automatically:
 We recommend reading these documents in order:
 
 ### 1. Start with Architecture
-[**System Architecture**](architecture/) provides the big picture—how all components fit together and how requests flow through the system.
+[**System Architecture**](/core-concepts/architecture/) provides the big picture—how all components fit together and how requests flow through the system.
 
 ### 2. Understand Agents
-[**Understanding Agents**](agents/) explains what SecureAgent is, the agent lifecycle, capabilities, and how to configure agents.
+[**Understanding Agents**](/core-concepts/agents/) explains what SecureAgent is, the agent lifecycle, capabilities, and how to configure agents.
 
 ### 3. Master Identity
-[**Identity & SPIFFE**](identity/) covers cryptographic identity—the foundation of AgentWeave's security model.
+[**Identity & SPIFFE**](/core-concepts/identity/) covers cryptographic identity—the foundation of AgentWeave's security model.
 
 ### 4. Learn Authorization
-[**Authorization & OPA**](authorization/) shows how policy-based access control protects your agents.
+[**Authorization & OPA**](/core-concepts/authorization/) shows how policy-based access control protects your agents.
 
 ### 5. Explore Communication
-[**A2A Protocol**](communication/) details how agents talk to each other using the Agent-to-Agent protocol.
+[**A2A Protocol**](/core-concepts/communication/) details how agents talk to each other using the Agent-to-Agent protocol.
 
 ### 6. Internalize the Security Model
-[**Security Model**](security-model/) ties everything together, explaining the zero-trust architecture and defense-in-depth approach.
+[**Security Model**](/core-concepts/security-model/) ties everything together, explaining the zero-trust architecture and defense-in-depth approach.
 
 ## Key Principles
 
@@ -160,7 +160,7 @@ AgentWeave agents can call external services. The A2A protocol is optional for e
 
 ## What's Next?
 
-Start with [System Architecture](architecture/) to understand how AgentWeave components work together, then dive into each concept in depth.
+Start with [System Architecture](/core-concepts/architecture/) to understand how AgentWeave components work together, then dive into each concept in depth.
 
 {: .note }
 Throughout this documentation, you'll see callouts highlighting important security considerations, best practices, and common pitfalls. Pay special attention to these—they represent lessons learned from production deployments.

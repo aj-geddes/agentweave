@@ -137,7 +137,7 @@ Examples:
 - spiffe://mycompany.com/agent/orchestrator/staging
 ```
 
-See [Identity & SPIFFE](identity/) for details.
+See [Identity & SPIFFE](/core-concepts/identity/) for details.
 
 ### 3. Authorization Layer
 
@@ -184,7 +184,7 @@ class AuthzDecision:
     audit_id: str          # Unique ID for audit trail
 ```
 
-See [Authorization & OPA](authorization/) for details.
+See [Authorization & OPA](/core-concepts/authorization/) for details.
 
 ### 4. Communication Layer
 
@@ -224,7 +224,7 @@ class AgentCard:
         """Serialize to A2A Agent Card format."""
 ```
 
-See [A2A Protocol](communication/) for details.
+See [A2A Protocol](/core-concepts/communication/) for details.
 
 ### 5. Transport Layer
 
@@ -581,11 +581,11 @@ Every security decision is logged and traceable:
 
 Now that you understand the overall architecture, dive into each component:
 
-- [Understanding Agents](agents/): Learn about SecureAgent, capabilities, and lifecycle
-- [Identity & SPIFFE](identity/): Deep dive into cryptographic identity
-- [Authorization & OPA](authorization/): Master policy-based access control
-- [A2A Protocol](communication/): Understand agent-to-agent communication
-- [Security Model](security-model/): See how all layers work together for zero-trust
+- [Understanding Agents](/core-concepts/agents/): Learn about SecureAgent, capabilities, and lifecycle
+- [Identity & SPIFFE](/core-concepts/identity/): Deep dive into cryptographic identity
+- [Authorization & OPA](/core-concepts/authorization/): Master policy-based access control
+- [A2A Protocol](/core-concepts/communication/): Understand agent-to-agent communication
+- [Security Model](/core-concepts/security-model/): See how all layers work together for zero-trust
 
 {: .important }
 The architecture is designed to be **tamper-proof**. Even with full access to the agent code, an attacker cannot bypass identity verification, authorization, or encryption without also compromising SPIRE, OPA, or TLS—which are hardened, production-grade systems.
