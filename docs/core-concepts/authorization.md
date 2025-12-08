@@ -5,6 +5,8 @@ description: Policy-based authorization with Open Policy Agent in AgentWeave
 permalink: /core-concepts/authorization/
 parent: Core Concepts
 nav_order: 4
+redirect_from:
+  - /core-concepts/architecture/authorization/
 ---
 
 # Authorization & OPA
