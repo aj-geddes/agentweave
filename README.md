@@ -5,7 +5,7 @@
 The AgentWeave SDK (`agentweave`) is a Python library for building AI agents with cryptographic identity, mutual TLS authentication, and policy-based authorization built-in. The SDK ensures **the secure path is the only path**—developers cannot accidentally bypass security controls.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![SPIFFE](https://img.shields.io/badge/SPIFFE-compliant-green.svg)](https://spiffe.io/)
 [![A2A](https://img.shields.io/badge/A2A-protocol-orange.svg)](https://a2a-protocol.org/)
 
@@ -64,11 +64,11 @@ server:
   port: 8443
 ```
 
-That's it! The SDK automatically:
-- Fetches SPIFFE identity from local SPIRE agent
-- Starts HTTPS server with mTLS
-- Enforces OPA policies on all requests
-- Publishes Agent Card for discovery
+The SDK wires together:
+- **SPIFFE identity** — fetched from your local SPIRE agent (or via static mTLS certs for development)
+- **OPA authorization** — policy checked before every capability is executed
+- **A2A server** — FastAPI-based JSON-RPC 2.0 endpoint with Agent Card discovery
+- **mTLS transport** — all outbound calls use your SVID certificate
 
 ## Architecture
 
@@ -242,16 +242,15 @@ Each agent:
 Integrate with agents from other frameworks:
 
 ```python
-# Call Google ADK agent
+# Call another AgentWeave agent (SPIFFE mTLS enforced)
 result = await self.call_agent(
-    target="https://adk-agent.example.com",
+    target="spiffe://partner.example.com/agent/summarizer",
     task_type="summarize",
     payload={"text": document},
-    auth_scheme="oauth2"  # Not SPIFFE
 )
 ```
 
-The SDK supports both SPIFFE mTLS (for AgentWeave agents) and OAuth2 (for external agents).
+AgentWeave agents communicate via mTLS with SPIFFE identity. For non-AgentWeave agents, use the `A2AClient` directly with appropriate transport configuration.
 
 ## Security Guarantees
 
@@ -307,10 +306,10 @@ Includes:
 
 ## Requirements
 
-- Python 3.10+
-- SPIRE Server + Agent (for SPIFFE identity)
-- OPA (for authorization)
-- Docker (for local development)
+- Python 3.11+
+- SPIRE Server + Agent (for SPIFFE identity in production; optional for dev with static mTLS)
+- OPA (for authorization; optional for dev with `allow-all` provider)
+- Docker (for local development and integration tests)
 - Kubernetes (for production deployment)
 
 ## Development
@@ -318,8 +317,9 @@ Includes:
 ### Install from Source
 
 ```bash
-git clone https://github.com/agentweave/agentweave
+git clone https://github.com/aj-geddes/agentweave
 cd agentweave
+python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 ```
 
@@ -402,26 +402,28 @@ Structured JSON logs:
 
 ## Roadmap
 
-### Phase 1: Foundation (Current)
+### Phase 1: Foundation (v1.0 — current)
 - [x] SPIFFE identity integration
-- [x] OPA authorization
-- [x] A2A protocol implementation
-- [x] mTLS transport
-- [x] Basic examples
+- [x] OPA authorization with decision caching and circuit breaker
+- [x] A2A protocol server and client (JSON-RPC 2.0 + SSE)
+- [x] mTLS transport (TLS 1.3 by default)
+- [x] Static mTLS provider for development
+- [x] CLI tools (validate, card, authz check, health)
+- [x] Testing utilities (mocks, fixtures, OPA policy simulator)
 
-### Phase 2: Production (Q1 2026)
-- [ ] Helm chart for Kubernetes
-- [ ] Observability stack integration
-- [ ] Policy library (common patterns)
+### Phase 2: Production Hardening (v1.1)
+- [ ] Helm chart and production Kubernetes manifests
+- [ ] Full OpenTelemetry observability integration
+- [ ] OPA policy library (common agent patterns)
+- [ ] SVID watcher using SPIFFE streaming API (replace polling)
 - [ ] Load testing benchmarks
 - [ ] Security audit
 
-### Phase 3: Ecosystem (Q2 2026)
-- [ ] LangGraph integration
-- [ ] CrewAI integration
-- [ ] ADK compatibility
-- [ ] Multi-framework examples
-- [ ] Federation cookbook
+### Phase 3: Ecosystem (v1.2+)
+- [ ] LangGraph integration example
+- [ ] CrewAI integration example
+- [ ] Google ADK compatibility layer
+- [ ] SPIRE federation cookbook
 
 ## Contributing
 
@@ -435,8 +437,8 @@ Apache 2.0 - See [LICENSE](LICENSE)
 
 - Documentation: [docs/](docs/)
 - Examples: [examples/](examples/)
-- Issues: [GitHub Issues](https://github.com/agentweave/agentweave/issues)
-- Discussions: [GitHub Discussions](https://github.com/agentweave/agentweave/discussions)
+- Issues: [GitHub Issues](https://github.com/aj-geddes/agentweave/issues)
+- Discussions: [GitHub Discussions](https://github.com/aj-geddes/agentweave/discussions)
 
 ## Acknowledgments
 
@@ -454,8 +456,8 @@ If you use AgentWeave SDK in research, please cite:
 @software{agentweave,
   title = {AgentWeave SDK},
   author = {AgentWeave Team},
-  year = {2025},
-  url = {https://github.com/agentweave/agentweave}
+  year = {2026},
+  url = {https://github.com/aj-geddes/agentweave}
 }
 ```
 

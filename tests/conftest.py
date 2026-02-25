@@ -15,17 +15,29 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 # Import all fixtures from agentweave.testing
 from agentweave.testing import (
     mock_identity_provider,
+    mock_identity_provider_with_rotation,
     mock_authz_provider,
+    mock_authz_provider_permissive,
+    mock_transport,
     test_agent,
     test_config,
+    test_config_dev,
+    spiffe_ids,
+    sample_tasks,
 )
 
 # Re-export fixtures so they're available to all tests
 __all__ = [
     "mock_identity_provider",
+    "mock_identity_provider_with_rotation",
     "mock_authz_provider",
+    "mock_authz_provider_permissive",
+    "mock_transport",
     "test_agent",
     "test_config",
+    "test_config_dev",
+    "spiffe_ids",
+    "sample_tasks",
 ]
 
 

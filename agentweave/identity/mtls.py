@@ -13,6 +13,7 @@ It should only be used in development/testing environments.
 import logging
 import os
 import ssl
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
@@ -167,7 +168,7 @@ class StaticMTLSProvider(IdentityProvider):
         self._ensure_initialized()
 
         # Check if certificate is expired
-        if self._svid.leaf.not_valid_after_utc < self._svid.leaf.not_valid_after_utc:
+        if self._svid.leaf.not_valid_after_utc < datetime.now(timezone.utc):
             logger.warning(
                 f"Certificate has expired: {self._svid.leaf.not_valid_after_utc}. "
                 "Update certificate files and restart the agent."
@@ -315,7 +316,7 @@ class StaticMTLSProvider(IdentityProvider):
 
             # Check if certificate is not expired
             svid = await self.get_svid()
-            if svid.leaf.not_valid_after_utc < svid.leaf.not_valid_after_utc:
+            if svid.leaf.not_valid_after_utc < datetime.now(timezone.utc):
                 logger.error("Health check failed: certificate expired")
                 return False
 

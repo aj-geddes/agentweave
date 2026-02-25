@@ -31,7 +31,7 @@ console = Console()
 
 
 @click.group()
-@click.version_option(version="0.1.0", prog_name="agentweave")
+@click.version_option(version="1.0.0", prog_name="agentweave")
 def cli():
     """
     AgentWeave SDK - Command Line Interface

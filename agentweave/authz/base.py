@@ -75,3 +75,27 @@ class AuthorizationProvider(ABC):
             True if healthy, False otherwise
         """
         pass
+
+
+class AllowAllProvider(AuthorizationProvider):
+    """
+    Development-only authorization provider that permits all requests.
+
+    WARNING: Never use in production. This bypasses all access control.
+    """
+
+    async def check(
+        self,
+        caller_id: str,
+        resource: str,
+        action: str,
+        context: Optional[dict] = None
+    ) -> AuthzDecision:
+        return AuthzDecision(
+            allowed=True,
+            reason="allow-all policy (development only)",
+            policy_id="allow-all",
+        )
+
+    async def health_check(self) -> bool:
+        return True

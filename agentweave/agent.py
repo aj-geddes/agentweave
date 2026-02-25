@@ -129,30 +129,30 @@ class BaseAgent(ABC):
     def _create_identity_provider(self, config: AgentConfig) -> Any:
         """Create identity provider based on config."""
         if config.identity_provider == "spiffe":
-            # Import and create SPIFFE provider
-            # Note: In full implementation, would import from agentweave.identity.spiffe
-            logger.info(f"Creating SPIFFE identity provider (endpoint: {config.spiffe_endpoint})")
-            # Placeholder - would return actual SPIFFEIdentityProvider
-            return None
+            from agentweave.identity.spiffe import SPIFFEIdentityProvider
+            endpoint = config.spiffe_endpoint or "unix:///run/spire/sockets/agent.sock"
+            logger.info(f"Creating SPIFFE identity provider (endpoint: {endpoint})")
+            return SPIFFEIdentityProvider(endpoint=endpoint)
         elif config.identity_provider == "mtls-static":
-            logger.info("Creating static mTLS identity provider")
-            # Placeholder - would return actual StaticMTLSProvider
-            return None
+            from agentweave.identity.mtls import EnvironmentMTLSProvider
+            logger.info("Creating environment-based static mTLS identity provider")
+            return EnvironmentMTLSProvider()
         else:
             raise ValueError(f"Unknown identity provider: {config.identity_provider}")
 
     def _create_authz_provider(self, config: AgentConfig) -> Any:
         """Create authorization provider based on config."""
         if config.authz_provider == "opa":
-            # Import and create OPA enforcer
-            # Note: In full implementation, would import from agentweave.authz.opa
-            logger.info(f"Creating OPA enforcer (endpoint: {config.opa_endpoint})")
-            # Placeholder - would return actual OPAEnforcer
-            return None
+            from agentweave.authz.opa import OPAProvider
+            logger.info(f"Creating OPA authorization provider (endpoint: {config.opa_endpoint})")
+            return OPAProvider(
+                endpoint=config.opa_endpoint,
+                default_deny=True,
+            )
         elif config.authz_provider == "allow-all":
             logger.warning("Using allow-all authorization (DEVELOPMENT ONLY)")
-            # Placeholder - would return AllowAllEnforcer
-            return None
+            from agentweave.authz.base import AllowAllProvider
+            return AllowAllProvider()
         else:
             raise ValueError(f"Unknown authorization provider: {config.authz_provider}")
 
@@ -233,10 +233,6 @@ class BaseAgent(ABC):
 
         # Register capabilities
         await self.register_capabilities()
-
-        # Start A2A server (would be implemented with FastAPI)
-        # self._server = A2AServer(self, config=self._config)
-        # await self._server.start()
 
         self._running = True
         logger.info("Agent started successfully")

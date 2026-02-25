@@ -78,15 +78,29 @@ class A2AClient:
         """
         Ensure HTTP client is initialized.
 
+        When an identity provider is available the client is configured for
+        mTLS: the workload's SVID is used as the client certificate and the
+        trust bundle is loaded for peer verification.
+
         Returns:
             HTTP client instance
         """
         if self._http_client is None:
-            # TODO: Add mTLS configuration when identity provider is available
+            ssl_context = None
+            if self._identity is not None and hasattr(self._identity, "create_tls_context"):
+                try:
+                    ssl_context = await self._identity.create_tls_context(server=False)
+                except Exception as exc:
+                    import logging
+                    logging.getLogger(__name__).warning(
+                        "Failed to create mTLS context for A2A client, "
+                        "falling back to system trust store: %s", exc
+                    )
+
             self._http_client = httpx.AsyncClient(
                 timeout=httpx.Timeout(self._timeout),
                 follow_redirects=True,
-                # verify=True,  # Enable TLS verification
+                verify=ssl_context if ssl_context is not None else True,
             )
         return self._http_client
 

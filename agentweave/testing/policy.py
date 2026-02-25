@@ -73,9 +73,9 @@ class PolicySimulator:
         self.policy_content = policy_content
         self.data = data or {}
         self._temp_dir: Optional[tempfile.TemporaryDirectory] = None
-
-        # Check if OPA CLI is available
-        self._check_opa_available()
+        # OPA availability is checked lazily at first use, not at construction,
+        # so that PolicySimulator() can be instantiated in environments where
+        # the OPA CLI binary is not installed (e.g. CI without OPA).
 
     def _check_opa_available(self):
         """Check if OPA CLI is available."""
@@ -122,6 +122,9 @@ class PolicySimulator:
             )
             assert decision.allowed
         """
+        # Ensure OPA CLI is available before attempting to run a policy check
+        self._check_opa_available()
+
         # Build input document
         input_doc = {
             "caller_spiffe_id": caller,

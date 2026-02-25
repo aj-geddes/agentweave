@@ -5,7 +5,7 @@ OPA (Open Policy Agent) authorization provider implementation.
 import asyncio
 import hashlib
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 from collections import OrderedDict
 
@@ -15,6 +15,16 @@ from agentweave.authz.base import AuthorizationProvider, AuthzDecision
 
 
 logger = logging.getLogger(__name__)
+
+
+class CircuitBreakerError(Exception):
+    """Raised when circuit breaker is open."""
+    pass
+
+
+class AuthorizationError(Exception):
+    """Raised when authorization check fails."""
+    pass
 
 
 class CircuitBreaker:
@@ -47,7 +57,7 @@ class CircuitBreaker:
         """Execute a function with circuit breaker protection."""
         async with self._lock:
             if self.state == "OPEN":
-                if datetime.utcnow() - self.last_failure_time > timedelta(seconds=self.recovery_timeout):
+                if datetime.now(timezone.utc) - self.last_failure_time > timedelta(seconds=self.recovery_timeout):
                     logger.info("Circuit breaker entering HALF_OPEN state")
                     self.state = "HALF_OPEN"
                     self.success_count = 0
@@ -75,7 +85,7 @@ class CircuitBreaker:
     async def _on_failure(self):
         async with self._lock:
             self.failure_count += 1
-            self.last_failure_time = datetime.utcnow()
+            self.last_failure_time = datetime.now(timezone.utc)
 
             if self.state == "HALF_OPEN":
                 logger.warning("Circuit breaker entering OPEN state from HALF_OPEN")
@@ -119,7 +129,7 @@ class DecisionCache:
                 return None
 
             decision, timestamp = entry
-            age = (datetime.utcnow() - timestamp).total_seconds()
+            age = (datetime.now(timezone.utc) - timestamp).total_seconds()
 
             if age > self.ttl_seconds:
                 del self._cache[key]
@@ -140,7 +150,7 @@ class DecisionCache:
         """Cache an authorization decision."""
         async with self._lock:
             key = self._make_key(caller_id, resource, action, context)
-            self._cache[key] = (decision, datetime.utcnow())
+            self._cache[key] = (decision, datetime.now(timezone.utc))
             self._cache.move_to_end(key)
 
             # Evict oldest if over size
@@ -270,7 +280,7 @@ class OPAProvider(AuthorizationProvider):
             "caller_spiffe_id": caller_id,
             "resource_spiffe_id": resource,
             "action": action,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
 
         # Extract trust domains
@@ -421,13 +431,3 @@ class OPAProvider(AuthorizationProvider):
     async def close(self):
         """Close the HTTP client."""
         await self._client.aclose()
-
-
-class CircuitBreakerError(Exception):
-    """Raised when circuit breaker is open."""
-    pass
-
-
-class AuthorizationError(Exception):
-    """Raised when authorization check fails."""
-    pass

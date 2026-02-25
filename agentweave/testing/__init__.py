@@ -17,9 +17,15 @@ from .mocks import (
 
 from .fixtures import (
     mock_identity_provider,
+    mock_identity_provider_with_rotation,
     mock_authz_provider,
+    mock_authz_provider_permissive,
+    mock_transport,
     test_agent,
     test_config,
+    test_config_dev,
+    spiffe_ids,
+    sample_tasks,
 )
 
 from .cluster import TestCluster
@@ -34,9 +40,15 @@ __all__ = [
 
     # Fixtures
     "mock_identity_provider",
+    "mock_identity_provider_with_rotation",
     "mock_authz_provider",
+    "mock_authz_provider_permissive",
+    "mock_transport",
     "test_agent",
     "test_config",
+    "test_config_dev",
+    "spiffe_ids",
+    "sample_tasks",
 
     # Test infrastructure
     "TestCluster",

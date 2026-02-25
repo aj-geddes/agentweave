@@ -456,15 +456,6 @@ class AgentConfig(BaseModel):
                 details={"environment": self.agent.environment.value},
             )
 
-        # RULE 6: Valid SPIFFE trust domain (already validated in AgentSettings)
-        # Additional check: agent's trust domain should be in allowed list (implicitly)
-        if self.agent.trust_domain not in [
-            self.agent.trust_domain,
-            *self.identity.allowed_trust_domains,
-        ]:
-            # This shouldn't happen, but being explicit
-            pass
-
         return self
 
     @classmethod

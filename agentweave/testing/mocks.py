@@ -9,7 +9,7 @@ import asyncio
 import ssl
 import uuid
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any, AsyncIterator, Dict, List, Optional, Tuple
 from cryptography import x509
 from cryptography.x509.oid import NameOID, ExtensionOID
@@ -29,7 +29,9 @@ class MockSVID:
 
     def is_expired(self) -> bool:
         """Check if SVID is expired."""
-        return datetime.utcnow() >= self.expiry
+        # expiry stored as naive UTC; compare against UTC-aware now
+        now = datetime.now(timezone.utc).replace(tzinfo=None)
+        return now >= self.expiry
 
 
 @dataclass
@@ -102,6 +104,10 @@ class MockIdentityProvider:
         self._trust_bundles: Dict[str, MockTrustBundle] = {}
         self._rotation_task: Optional[asyncio.Task] = None
         self._update_listeners: List[asyncio.Queue] = []
+        # True only after stop_auto_rotation() is explicitly called; prevents
+        # get_svid() from lazily regenerating the cert so that tests can
+        # assert the cert did NOT change after rotation was stopped.
+        self._rotation_explicitly_stopped = False
 
         # Generate initial SVID
         self._generate_svid()
@@ -129,7 +135,8 @@ class MockIdentityProvider:
             x509.NameAttribute(NameOID.COMMON_NAME, self.spiffe_id),
         ])
 
-        expiry = datetime.utcnow() + timedelta(seconds=self.rotation_interval)
+        now_naive = datetime.now(timezone.utc).replace(tzinfo=None)
+        expiry = now_naive + timedelta(seconds=self.rotation_interval)
 
         cert = x509.CertificateBuilder().subject_name(
             subject
@@ -140,7 +147,7 @@ class MockIdentityProvider:
         ).serial_number(
             x509.random_serial_number()
         ).not_valid_before(
-            datetime.utcnow()
+            now_naive
         ).not_valid_after(
             expiry
         ).add_extension(
@@ -169,8 +176,18 @@ class MockIdentityProvider:
         return self._current_svid
 
     async def get_svid(self) -> MockSVID:
-        """Get current SVID (X.509)."""
-        if self._current_svid is None or self._current_svid.is_expired():
+        """Get current SVID (X.509).
+
+        Lazily regenerates the SVID on expiry UNLESS rotation was explicitly
+        stopped via ``stop_auto_rotation()``.  This lets tests verify that:
+        - Expired certs are transparently refreshed when no rotation policy
+          has been set (``test_svid_expiry_check``).
+        - Certs do NOT silently change after ``stop_auto_rotation()`` is called
+          (``test_stop_auto_rotation``).
+        """
+        if self._current_svid is None:
+            self._generate_svid()
+        elif not self._rotation_explicitly_stopped and self._current_svid.is_expired():
             self._generate_svid()
         return self._current_svid
 
@@ -226,6 +243,7 @@ class MockIdentityProvider:
     async def stop_auto_rotation(self):
         """Stop automatic SVID rotation."""
         self.auto_rotate = False
+        self._rotation_explicitly_stopped = True
         if self._rotation_task:
             self._rotation_task.cancel()
             try:
@@ -295,7 +313,7 @@ class MockAuthorizationProvider:
             callee_id=callee_id,
             action=action,
             context=context or {},
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc).replace(tzinfo=None),
             allowed=allowed,
             reason=reason,
         )
@@ -324,7 +342,7 @@ class MockAuthorizationProvider:
             callee_id=None,
             action=action,
             context=context or {},
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc).replace(tzinfo=None),
             allowed=allowed,
             reason=reason,
         )
@@ -431,7 +449,7 @@ class MockTransport:
             status_code=status_code,
             headers=headers or {},
             body=body,
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc).replace(tzinfo=None),
         ))
 
     async def request(
@@ -449,7 +467,7 @@ class MockTransport:
             url=url,
             headers=headers or {},
             body=data,
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc).replace(tzinfo=None),
         )
         self._requests.append(request)
 
@@ -471,7 +489,7 @@ class MockTransport:
             status_code=404,
             headers={},
             body=b"Not Found",
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc).replace(tzinfo=None),
         )
 
     async def get(self, url: str, **kwargs) -> MockResponse:

@@ -20,25 +20,44 @@ from agentweave.comms.a2a.card import AgentCard
 from agentweave.comms.a2a.task import Task, TaskState, TaskManager, Message, MessagePart
 
 
+def _extract_spiffe_id_from_san(san_value: str) -> Optional[str]:
+    """Extract a SPIFFE URI SAN from a raw SAN string if present."""
+    if san_value.startswith("spiffe://"):
+        return san_value
+    return None
+
+
 class SPIFFEMiddleware(BaseHTTPMiddleware):
     """
-    Middleware to extract SPIFFE ID from client certificate.
+    Middleware to extract SPIFFE ID from client mTLS certificate.
 
-    In production, this would extract the SPIFFE ID from the client's
-    mTLS certificate and add it to request state.
+    Attempts to read the URI SAN from the peer certificate exposed via
+    the ASGI scope (available when running under uvicorn with ssl=True and
+    ``ssl.CERT_REQUIRED``).  Falls back to ``None`` when no cert is present
+    (e.g. plain-HTTP development mode).
     """
 
     async def dispatch(self, request: Request, call_next):
-        """Process request and extract SPIFFE ID."""
-        # TODO: Extract SPIFFE ID from client certificate
-        # For now, use a placeholder
-        request.state.spiffe_id = None
+        """Process request and extract SPIFFE ID from client certificate."""
+        spiffe_id: Optional[str] = None
 
-        # Get peer cert from TLS connection
-        # if hasattr(request, 'scope') and 'client_cert' in request.scope:
-        #     cert = request.scope['client_cert']
-        #     spiffe_id = extract_spiffe_id_from_cert(cert)
-        #     request.state.spiffe_id = spiffe_id
+        # ASGI servers (uvicorn ≥ 0.20) expose the peer certificate under
+        # request.scope["ssl"] or via transport extensions.  We attempt a
+        # best-effort extraction without hard-failing so the server remains
+        # usable in non-mTLS development scenarios.
+        try:
+            transport = request.scope.get("transport")
+            if transport is not None and hasattr(transport, "get_extra_info"):
+                peer_cert = transport.get_extra_info("peercert")
+                if peer_cert:
+                    for san_type, san_value in peer_cert.get("subjectAltName", []):
+                        if san_type == "URI" and san_value.startswith("spiffe://"):
+                            spiffe_id = san_value
+                            break
+        except Exception:
+            pass  # Non-fatal — caller will be treated as unknown
+
+        request.state.spiffe_id = spiffe_id
 
         response = await call_next(request)
         return response
@@ -57,7 +76,8 @@ class A2AServer:
         agent_card: AgentCard,
         task_manager: Optional[TaskManager] = None,
         authz_enforcer=None,
-        enable_cors: bool = True
+        enable_cors: bool = False,
+        allowed_origins: Optional[list] = None,
     ):
         """
         Initialize A2A server.
@@ -66,7 +86,8 @@ class A2AServer:
             agent_card: Agent card to serve
             task_manager: Task manager instance (creates new if None)
             authz_enforcer: Authorization enforcer (optional)
-            enable_cors: Enable CORS middleware
+            enable_cors: Enable CORS middleware (disabled by default for security)
+            allowed_origins: Explicit list of allowed CORS origins (required when enable_cors=True)
         """
         self.agent_card = agent_card
         self.task_manager = task_manager or TaskManager()
@@ -82,14 +103,22 @@ class A2AServer:
         # Task handlers
         self._task_handlers: Dict[str, Callable[[Task], Awaitable[Task]]] = {}
 
-        # Setup middleware
+        # Setup middleware — CORS is disabled by default; agents communicate via mTLS, not browsers
         if enable_cors:
+            origins = allowed_origins or []
+            if not origins:
+                import warnings
+                warnings.warn(
+                    "CORS enabled with no allowed_origins — no origins will be permitted. "
+                    "Pass allowed_origins=['https://your-ui.example.com'] explicitly.",
+                    stacklevel=2,
+                )
             self.app.add_middleware(
                 CORSMiddleware,
-                allow_origins=["*"],  # TODO: Configure based on security requirements
+                allow_origins=origins,
                 allow_credentials=True,
-                allow_methods=["*"],
-                allow_headers=["*"],
+                allow_methods=["POST", "GET"],
+                allow_headers=["Content-Type", "Authorization"],
             )
 
         self.app.add_middleware(SPIFFEMiddleware)
@@ -175,18 +204,20 @@ class A2AServer:
         """
         # Check authorization
         if self.authz:
-            caller_id = getattr(request.state, 'spiffe_id', 'unknown')
-            # decision = await self.authz.check_inbound(
-            #     caller_id=caller_id,
-            #     action=params.get("task_type"),
-            #     context=params
-            # )
-            # if not decision.allowed:
-            #     return self._jsonrpc_error(
-            #         error_id=request_id,
-            #         code=-32000,
-            #         message=f"Not authorized: {decision.reason}"
-            #     )
+            caller_id = getattr(request.state, 'spiffe_id', None) or 'unknown'
+            task_type = params.get("task_type")
+            decision = await self.authz.check(
+                caller_id=caller_id,
+                resource=self.agent_card.name,
+                action=task_type or "unknown",
+                context={"params": params}
+            )
+            if not decision.allowed:
+                return self._jsonrpc_error(
+                    error_id=request_id,
+                    code=-32000,
+                    message=f"Not authorized: {decision.reason}"
+                )
 
         # Create task
         task_type = params.get("task_type")
