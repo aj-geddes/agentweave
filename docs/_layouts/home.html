@@ -1,756 +1,499 @@
 <!DOCTYPE html>
 <html lang="en">
-{% include head.html %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title | default: site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <meta name="keywords" content="agentic commerce security, AI agent security SDK, secure AI agent framework, SPIFFE AI agents, zero-trust AI agents, cryptographic agent identity, mTLS agent framework, OPA agent authorization, A2A protocol security, Python AI agent SDK, agent-to-agent communication security, AgentWeave">
+  <meta name="author" content="{{ site.author | default: 'AgentWeave Team' }}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{ page.title | default: site.title }}">
+  <meta property="og:description" content="{{ page.description | default: site.description }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}/">
+  <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/assets/images/agentweave-social.png">
+  <meta property="og:site_name" content="AgentWeave">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page.title | default: site.title }}">
+  <meta name="twitter:description" content="{{ page.description | default: site.description }}">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon/favicon.svg' | relative_url }}">
+
+  <!-- Fonts: Instrument Serif (display), DM Sans (body), JetBrains Mono (code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{ '/assets/css/home.css' | relative_url }}">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AgentWeave SDK",
+    "description": "{{ site.description | xml_escape }}",
+    "url": "{{ site.url }}{{ site.baseurl }}/",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Linux, macOS, Windows",
+    "programmingLanguage": "Python",
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "downloadUrl": "https://pypi.org/project/agentweave/",
+    "codeRepository": "https://github.com/aj-geddes/agentweave",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is AgentWeave?",
+        "acceptedAnswer": { "@type": "Answer", "text": "AgentWeave is an open-source Python SDK providing cryptographic identity, mandatory mTLS, and policy-based authorization for AI agents. It is the trust and security infrastructure layer for agentic commerce." }
+      },
+      {
+        "@type": "Question",
+        "name": "How does AgentWeave secure agent-to-agent communication?",
+        "acceptedAnswer": { "@type": "Answer", "text": "AgentWeave enforces mandatory mutual TLS (mTLS) on every connection. Every agent receives a cryptographic SPIFFE identity. The secure path is the only path — security cannot be bypassed." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is agentic commerce?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Agentic commerce is the emerging $20.9B market where AI agents autonomously discover, negotiate, and complete purchases. AgentWeave provides the trust infrastructure this market requires." }
+      }
+    ]
+  }
+  </script>
+</head>
 <body>
-  {% include header.html %}
 
-<!-- Skip to Content (Accessibility) -->
-<a href="#main-content" class="skip-to-content">Skip to main content</a>
-
-<!-- Hero Section -->
-<section class="hero" id="main-content" role="banner" aria-labelledby="hero-heading">
-  <div class="hero-bg-pattern" aria-hidden="true"></div>
-  <div class="hero-container">
-    <div class="hero-content">
-      <div class="hero-badge">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        </svg>
-        <span>Trust Infrastructure for Agentic Commerce</span>
-      </div>
-
-      <h1 class="hero-title" id="hero-heading">{{ page.hero.title | default: site.title }}</h1>
-      <p class="hero-tagline">{{ page.hero.tagline | default: "The secure path is the only path" }}</p>
-
-      {% if page.hero.description %}
-      <p class="hero-description">{{ page.hero.description }}</p>
-      {% endif %}
-
-      <!-- Pip Install Box -->
-      <div class="hero-install">
-        <div class="install-box" role="group" aria-label="Install command">
-          <span class="install-prompt" aria-hidden="true">$</span>
-          <code class="install-command">pip install agentweave</code>
-          <button class="copy-btn copy-install-btn" data-copy="pip install agentweave" aria-label="Copy install command to clipboard">
-            <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-            </svg>
-            <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="display:none">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- CTA Buttons -->
-      <div class="hero-actions">
-        <a href="{{ '/getting-started/quickstart/' | relative_url }}" class="btn btn-primary btn-lg">
-          Get Started
-          <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </a>
-        <a href="{{ '/getting-started/' | relative_url }}" class="btn btn-secondary">
-          View Documentation
-        </a>
-        <a href="{{ site.github.repository_url | default: 'https://github.com/aj-geddes/agentweave' }}" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
-          <svg class="btn-icon-left" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-          </svg>
-          GitHub
-        </a>
-      </div>
-    </div>
-
-    <!-- Code Example -->
-    {% if page.hero.code_example %}
-    <div class="hero-code">
-      <div class="code-window">
-        <div class="code-window-header">
-          <div class="code-window-dots" aria-hidden="true">
-            <span class="dot dot-red"></span>
-            <span class="dot dot-yellow"></span>
-            <span class="dot dot-green"></span>
-          </div>
-          <span class="code-window-title">agent.py</span>
-          <button class="copy-btn code-copy-btn" data-copy-target="hero-code-block" aria-label="Copy code example to clipboard">
-            <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-            </svg>
-            <svg class="check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="display:none">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-          </button>
-        </div>
-        <pre class="code-window-body"><code id="hero-code-block" class="language-python">{{ page.hero.code_example | xml_escape }}</code></pre>
-      </div>
-    </div>
-    {% endif %}
-  </div>
-</section>
-
-<!-- Market Stats Banner -->
-{% if page.market_stats %}
-<section class="market-stats" aria-label="Market statistics">
-  <div class="market-stats-container">
-    {% for stat in page.market_stats %}
-    <div class="market-stat-item fade-in-section">
-      <div class="market-stat-icon">
-        {% if stat.icon == "trending-up" %}
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
-        </svg>
-        {% elsif stat.icon == "globe" %}
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
-          <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-        </svg>
-        {% elsif stat.icon == "shield" %}
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        </svg>
-        {% elsif stat.icon == "zap" %}
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-        </svg>
-        {% elsif stat.icon == "users" %}
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
-          <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
-        </svg>
-        {% elsif stat.icon == "chart-bar" %}
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
-        </svg>
-        {% endif %}
-      </div>
-      <span class="market-stat-value">{{ stat.value }}</span>
-      <span class="market-stat-label">{{ stat.label }}</span>
-    </div>
-    {% endfor %}
-  </div>
-</section>
-{% endif %}
-
-<!-- Features Grid -->
-{% if page.features %}
-<section class="features-section" id="features" aria-labelledby="features-heading">
-  <div class="section-container">
-    <h2 class="section-title" id="features-heading">{{ page.features.title | default: "Why AgentWeave?" }}</h2>
-
-    {% if page.features.subtitle %}
-    <p class="section-subtitle">{{ page.features.subtitle }}</p>
-    {% endif %}
-
-    <div class="features-grid">
-      {% for feature in page.features.items %}
-      <div class="feature-card fade-in-section">
-        {% if feature.icon %}
-        <div class="feature-icon">
-          {% case feature.icon %}
-          {% when "shield" %}
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
-          {% when "lock" %}
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-            <path d="M7 11V7a5 5 0 0110 0v4"/>
-          </svg>
-          {% when "code" %}
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="16 18 22 12 16 6"/>
-            <polyline points="8 6 2 12 8 18"/>
-          </svg>
-          {% when "zap" %}
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-          </svg>
-          {% when "layers" %}
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-            <polyline points="2 17 12 22 22 17"/>
-            <polyline points="2 12 12 17 22 12"/>
-          </svg>
-          {% when "cloud" %}
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/>
-          </svg>
-          {% when "globe" %}
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="2" y1="12" x2="22" y2="12"/>
-            <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-          </svg>
-          {% when "trending-up" %}
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-            <polyline points="17 6 23 6 23 12"/>
-          </svg>
-          {% when "link" %}
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
-            <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
-          </svg>
-          {% when "users" %}
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 00-3-3.87"/>
-            <path d="M16 3.13a4 4 0 010 7.75"/>
-          </svg>
-          {% when "chart-bar" %}
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="18" y1="20" x2="18" y2="10"/>
-            <line x1="12" y1="20" x2="12" y2="4"/>
-            <line x1="6" y1="20" x2="6" y2="14"/>
-          </svg>
-          {% endcase %}
-        </div>
-        {% endif %}
-
-        <h3 class="feature-title">{{ feature.title }}</h3>
-        <p class="feature-description">{{ feature.description }}</p>
-
-        {% if feature.link %}
-        <a href="{{ feature.link.url | relative_url }}" class="feature-link">
-          {{ feature.link.text }}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </a>
-        {% endif %}
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endif %}
-
-<!-- Use Cases -->
-{% if page.use_cases %}
-<section class="use-cases-section" id="use-cases" aria-labelledby="use-cases-heading">
-  <div class="section-container">
-    <h2 class="section-title" id="use-cases-heading">{{ page.use_cases.title | default: "Real-World Use Cases" }}</h2>
-
-    {% if page.use_cases.subtitle %}
-    <p class="section-subtitle">{{ page.use_cases.subtitle }}</p>
-    {% endif %}
-
-    <div class="use-cases-grid">
-      {% for use_case in page.use_cases.items %}
-      <div class="use-case-card fade-in-section">
-        {% if use_case.icon %}
-        <div class="use-case-icon">
-          {% case use_case.icon %}
-          {% when "shield" %}
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
-          {% when "globe" %}
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
-            <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-          </svg>
-          {% when "zap" %}
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-          </svg>
-          {% when "lock" %}
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
-          </svg>
-          {% when "layers" %}
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-            <polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
-          </svg>
-          {% when "code" %}
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
-          </svg>
-          {% when "cloud" %}
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/>
-          </svg>
-          {% when "trending-up" %}
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
-          </svg>
-          {% when "link" %}
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
-            <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
-          </svg>
-          {% when "users" %}
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
-          </svg>
-          {% when "chart-bar" %}
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
-          </svg>
-          {% endcase %}
-        </div>
-        {% endif %}
-
-        <h3 class="use-case-title">{{ use_case.title }}</h3>
-        <p class="use-case-description">{{ use_case.description }}</p>
-
-        {% if use_case.capabilities %}
-        <ul class="use-case-capabilities" aria-label="Capabilities">
-          {% for cap in use_case.capabilities %}
-          <li>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-            {{ cap }}
-          </li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-
-        {% if use_case.link %}
-        <a href="{{ use_case.link.url | relative_url }}" class="use-case-link">
-          {{ use_case.link.text | default: "Learn more" }}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </a>
-        {% endif %}
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endif %}
-
-<!-- Technologies -->
-{% if page.technologies %}
-<section class="technologies-section" id="technologies" aria-labelledby="technologies-heading">
-  <div class="section-container">
-    <h2 class="section-title" id="technologies-heading">{{ page.technologies.title | default: "Built on Production-Proven Technologies" }}</h2>
-
-    {% if page.technologies.subtitle %}
-    <p class="section-subtitle">{{ page.technologies.subtitle }}</p>
-    {% endif %}
-
-    <div class="tech-grid">
-      {% for tech in page.technologies.items %}
-      <div class="tech-card fade-in-section">
-        {% if tech.badge %}
-        <span class="tech-badge-label">{{ tech.badge }}</span>
-        {% endif %}
-        <h3 class="tech-name">{{ tech.name }}</h3>
-        <p class="tech-description">{{ tech.description }}</p>
-        {% if tech.link %}
-        <a href="{{ tech.link }}" class="tech-link" target="_blank" rel="noopener noreferrer">
-          Learn more
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
-            <polyline points="15 3 21 3 21 9"/>
-            <line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-        </a>
-        {% endif %}
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endif %}
-
-<!-- Getting Started -->
-{% if page.getting_started %}
-<section class="getting-started-section" id="getting-started" aria-labelledby="getting-started-heading">
-  <div class="section-container">
-    <h2 class="section-title" id="getting-started-heading">{{ page.getting_started.title | default: "Get Started in Minutes" }}</h2>
-
-    {% if page.getting_started.subtitle %}
-    <p class="section-subtitle">{{ page.getting_started.subtitle }}</p>
-    {% endif %}
-
-    <div class="steps-grid">
-      {% for step in page.getting_started.steps %}
-      <div class="step-card fade-in-section">
-        <div class="step-number" aria-hidden="true">{{ forloop.index }}</div>
-        <h3 class="step-title">{{ step.title }}</h3>
-        <p class="step-description">{{ step.description }}</p>
-        {% if step.code %}
-        <div class="step-code">
-          <div class="step-code-header">
-            <button class="copy-btn step-copy-btn" data-copy="{{ step.code | strip_newlines | xml_escape }}" aria-label="Copy code for step {{ forloop.index }}">
-              <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-              </svg>
-              <svg class="check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="display:none">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-            </button>
-          </div>
-          <pre><code>{{ step.code | xml_escape }}</code></pre>
-        </div>
-        {% endif %}
-      </div>
-      {% endfor %}
-    </div>
-
-    {% if page.getting_started.cta %}
-    <div class="getting-started-cta">
-      <a href="{{ page.getting_started.cta.url | relative_url }}" class="btn btn-primary btn-lg">
-        {{ page.getting_started.cta.text }}
-        <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-        </svg>
+<!-- ════════════════════════════════════════════════════════════════════
+     NAVIGATION
+     ════════════════════════════════════════════════════════════════════ -->
+<nav class="aw-nav">
+  <div class="aw-nav__inner">
+    <a href="{{ '/' | relative_url }}" class="aw-nav__logo">
+      <svg class="aw-nav__logomark" width="28" height="28" viewBox="0 0 32 32" fill="none"><path d="M16 2L3 9v14l13 7 13-7V9L16 2z" stroke="currentColor" stroke-width="2"/><path d="M16 2v28M3 9l13 7 13-7" stroke="currentColor" stroke-width="2"/></svg>
+      <span>AgentWeave</span>
+    </a>
+    <div class="aw-nav__links">
+      <a href="https://github.com/aj-geddes/agentweave/wiki" target="_blank" rel="noopener">Docs</a>
+      <a href="https://github.com/aj-geddes/agentweave/wiki/API-Reference" target="_blank" rel="noopener">API</a>
+      <a href="https://github.com/aj-geddes/agentweave/wiki#examples" target="_blank" rel="noopener">Examples</a>
+      <a href="https://github.com/aj-geddes/agentweave" target="_blank" rel="noopener" class="aw-nav__gh">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        GitHub
       </a>
     </div>
-    {% endif %}
+    <button class="aw-nav__toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-</section>
-{% endif %}
+</nav>
 
-<!-- Protocol Compatibility -->
-{% if page.protocols %}
-<section class="protocols-section" id="protocols" aria-labelledby="protocols-heading">
-  <div class="section-container">
-    <h2 class="section-title" id="protocols-heading">{{ page.protocols.title | default: "Protocol Compatibility" }}</h2>
-
-    {% if page.protocols.subtitle %}
-    <p class="section-subtitle">{{ page.protocols.subtitle }}</p>
-    {% endif %}
-
-    <div class="protocols-grid">
-      {% for protocol in page.protocols.items %}
-      <div class="protocol-card fade-in-section">
-        <div class="protocol-header">
-          {% if protocol.icon %}
-          <div class="protocol-icon">
-            {% case protocol.icon %}
-            {% when "link" %}
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
-              <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
-            </svg>
-            {% when "code" %}
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
-            </svg>
-            {% when "globe" %}
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
-              <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-            </svg>
-            {% when "layers" %}
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-              <polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
-            </svg>
-            {% when "shield" %}
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-            {% endcase %}
-          </div>
-          {% endif %}
-          <h3 class="protocol-name">{{ protocol.name }}</h3>
-          {% if protocol.status %}
-          <span class="protocol-status protocol-status--{{ protocol.status | downcase | replace: ' ', '-' }}">{{ protocol.status }}</span>
-          {% endif %}
-        </div>
-        <p class="protocol-description">{{ protocol.description }}</p>
-        {% if protocol.link %}
-        <a href="{{ protocol.link | relative_url }}" class="protocol-link">
-          Documentation
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </a>
-        {% endif %}
+<!-- ════════════════════════════════════════════════════════════════════
+     HERO
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="aw-hero">
+  <div class="aw-hero__bg" aria-hidden="true"></div>
+  <div class="aw-hero__inner">
+    <div class="aw-hero__content">
+      <div class="aw-hero__badge">
+        <span class="aw-hero__badge-dot"></span>
+        Open Source &middot; Apache 2.0 &middot; Python 3.11+
       </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endif %}
-
-<!-- Community & Support -->
-{% if page.community %}
-<section class="community-section" id="community" aria-labelledby="community-heading">
-  <div class="section-container">
-    <h2 class="section-title" id="community-heading">{{ page.community.title | default: "Community & Support" }}</h2>
-
-    {% if page.community.subtitle %}
-    <p class="section-subtitle">{{ page.community.subtitle }}</p>
-    {% endif %}
-
-    <div class="community-grid">
-      {% for item in page.community.items %}
-      {% if item.url contains "http" %}
-      <a href="{{ item.url }}" class="community-card fade-in-section" target="_blank" rel="noopener noreferrer">
-      {% else %}
-      <a href="{{ item.url | relative_url }}" class="community-card fade-in-section">
-      {% endif %}
-        <div class="community-icon">
-          {% case item.icon %}
-          {% when "github" %}
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-          </svg>
-          {% when "discord" %}
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-          </svg>
-          {% when "docs" %}
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-          </svg>
-          {% when "mail" %}
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-            <polyline points="22,6 12,13 2,6"/>
-          </svg>
-          {% when "users" %}
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 00-3-3.87"/>
-            <path d="M16 3.13a4 4 0 010 7.75"/>
-          </svg>
-          {% endcase %}
-        </div>
-        <h3 class="community-title">{{ item.title }}</h3>
-        <p class="community-description">{{ item.description }}</p>
-        <span class="community-link-indicator">
-          {% if item.url contains "http" %}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
-            <polyline points="15 3 21 3 21 9"/>
-            <line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-          {% else %}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-          </svg>
-          {% endif %}
-        </span>
-      </a>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endif %}
-
-<!-- Final CTA -->
-<section class="cta-section" aria-labelledby="cta-heading">
-  <div class="cta-bg-pattern" aria-hidden="true"></div>
-  <div class="section-container">
-    <div class="cta-content">
-      <h2 class="cta-title" id="cta-heading">Ready to Build Secure AI Agents?</h2>
-      <p class="cta-description">Get your first cryptographically authenticated agent running in 5 minutes. Security is automatic.</p>
-      <div class="cta-actions">
-        <a href="{{ '/getting-started/quickstart/' | relative_url }}" class="btn btn-primary btn-lg">
-          Get Started
-          <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </a>
-        <a href="{{ '/examples/' | relative_url }}" class="btn btn-secondary">
-          View Examples
-        </a>
-        <a href="{{ site.github.repository_url | default: 'https://github.com/aj-geddes/agentweave' }}" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
-          <svg class="btn-icon-left" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-          </svg>
+      <h1 class="aw-hero__title">The Trust Layer for<br><em>Agentic Commerce</em></h1>
+      <p class="aw-hero__sub">Cryptographic identity, mandatory mTLS, and policy-based authorization for the $20.9B AI agent economy. Security that cannot be bypassed.</p>
+      <div class="aw-hero__install">
+        <code>$ pip install agentweave</code>
+        <button class="aw-hero__copy" data-copy="pip install agentweave" aria-label="Copy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        </button>
+      </div>
+      <div class="aw-hero__actions">
+        <a href="https://github.com/aj-geddes/agentweave/wiki/Quick-Start" class="aw-btn aw-btn--primary" target="_blank" rel="noopener">Get Started</a>
+        <a href="https://github.com/aj-geddes/agentweave" class="aw-btn aw-btn--ghost" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
           Star on GitHub
         </a>
       </div>
     </div>
+    <div class="aw-hero__code">
+      <div class="aw-hero__code-chrome">
+        <span class="aw-dot aw-dot--r"></span>
+        <span class="aw-dot aw-dot--y"></span>
+        <span class="aw-dot aw-dot--g"></span>
+        <span class="aw-hero__code-file">agent.py</span>
+      </div>
+      <pre class="aw-hero__code-body"><code><span class="aw-kw">from</span> <span class="aw-mod">agentweave</span> <span class="aw-kw">import</span> SecureAgent, capability
+
+<span class="aw-kw">class</span> <span class="aw-cls">PurchaseAgent</span>(SecureAgent):
+    <span class="aw-dec">@capability</span>(<span class="aw-str">"negotiate"</span>)
+    <span class="aw-kw">async def</span> <span class="aw-fn">negotiate</span>(self, order: dict) -> dict:
+        <span class="aw-cmt"># Identity verified. mTLS enforced.</span>
+        <span class="aw-cmt"># Authorization checked. Audit logged.</span>
+        <span class="aw-kw">return</span> {<span class="aw-str">"status"</span>: <span class="aw-str">"accepted"</span>}
+
+agent = PurchaseAgent.from_config(<span class="aw-str">"config.yaml"</span>)
+agent.run()</code></pre>
+    </div>
   </div>
 </section>
 
-<!-- Main Content (renders index.md markdown body) -->
-{% if content != "" and content != nil %}
-<section class="home-content">
-  <div class="section-container">
-    {{ content }}
+<!-- ════════════════════════════════════════════════════════════════════
+     CRISIS: THE MARKET PROBLEM
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="aw-crisis">
+  <div class="aw-container">
+    <p class="aw-crisis__label">The Security Gap</p>
+    <h2 class="aw-crisis__title">The agent economy has a <em>trust problem</em></h2>
+    <div class="aw-crisis__grid">
+      <div class="aw-crisis__stat">
+        <span class="aw-crisis__val">$20.9B</span>
+        <span class="aw-crisis__desc">US agentic commerce<br>market in 2026</span>
+        <span class="aw-crisis__src">eMarketer</span>
+      </div>
+      <div class="aw-crisis__stat">
+        <span class="aw-crisis__val">693%</span>
+        <span class="aw-crisis__desc">increase in AI traffic<br>to retail sites</span>
+        <span class="aw-crisis__src">Adobe</span>
+      </div>
+      <div class="aw-crisis__stat">
+        <span class="aw-crisis__val">40%</span>
+        <span class="aw-crisis__desc">agentic AI projects<br>cancelled due to risk</span>
+        <span class="aw-crisis__src">Gartner</span>
+      </div>
+      <div class="aw-crisis__stat">
+        <span class="aw-crisis__val">$15T</span>
+        <span class="aw-crisis__desc">B2B purchases via<br>AI agents by 2028</span>
+        <span class="aw-crisis__src">Gartner</span>
+      </div>
+    </div>
+    <p class="aw-crisis__coda">Every one of these transactions needs verified identity, enforced authorization, and auditable trust.</p>
   </div>
 </section>
-{% endif %}
 
-<!-- Home Page JavaScript -->
+<!-- ════════════════════════════════════════════════════════════════════
+     STACK: WHERE AGENTWEAVE FITS
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="aw-stack">
+  <div class="aw-container">
+    <p class="aw-stack__label">Architecture</p>
+    <h2 class="aw-stack__title">The security middleware for <em>every agent protocol</em></h2>
+    <div class="aw-stack__diagram">
+      <div class="aw-stack__layer aw-stack__layer--consumer">
+        <span class="aw-stack__layer-name">Consumer Agents</span>
+        <span class="aw-stack__layer-items">ChatGPT &middot; Gemini &middot; Copilot &middot; Perplexity</span>
+      </div>
+      <div class="aw-stack__layer aw-stack__layer--protocol">
+        <span class="aw-stack__layer-name">Commerce Protocols</span>
+        <span class="aw-stack__layer-items">ACP (OpenAI/Stripe) &middot; UCP (Google/Shopify) &middot; A2A</span>
+      </div>
+      <div class="aw-stack__layer aw-stack__layer--aw">
+        <span class="aw-stack__layer-icon">
+          <svg width="20" height="20" viewBox="0 0 32 32" fill="none"><path d="M16 2L3 9v14l13 7 13-7V9L16 2z" stroke="currentColor" stroke-width="2"/><path d="M16 2v28M3 9l13 7 13-7" stroke="currentColor" stroke-width="2"/></svg>
+        </span>
+        <span class="aw-stack__layer-name">AgentWeave</span>
+        <span class="aw-stack__layer-items">SPIFFE Identity &middot; OPA Authorization &middot; mTLS &middot; Audit</span>
+      </div>
+      <div class="aw-stack__layer aw-stack__layer--payment">
+        <span class="aw-stack__layer-name">Payment Layer</span>
+        <span class="aw-stack__layer-items">Visa TAP &middot; Mastercard Agent Pay &middot; Stripe &middot; PayPal</span>
+      </div>
+      <div class="aw-stack__layer aw-stack__layer--infra">
+        <span class="aw-stack__layer-name">Infrastructure</span>
+        <span class="aw-stack__layer-items">Cloudflare &middot; Akamai &middot; AWS/GCP/Azure &middot; Kubernetes</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     FEATURES
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="aw-features" id="features">
+  <div class="aw-container">
+    <p class="aw-section-label">Capabilities</p>
+    <h2 class="aw-section-title">Every component agents need to<br>transact with <em>verifiable trust</em></h2>
+    <div class="aw-features__grid">
+
+      <div class="aw-card">
+        <div class="aw-card__icon aw-card__icon--cyan">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="aw-card__title">Cryptographic Identity</h3>
+        <p class="aw-card__text">SPIFFE-based workload identity gives every agent a non-forgeable credential. Automatic rotation. No shared secrets. The same standard Netflix, Uber, and Square use.</p>
+        <a href="https://github.com/aj-geddes/agentweave/wiki/Identity" class="aw-card__link" target="_blank" rel="noopener">Read the docs &rarr;</a>
+      </div>
+
+      <div class="aw-card">
+        <div class="aw-card__icon aw-card__icon--violet">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        </div>
+        <h3 class="aw-card__title">Mandatory mTLS</h3>
+        <p class="aw-card__text">Mutual TLS on every connection. No exceptions, no downgrades. TLS 1.3 enforced. The secure path is the only path &mdash; you cannot ship an insecure agent.</p>
+        <a href="https://github.com/aj-geddes/agentweave/wiki/Security-Model" class="aw-card__link" target="_blank" rel="noopener">Read the docs &rarr;</a>
+      </div>
+
+      <div class="aw-card">
+        <div class="aw-card__icon aw-card__icon--amber">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3 class="aw-card__title">Policy-Based Authorization</h3>
+        <p class="aw-card__text">OPA-powered fine-grained access control. Default-deny in production. Policies as code in Rego. Every decision audited and traceable.</p>
+        <a href="https://github.com/aj-geddes/agentweave/wiki/Authorization" class="aw-card__link" target="_blank" rel="noopener">Read the docs &rarr;</a>
+      </div>
+
+      <div class="aw-card">
+        <div class="aw-card__icon aw-card__icon--cyan">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3 class="aw-card__title">A2A Protocol Native</h3>
+        <p class="aw-card__text">First-class Linux Foundation A2A support. Agent Cards, capability discovery, JSON-RPC 2.0 messaging. Interoperate with any A2A-compatible system.</p>
+        <a href="https://github.com/aj-geddes/agentweave/wiki/A2A-Protocol" class="aw-card__link" target="_blank" rel="noopener">Read the docs &rarr;</a>
+      </div>
+
+      <div class="aw-card">
+        <div class="aw-card__icon aw-card__icon--violet">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        </div>
+        <h3 class="aw-card__title">Cross-Cloud Federation</h3>
+        <p class="aw-card__text">SPIRE federation across trust domains. AWS to GCP to Azure. Vendor-neutral identity that works across organizational boundaries.</p>
+        <a href="https://github.com/aj-geddes/agentweave/wiki/Architecture" class="aw-card__link" target="_blank" rel="noopener">Read the docs &rarr;</a>
+      </div>
+
+      <div class="aw-card">
+        <div class="aw-card__icon aw-card__icon--amber">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
+        </div>
+        <h3 class="aw-card__title">Full Observability</h3>
+        <p class="aw-card__text">OpenTelemetry-native metrics, distributed tracing, structured audit logs. Prometheus-compatible. See every interaction in production.</p>
+        <a href="https://github.com/aj-geddes/agentweave/wiki/Observability" class="aw-card__link" target="_blank" rel="noopener">Read the docs &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     PROTOCOLS
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="aw-protocols">
+  <div class="aw-container">
+    <p class="aw-section-label">Interoperability</p>
+    <h2 class="aw-section-title">Works with the <em>emerging protocol ecosystem</em></h2>
+    <div class="aw-protocols__grid">
+      <div class="aw-protocols__card">
+        <div class="aw-protocols__status aw-protocols__status--native">Native</div>
+        <h3>A2A Protocol</h3>
+        <p>Linux Foundation standard. Agent Cards, capability discovery, JSON-RPC 2.0. First-class support built in.</p>
+      </div>
+      <div class="aw-protocols__card">
+        <div class="aw-protocols__status aw-protocols__status--compat">Compatible</div>
+        <h3>ACP</h3>
+        <p>OpenAI + Stripe agentic commerce protocol. AgentWeave secures ACP connections with mTLS and identity.</p>
+      </div>
+      <div class="aw-protocols__card">
+        <div class="aw-protocols__status aw-protocols__status--compat">Compatible</div>
+        <h3>UCP</h3>
+        <p>Google + Shopify universal commerce protocol. AgentWeave provides the trust layer regardless of wire protocol.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     COMPARISON
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="aw-compare">
+  <div class="aw-container">
+    <p class="aw-section-label">Why AgentWeave</p>
+    <h2 class="aw-section-title">Traditional agent security <em>vs. AgentWeave</em></h2>
+    <div class="aw-compare__grid">
+      <div class="aw-compare__col aw-compare__col--old">
+        <h3>Traditional</h3>
+        <ul>
+          <li>API keys and shared secrets in headers</li>
+          <li>Plain HTTP or optional TLS, no peer verification</li>
+          <li>Authorization scattered in application code</li>
+          <li>No audit trail for agent transactions</li>
+          <li>Security bolted on, easily bypassed</li>
+        </ul>
+      </div>
+      <div class="aw-compare__col aw-compare__col--new">
+        <h3>AgentWeave</h3>
+        <ul>
+          <li>Cryptographic identity via SPIFFE &mdash; no secrets</li>
+          <li>Mandatory mTLS, every connection verified both ways</li>
+          <li>OPA policies as code, default-deny enforcement</li>
+          <li>Every decision audited with distributed tracing</li>
+          <li>Security is the architecture &mdash; cannot be bypassed</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     GETTING STARTED
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="aw-start" id="getting-started">
+  <div class="aw-container">
+    <p class="aw-section-label">Quick Start</p>
+    <h2 class="aw-section-title">Ship a secure agent in <em>minutes</em></h2>
+    <div class="aw-start__steps">
+      <div class="aw-start__step">
+        <div class="aw-start__num">1</div>
+        <h3>Install</h3>
+        <p>Python 3.11+ required.</p>
+        <pre><code>pip install agentweave</code></pre>
+      </div>
+      <div class="aw-start__step">
+        <div class="aw-start__num">2</div>
+        <h3>Define capabilities</h3>
+        <p>Identity, mTLS, and authorization are automatic.</p>
+        <pre><code><span class="aw-kw">from</span> <span class="aw-mod">agentweave</span> <span class="aw-kw">import</span> SecureAgent, capability
+
+<span class="aw-kw">class</span> <span class="aw-cls">MyAgent</span>(SecureAgent):
+    <span class="aw-dec">@capability</span>(<span class="aw-str">"greet"</span>)
+    <span class="aw-kw">async def</span> <span class="aw-fn">greet</span>(self, name: <span class="aw-cls">str</span>):
+        <span class="aw-kw">return</span> {<span class="aw-str">"msg"</span>: <span class="aw-str">f"Hello, </span>{name}<span class="aw-str">!"</span>}</code></pre>
+      </div>
+      <div class="aw-start__step">
+        <div class="aw-start__num">3</div>
+        <h3>Configure &amp; run</h3>
+        <p>Point to your SPIFFE trust domain and OPA policies.</p>
+        <pre><code>agent = MyAgent.from_config(<span class="aw-str">"config.yaml"</span>)
+agent.run()</code></pre>
+      </div>
+    </div>
+    <div class="aw-start__cta">
+      <a href="https://github.com/aj-geddes/agentweave/wiki/Quick-Start" class="aw-btn aw-btn--primary" target="_blank" rel="noopener">Read the Quick Start Guide &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     BUILT ON
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="aw-built">
+  <div class="aw-container">
+    <p class="aw-section-label">Foundations</p>
+    <h2 class="aw-section-title">Built on <em>CNCF-graduated</em> standards</h2>
+    <div class="aw-built__grid">
+      <a href="https://spiffe.io" target="_blank" rel="noopener" class="aw-built__item">
+        <strong>SPIFFE / SPIRE</strong>
+        <span>Cryptographic identity. Netflix, Uber, Square.</span>
+      </a>
+      <a href="https://www.openpolicyagent.org" target="_blank" rel="noopener" class="aw-built__item">
+        <strong>Open Policy Agent</strong>
+        <span>Policy engine for authorization at scale.</span>
+      </a>
+      <a href="https://a2a-protocol.org" target="_blank" rel="noopener" class="aw-built__item">
+        <strong>A2A Protocol</strong>
+        <span>Linux Foundation agent interoperability.</span>
+      </a>
+      <a href="https://opentelemetry.io" target="_blank" rel="noopener" class="aw-built__item">
+        <strong>OpenTelemetry</strong>
+        <span>Vendor-neutral observability standard.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     CTA
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="aw-cta">
+  <div class="aw-container">
+    <h2 class="aw-cta__title">Ready to secure<br>your agents?</h2>
+    <p class="aw-cta__sub">The agent economy will not wait for security to catch up.</p>
+    <div class="aw-cta__actions">
+      <a href="https://github.com/aj-geddes/agentweave/wiki/Quick-Start" class="aw-btn aw-btn--primary" target="_blank" rel="noopener">Get Started</a>
+      <a href="https://github.com/aj-geddes/agentweave" class="aw-btn aw-btn--ghost" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════════════════════════════════ -->
+<footer class="aw-footer">
+  <div class="aw-container">
+    <div class="aw-footer__grid">
+      <div class="aw-footer__col">
+        <h4>Documentation</h4>
+        <ul>
+          <li><a href="https://github.com/aj-geddes/agentweave/wiki/Quick-Start" target="_blank" rel="noopener">Quick Start</a></li>
+          <li><a href="https://github.com/aj-geddes/agentweave/wiki/Architecture" target="_blank" rel="noopener">Architecture</a></li>
+          <li><a href="https://github.com/aj-geddes/agentweave/wiki/Identity" target="_blank" rel="noopener">Identity (SPIFFE)</a></li>
+          <li><a href="https://github.com/aj-geddes/agentweave/wiki/Authorization" target="_blank" rel="noopener">Authorization (OPA)</a></li>
+          <li><a href="https://github.com/aj-geddes/agentweave/wiki/A2A-Protocol" target="_blank" rel="noopener">A2A Protocol</a></li>
+          <li><a href="https://github.com/aj-geddes/agentweave/wiki/API-Reference" target="_blank" rel="noopener">API Reference</a></li>
+        </ul>
+      </div>
+      <div class="aw-footer__col">
+        <h4>Examples</h4>
+        <ul>
+          <li><a href="https://github.com/aj-geddes/agentweave/wiki/Example-RAG-Knowledge-Base" target="_blank" rel="noopener">RAG Knowledge Base</a></li>
+          <li><a href="https://github.com/aj-geddes/agentweave/wiki/Example-Data-Pipeline" target="_blank" rel="noopener">Data Pipeline</a></li>
+          <li><a href="https://github.com/aj-geddes/agentweave/wiki/Example-Support-Triage" target="_blank" rel="noopener">Support Triage</a></li>
+          <li><a href="https://github.com/aj-geddes/agentweave/wiki/Example-Healthcare-Gateway" target="_blank" rel="noopener">Healthcare Gateway</a></li>
+          <li><a href="https://github.com/aj-geddes/agentweave/wiki/Example-Deploy-Orchestrator" target="_blank" rel="noopener">Deploy Orchestrator</a></li>
+        </ul>
+      </div>
+      <div class="aw-footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://github.com/aj-geddes/agentweave" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/aj-geddes/agentweave/discussions" target="_blank" rel="noopener">Discussions</a></li>
+          <li><a href="https://github.com/aj-geddes/agentweave/issues" target="_blank" rel="noopener">Issues</a></li>
+          <li><a href="https://github.com/aj-geddes/agentweave/blob/main/LICENSE" target="_blank" rel="noopener">Apache 2.0 License</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="aw-footer__bottom">
+      <p>&copy; {{ 'now' | date: "%Y" }} AgentWeave Team. Built on SPIFFE, OPA, A2A, and OpenTelemetry.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ Scripts ═══ -->
 <script>
-(function() {
-  'use strict';
-
-  document.addEventListener('DOMContentLoaded', function() {
-
-    // ---- Copy to Clipboard ----
-    function initCopyButtons() {
-      // Buttons with data-copy attribute (direct text)
-      document.querySelectorAll('[data-copy]').forEach(function(button) {
-        button.addEventListener('click', function(e) {
-          e.preventDefault();
-          var text = this.getAttribute('data-copy');
-          copyToClipboard(text, this);
-        });
+(function(){
+  // Copy button
+  document.querySelectorAll('[data-copy]').forEach(function(b){
+    b.addEventListener('click',function(){
+      navigator.clipboard.writeText(this.dataset.copy).then(function(){
+        b.classList.add('aw-copied');
+        setTimeout(function(){b.classList.remove('aw-copied')},1500);
       });
-
-      // Buttons with data-copy-target attribute (reference an element's textContent)
-      document.querySelectorAll('[data-copy-target]').forEach(function(button) {
-        button.addEventListener('click', function(e) {
-          e.preventDefault();
-          var targetId = this.getAttribute('data-copy-target');
-          var target = document.getElementById(targetId);
-          if (target) {
-            copyToClipboard(target.textContent, this);
-          }
-        });
-      });
-    }
-
-    function copyToClipboard(text, button) {
-      navigator.clipboard.writeText(text).then(function() {
-        var copyIcon = button.querySelector('.copy-icon');
-        var checkIcon = button.querySelector('.check-icon');
-
-        if (copyIcon && checkIcon) {
-          copyIcon.style.display = 'none';
-          checkIcon.style.display = 'block';
-          button.classList.add('copied');
-
-          setTimeout(function() {
-            copyIcon.style.display = '';
-            checkIcon.style.display = 'none';
-            button.classList.remove('copied');
-          }, 2000);
-        } else {
-          // Fallback for buttons without separate icons
-          var original = button.innerHTML;
-          button.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
-          button.classList.add('copied');
-          setTimeout(function() {
-            button.innerHTML = original;
-            button.classList.remove('copied');
-          }, 2000);
-        }
-      }).catch(function() {
-        // Fallback for older browsers
-        var textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-          document.execCommand('copy');
-        } catch (err) {
-          // Silently fail
-        }
-        document.body.removeChild(textarea);
-      });
-    }
-
-    // ---- Intersection Observer for Scroll Animations ----
-    function initScrollAnimations() {
-      if (!('IntersectionObserver' in window)) {
-        // Fallback: show everything immediately
-        document.querySelectorAll('.fade-in-section').forEach(function(el) {
-          el.classList.add('is-visible');
-        });
-        return;
-      }
-
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -40px 0px'
-      });
-
-      document.querySelectorAll('.fade-in-section').forEach(function(el) {
-        observer.observe(el);
-      });
-    }
-
-    // ---- Smooth Scroll for Anchor Links ----
-    function initSmoothScroll() {
-      document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-        anchor.addEventListener('click', function(e) {
-          var targetId = this.getAttribute('href');
-          if (targetId === '#') return;
-          var target = document.querySelector(targetId);
-          if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            // Update URL without triggering scroll
-            if (history.pushState) {
-              history.pushState(null, null, targetId);
-            }
-          }
-        });
-      });
-    }
-
-    // ---- Staggered Animation for Grid Items ----
-    function initStaggeredAnimations() {
-      var grids = document.querySelectorAll('.features-grid, .use-cases-grid, .tech-grid, .protocols-grid, .community-grid, .steps-grid');
-      grids.forEach(function(grid) {
-        var children = grid.querySelectorAll('.fade-in-section');
-        children.forEach(function(child, index) {
-          child.style.transitionDelay = (index * 0.08) + 's';
-        });
-      });
-    }
-
-    // ---- Market Stats Counter Animation ----
-    function initCounterAnimation() {
-      var statValues = document.querySelectorAll('.market-stat-value');
-      if (statValues.length === 0) return;
-
-      if (!('IntersectionObserver' in window)) return;
-
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-count');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.5 });
-
-      statValues.forEach(function(el) {
-        observer.observe(el);
-      });
-    }
-
-    // Initialize all modules
-    initCopyButtons();
-    initScrollAnimations();
-    initSmoothScroll();
-    initStaggeredAnimations();
-    initCounterAnimation();
-
-    // Respect reduced motion preferences
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.querySelectorAll('.fade-in-section').forEach(function(el) {
-        el.classList.add('is-visible');
-        el.style.transitionDelay = '0s';
-      });
-    }
+    });
   });
+  // Mobile nav
+  var tog=document.querySelector('.aw-nav__toggle');
+  var links=document.querySelector('.aw-nav__links');
+  if(tog&&links){tog.addEventListener('click',function(){links.classList.toggle('aw-nav__links--open');tog.classList.toggle('aw-nav__toggle--open')});}
+  // Scroll reveal
+  if('IntersectionObserver' in window){
+    var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('aw-visible');obs.unobserve(e.target)}})},{threshold:0.08,rootMargin:'0px 0px -60px 0px'});
+    document.querySelectorAll('.aw-card,.aw-crisis__stat,.aw-protocols__card,.aw-start__step,.aw-built__item,.aw-compare__col,.aw-stack__layer').forEach(function(el){obs.observe(el)});
+  }
+  // Reduced motion
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    document.querySelectorAll('.aw-card,.aw-crisis__stat,.aw-protocols__card,.aw-start__step,.aw-built__item,.aw-compare__col,.aw-stack__layer').forEach(function(el){el.classList.add('aw-visible')});
+  }
 })();
 </script>
-
-  {% include footer.html %}
 </body>
 </html>
