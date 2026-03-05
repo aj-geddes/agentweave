@@ -1,0 +1,60 @@
+agent:
+  name: claims
+  trust_domain: insurance.health
+  description: "Insurance Claims Processing Agent"
+  capabilities:
+    - name: process_claim
+      description: "Process an insurance claim using hospital patient data"
+      input_modes: ["application/json"]
+      output_modes: ["application/json"]
+    - name: verify_coverage
+      description: "Verify if a procedure is covered under a patient's plan"
+      input_modes: ["application/json"]
+      output_modes: ["application/json"]
+
+identity:
+  provider: spiffe
+  spiffe_endpoint: "unix:///run/spire/sockets/agent.sock"
+  allowed_trust_domains:
+    - insurance.health
+    - hospital.health  # Federation with hospital domain
+
+authorization:
+  provider: opa
+  opa_endpoint: "http://localhost:8181"
+  policy_path: "agentweave/authz"
+  default_action: deny
+  audit:
+    enabled: true
+    destination: "file:///var/log/agentweave/insurance-audit.log"
+
+transport:
+  tls_min_version: "1.3"
+  peer_verification: strict
+  connection_pool:
+    max_connections: 50
+    idle_timeout_seconds: 120
+  circuit_breaker:
+    failure_threshold: 3
+    recovery_timeout_seconds: 15
+  retry:
+    max_attempts: 3
+    backoff_base_seconds: 1.0
+    backoff_max_seconds: 10.0
+
+server:
+  host: "0.0.0.0"
+  port: 8444
+  protocol: a2a
+
+observability:
+  metrics:
+    enabled: true
+    port: 9091
+  tracing:
+    enabled: true
+    exporter: otlp
+    endpoint: "http://localhost:4317"
+  logging:
+    level: INFO
+    format: json

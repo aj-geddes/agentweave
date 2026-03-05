@@ -1,0 +1,59 @@
+# AgentWeave Configuration - Validator Agent
+# Stage 2: Validates transactions against business rules
+# Only accepts calls from the Ingest agent (chain-of-custody)
+
+agent:
+  name: "validator"
+  trust_domain: "finance.example"
+  description: "Validates transactions against business rules"
+  capabilities:
+    - name: "validate"
+      description: "Validate transactions against business rules"
+      input_modes: ["application/json"]
+      output_modes: ["application/json"]
+
+identity:
+  provider: "spiffe"
+  spiffe_endpoint: "unix:///run/spire/sockets/agent.sock"
+  allowed_trust_domains:
+    - "finance.example"
+
+authorization:
+  provider: "opa"
+  opa_endpoint: "http://opa:8181"
+  policy_path: "agentweave/authz"
+  default_action: "deny"
+  audit:
+    enabled: true
+    destination: "file:///var/log/agentweave/validator-audit.log"
+
+transport:
+  tls_min_version: "1.3"
+  peer_verification: "strict"
+  connection_pool:
+    max_connections: 100
+    idle_timeout_seconds: 60
+  circuit_breaker:
+    failure_threshold: 5
+    recovery_timeout_seconds: 30
+  retry:
+    max_attempts: 3
+    backoff_base_seconds: 1.0
+    backoff_max_seconds: 30.0
+
+server:
+  host: "0.0.0.0"
+  port: 8444
+  protocol: "a2a"
+
+observability:
+  metrics:
+    enabled: true
+    port: 9091
+  tracing:
+    enabled: true
+    exporter: "otlp"
+    endpoint: "http://otel-collector:4317"
+  logging:
+    level: "INFO"
+    format: "json"

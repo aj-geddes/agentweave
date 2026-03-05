@@ -1,0 +1,33 @@
+agent:
+  name: env-staging
+  version: 1.0.0
+  description: "Staging Environment Agent"
+
+identity:
+  trust_domain: devops.example
+  provider: spiffe
+  spire_socket: unix:///run/spire/sockets/agent.sock
+
+authorization:
+  provider: opa
+  opa_url: http://localhost:8181
+  policy_path: ./policies/
+  default_action: deny
+
+server:
+  host: 0.0.0.0
+  port: 8444
+
+transport:
+  tls:
+    min_version: "1.3"
+
+observability:
+  metrics:
+    enabled: true
+    port: 9091
+  logging:
+    level: INFO
+    format: json
+  audit:
+    enabled: true
