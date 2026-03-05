@@ -1,99 +1,100 @@
 ---
 layout: home
-title: AgentWeave SDK
-description: Build secure, cross-cloud AI agents with cryptographic identity and zero-trust authorization
+title: "AgentWeave SDK - The Trust Layer for Agentic Commerce"
+description: "AgentWeave is the security infrastructure for the AI agent economy. Cryptographic identity, mandatory mTLS, and policy-based authorization for agentic commerce, B2B negotiation, and cross-platform agent orchestration. Built on CNCF-graduated SPIFFE and OPA."
 permalink: /
 
 hero:
-  title: "AgentWeave SDK"
-  tagline: "The secure path is the only path"
-  description: "Build production-ready AI agents with built-in cryptographic identity, mutual TLS, and policy-based authorization. Security isn't optional—it's automatic."
+  title: "The Trust Layer for Agentic Commerce"
+  tagline: "Secure the $20.9 billion AI agent economy"
+  description: "AI agents are buying, selling, and negotiating across every major platform. AgentWeave is the security infrastructure that makes it safe. Cryptographic identity, mandatory mTLS, and policy-based authorization — built in, not bolted on."
   code_example: |
     from agentweave import SecureAgent, capability
 
-    class DataProcessor(SecureAgent):
-        @capability("process", description="Process incoming data")
-        async def process(self, data: dict) -> dict:
-            return {"status": "processed", "id": data["id"]}
+    class PurchaseAgent(SecureAgent):
+        @capability("negotiate", description="Negotiate terms with supplier agents")
+        async def negotiate(self, order: dict) -> dict:
+            # Identity verified. mTLS enforced. Authorization checked.
+            # You write business logic. AgentWeave handles trust.
+            return {"status": "accepted", "order_id": order["id"]}
 
-    # Identity, mTLS, and authorization are automatic
-    agent = DataProcessor.from_config("config.yaml")
+    agent = PurchaseAgent.from_config("config.yaml")
     agent.run()
 
 features:
-  title: "Built for Security, Designed for Simplicity"
-  subtitle: "Everything you need to build production-grade AI agents"
+  title: "Security Infrastructure for the Agent Economy"
+  subtitle: "Every component AI agents need to transact with verifiable trust"
   items:
     - icon: "shield"
-      title: "Zero-Trust Security"
-      description: "Every request is authenticated and authorized. Default-deny policies ensure no accidental access. Security cannot be bypassed—it's baked into the SDK."
+      title: "Agentic Commerce Ready"
+      description: "Purpose-built for the $20.9B agentic commerce market. Agents that buy, sell, and negotiate need cryptographic proof of identity — not API keys. AgentWeave delivers the trust layer that Visa, Mastercard, and Cloudflare are converging toward."
       link:
         text: "Learn about security"
         url: "/security/"
 
     - icon: "lock"
-      title: "SPIFFE Identity"
-      description: "Cryptographic workload identity via SPIRE. Automatic certificate rotation. No hardcoded secrets. Trust established through verifiable credentials."
+      title: "Cryptographic Agent Identity"
+      description: "SPIFFE-based workload identity gives every agent a verifiable, non-forgeable credential. Automatic certificate rotation. No shared secrets. The same standard Netflix, Uber, and Square use to secure production infrastructure."
       link:
         text: "Identity concepts"
         url: "/core-concepts/identity/"
 
     - icon: "code"
-      title: "A2A Protocol"
-      description: "Standardized agent-to-agent communication. Framework-agnostic. Built-in capability discovery via Agent Cards. Works with any A2A-compatible system."
+      title: "A2A Protocol Native"
+      description: "First-class support for the Linux Foundation A2A standard. Framework-agnostic agent-to-agent communication with built-in capability discovery via Agent Cards. Interoperate with any A2A-compatible system."
       link:
         text: "A2A protocol guide"
         url: "/core-concepts/communication/"
 
     - icon: "zap"
-      title: "OPA Authorization"
-      description: "Fine-grained policy-based access control. Policies as code with Rego. Audit every decision. Decouple authorization from business logic."
+      title: "Policy-Based Authorization"
+      description: "OPA-powered fine-grained access control with default-deny enforcement. Policies as code in Rego. Every authorization decision is audited. Decouple who-can-do-what from business logic entirely."
       link:
         text: "Authorization guide"
         url: "/core-concepts/authorization/"
 
     - icon: "layers"
-      title: "mTLS Transport"
-      description: "Mutual TLS for all communication. TLS 1.3 enforced. Peer verification mandatory. Encrypted end-to-end with zero downgrade attacks."
+      title: "Mandatory mTLS Transport"
+      description: "Mutual TLS for every agent interaction — no exceptions, no downgrades. TLS 1.3 enforced. Peer verification mandatory. The secure path is the only path, which means you cannot ship an insecure agent."
       link:
         text: "Transport layer"
         url: "/core-concepts/security-model/"
 
     - icon: "cloud"
-      title: "Observability"
-      description: "Built-in metrics, tracing, and audit logging. OpenTelemetry integration. Prometheus-compatible metrics. Debug and monitor production agents."
+      title: "Full-Stack Observability"
+      description: "OpenTelemetry-native metrics, distributed tracing, and structured audit logging. Prometheus-compatible. See every agent interaction, authorization decision, and certificate rotation in production."
       link:
         text: "Observability guide"
         url: "/api-reference/observability/"
 
 technologies:
-  title: "Built on Production-Proven Technologies"
+  title: "Built on Battle-Tested, CNCF-Graduated Standards"
   items:
     - name: "SPIFFE/SPIRE"
-      description: "CNCF-graduated cryptographic identity framework. Used by Netflix, Pinterest, Uber, and Square in production."
+      description: "CNCF-graduated cryptographic identity framework. Production-proven at Netflix, Pinterest, Uber, and Square. The emerging standard for agent identity that Visa and Mastercard are building toward."
       link: "https://spiffe.io"
 
     - name: "Open Policy Agent"
-      description: "CNCF-graduated policy engine for cloud-native environments. Decoupled authorization at scale."
+      description: "CNCF-graduated policy engine trusted across cloud-native infrastructure. Powers authorization at scale for organizations that cannot afford access control failures."
       link: "https://www.openpolicyagent.org"
 
     - name: "A2A Protocol"
-      description: "Linux Foundation standard for agent-to-agent communication. Framework-agnostic interoperability."
+      description: "Linux Foundation standard for agent-to-agent communication. Framework-agnostic interoperability that works across Google, OpenAI, Microsoft, and custom agent platforms."
       link: "https://a2a-protocol.org"
 
     - name: "OpenTelemetry"
-      description: "CNCF standard for observability. Unified metrics, traces, and logs across your agent infrastructure."
+      description: "CNCF-graduated observability standard. Unified metrics, traces, and logs across your entire agent infrastructure. Vendor-neutral with broad ecosystem support."
       link: "https://opentelemetry.io"
 
 getting_started:
-  title: "Get Started in Minutes"
+  title: "Ship a Secure Agent in Minutes"
   steps:
     - title: "Install AgentWeave"
-      description: "Install the SDK using pip. Requires Python 3.10 or higher."
+      description: "Install the SDK with pip. Python 3.11+ required."
       code: "pip install agentweave"
 
     - title: "Create Your Agent"
-      description: "Define your agent with the @capability decorator. Security is automatic."
+      description: "Define capabilities with decorators. Identity, mTLS, and authorization are automatic."
       code: |
         from agentweave import SecureAgent, capability
 
@@ -103,7 +104,7 @@ getting_started:
                 return {"message": f"Hello, {name}!"}
 
     - title: "Configure & Run"
-      description: "Set up identity, authorization, and transport in config.yaml, then start your agent."
+      description: "Point to your SPIFFE trust domain and OPA policies, then start serving."
       code: |
         agent = MyAgent.from_config("config.yaml")
         agent.run()
@@ -122,65 +123,175 @@ community:
 
     - icon: "docs"
       title: "Documentation"
-      description: "Comprehensive guides, tutorials, and API reference for every feature of AgentWeave."
+      description: "Architecture guides, security walkthroughs, API reference, and production deployment patterns."
       url: "/getting-started/"
 
     - icon: "github"
       title: "Discussions"
-      description: "Ask questions, share projects, and connect with other AgentWeave developers."
+      description: "Ask questions, share deployment patterns, and connect with other AgentWeave developers."
       url: "https://github.com/aj-geddes/agentweave/discussions"
 
     - icon: "github"
       title: "Report Issues"
-      description: "Found a bug or have a feature request? Let us know on GitHub Issues."
+      description: "Found a bug or have a feature request? Open an issue on GitHub."
       url: "https://github.com/aj-geddes/agentweave/issues"
+
+market_stats:
+  - icon: "trending-up"
+    value: "$20.9B"
+    label: "US agentic commerce market (2026)"
+  - icon: "globe"
+    value: "$1T+"
+    label: "Projected US market by 2030"
+  - icon: "zap"
+    value: "693%"
+    label: "AI traffic increase to retail sites"
+  - icon: "shield"
+    value: "40%"
+    label: "Agentic AI projects cancelled due to risk"
+
+use_cases:
+  title: "Built for Real-World Agent Commerce"
+  subtitle: "Security infrastructure for the scenarios that matter most"
+  items:
+    - icon: "trending-up"
+      title: "Retail Agent Orchestration"
+      description: "AI shopping agents are flooding retail platforms — 693% more AI traffic in the past year. AgentWeave gives retailers the infrastructure to verify which agents are legitimate, enforce purchasing policies, and maintain audit trails."
+      capabilities:
+        - "Cryptographic agent identity verification"
+        - "Policy-enforced purchasing limits"
+        - "Full transaction audit trail"
+        - "Bot authentication and classification"
+      link:
+        text: "Explore retail use case"
+        url: "/use-cases/agentic-commerce/"
+    - icon: "globe"
+      title: "B2B Agent Negotiation"
+      description: "Gartner projects $15 trillion in B2B purchases will be AI-agent-intermediated by 2028. When agents negotiate contracts and authorize payments, trust infrastructure cannot be an afterthought."
+      capabilities:
+        - "Enterprise-grade mutual authentication"
+        - "Contract negotiation authorization"
+        - "Cross-organization trust federation"
+        - "Auditable decision logging"
+      link:
+        text: "Explore B2B use case"
+        url: "/use-cases/agentic-commerce/"
+    - icon: "layers"
+      title: "Cross-Platform Trust Federation"
+      description: "The agent economy is multi-cloud and multi-vendor. A purchasing agent on AWS needs to securely transact with fulfillment on GCP and payments on Azure. SPIFFE-based federated identity makes this a configuration problem."
+      capabilities:
+        - "SPIFFE-based federated identity"
+        - "Cross-cloud mesh networking"
+        - "Vendor-neutral trust domains"
+        - "Automatic certificate rotation"
+      link:
+        text: "Explore federation use case"
+        url: "/use-cases/agentic-commerce/"
+
+protocols:
+  title: "Protocol Compatible"
+  subtitle: "Works with the emerging agent communication ecosystem"
+  items:
+    - icon: "link"
+      name: "A2A Protocol"
+      status: "Native"
+      description: "First-class support for the Linux Foundation Agent-to-Agent standard. Agent Cards, capability discovery, and JSON-RPC 2.0 messaging built in."
+      link: "/core-concepts/communication/"
+    - icon: "code"
+      name: "ACP"
+      status: "Compatible"
+      description: "Compatible transport layer. AgentWeave's mTLS and identity infrastructure secures Agent Communication Protocol connections."
+      link: "/core-concepts/communication/"
+    - icon: "globe"
+      name: "UCP"
+      status: "Compatible"
+      description: "Interoperable by design. AgentWeave provides the trust and authorization layer regardless of the wire protocol."
+      link: "/core-concepts/communication/"
+---
+
+## The Agentic Commerce Security Gap
+
+The AI agent economy is here. Every major platform — Google, OpenAI, Microsoft — has launched agentic shopping. Visa, Mastercard, and Cloudflare are building agent identity infrastructure. Gartner projects **$15 trillion in B2B purchases** will be AI-agent-intermediated by 2028.
+
+But there is a critical gap. **40% of agentic AI projects are cancelled due to inadequate risk controls** (Gartner, 2025). AI bot traffic to retail sites is up **693%** (Adobe). Akamai reports a **300% increase** in AI bot traffic across the web. The commerce infrastructure that handles $20.9 billion in US transactions this year has no standardized trust layer.
+
+AgentWeave fills that gap. It is the open-source security infrastructure that gives every AI agent a cryptographic identity, enforces mutual authentication on every transaction, and makes authorization decisions auditable and policy-driven.
+
+**The secure path is the only path.** Developers using AgentWeave cannot accidentally ship an insecure agent. Security is not a feature you enable — it is the architecture itself.
+
 ---
 
 ## Why AgentWeave?
 
-### Security by Design, Not Afterthought
+### Traditional Agent Security
 
-Building secure AI agents shouldn't require security expertise. AgentWeave makes the secure path the only path.
+- API keys and shared secrets passed in headers
+- Plain HTTP or optional TLS with no peer verification
+- Authorization logic scattered across application code
+- No audit trail for agent-to-agent transactions
+- Security added as an afterthought, easily bypassed
+- Custom protocols that break across frameworks
 
-#### Traditional Approach
+### The AgentWeave Approach
 
-- API keys in environment variables
-- Plain HTTP or self-signed TLS
-- Authorization logic scattered in code
-- No audit trail
-- Security bolted on later
-- Custom protocols per framework
+- **Cryptographic identity** via SPIFFE — non-forgeable, automatically rotated
+- **Mandatory mutual TLS** — every connection verified both ways, no downgrades
+- **OPA policy enforcement** — default-deny authorization, policies as code
+- **Every decision audited** — structured logs, distributed traces, Prometheus metrics
+- **Security cannot be bypassed** — the SDK enforces it at the architecture level
+- **A2A protocol standard** — framework-agnostic, Linux Foundation backed
 
-#### AgentWeave Approach
+---
 
-- Cryptographic identity via SPIFFE
-- Mutual TLS with automatic rotation
-- OPA policy enforcement (default-deny)
-- Every decision audited and logged
-- Security cannot be bypassed
-- Standard A2A protocol (framework-agnostic)
+## Built for the Agent Economy
 
-### Production-Ready from Day One
+### Retail & Commerce Orchestration
 
-AgentWeave is built on CNCF-graduated technologies trusted by industry leaders:
+AI shopping agents are flooding retail platforms — **693% more AI traffic to retail sites** in the past year alone. AgentWeave gives retailers and platform operators the infrastructure to verify which agents are legitimate, enforce purchasing policies, and maintain audit trails for every automated transaction.
 
-- **SPIFFE/SPIRE** - Used by Netflix, Pinterest, Uber, Square
-- **Open Policy Agent** - Proven at scale in cloud-native environments
-- **A2A Protocol** - Linux Foundation standard for agent interoperability
-- **mTLS** - Industry-standard encrypted communication
+### B2B Agent Negotiation
 
-### Cross-Cloud by Default
+Gartner projects **$15 trillion in B2B purchases** will be intermediated by AI agents by 2028. When agents negotiate contracts, place orders, and authorize payments on behalf of enterprises, the trust infrastructure cannot be an afterthought. AgentWeave provides the cryptographic identity and policy enforcement that B2B commerce demands.
 
-Deploy agents anywhere—AWS, GCP, Azure, on-premises—and they can securely communicate:
+### Cross-Platform Trust Federation
 
-- **Federated Identity** - Trust across organizational boundaries
-- **Optional Tailscale Integration** - Zero-config mesh networking
-- **Kubernetes Native** - First-class Helm charts and operators
-- **Cloud Agnostic** - No vendor lock-in
+The agent economy is inherently multi-cloud and multi-vendor. A purchasing agent on AWS needs to securely transact with a fulfillment agent on GCP and a payment agent on Azure. AgentWeave's SPIFFE-based federated identity and optional Tailscale mesh networking make cross-boundary trust a configuration problem, not an engineering project.
 
-## Ready to Build?
+---
 
-Get your first secure agent running in 5 minutes.
+## Protocol Compatible
+
+AgentWeave is designed to work with the emerging agent protocol ecosystem:
+
+- **A2A (Agent-to-Agent)** — Native support for the Linux Foundation standard. Agent Cards, capability discovery, and JSON-RPC 2.0 messaging built in.
+- **ACP (Agent Communication Protocol)** — Compatible transport layer. AgentWeave's mTLS and identity infrastructure secures ACP connections.
+- **UCP (Universal Communication Protocol)** — Interoperable by design. AgentWeave provides the trust and authorization layer regardless of the wire protocol.
+
+The protocol landscape is evolving rapidly. AgentWeave's value is not in competing with communication protocols — it is in providing the **security and identity layer** that every protocol needs but none provide on their own.
+
+---
+
+## The Market Opportunity
+
+The numbers tell a clear story:
+
+| Metric | Value | Source |
+|--------|-------|--------|
+| US agentic commerce market (2026) | **$20.9 billion** | eMarketer |
+| US agentic commerce market (2030) | **$1 trillion** | McKinsey |
+| Global agentic commerce (2030) | **$3-5 trillion** | McKinsey |
+| B2B purchases via AI agents (2028) | **$15 trillion** | Gartner |
+| AI bot traffic increase | **300%** | Akamai |
+| AI traffic to retail sites increase | **693%** | Adobe |
+| Agentic AI projects cancelled (risk) | **40%** | Gartner |
+
+Every one of these transactions needs verified identity, enforced authorization, and auditable trust. That is what AgentWeave provides.
+
+---
+
+## Ready to Secure Your Agents?
+
+The agent economy will not wait for security to catch up. Start building with trust infrastructure that is already here.
 
 <div class="cta-box">
   <a href="{{ '/getting-started/quickstart/' | relative_url }}" class="btn btn-primary btn-large">Get Started</a>

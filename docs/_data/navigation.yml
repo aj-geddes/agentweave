@@ -1,4 +1,4 @@
-# HVS Secure Agent SDK Documentation Navigation
+# AgentWeave SDK Documentation Navigation
 # This file defines the complete navigation structure for the documentation site
 
 main:
@@ -7,10 +7,10 @@ main:
     children:
       - title: "Overview"
         url: /getting-started/
-        description: "Introduction to HVS Secure Agent SDK"
+        description: "Introduction to AgentWeave SDK"
       - title: "Installation"
         url: /getting-started/installation/
-        description: "Install HVS Agent SDK and dependencies"
+        description: "Install AgentWeave SDK and dependencies"
       - title: "Quick Start"
         url: /getting-started/quickstart/
         description: "Build your first secure agent in 5 minutes"
@@ -19,7 +19,7 @@ main:
         description: "Essential concepts and terminology"
       - title: "Hello World"
         url: /getting-started/hello-world/
-        description: "Your first HVS agent example"
+        description: "Your first AgentWeave agent example"
 
   - title: "Core Concepts"
     url: /core-concepts/
@@ -32,7 +32,7 @@ main:
         description: "System architecture and design patterns"
       - title: "Agents"
         url: /core-concepts/agents/
-        description: "Understanding HVS agents"
+        description: "Understanding AgentWeave agents"
       - title: "Identity"
         url: /core-concepts/identity/
         description: "Cryptographic workload identity with SPIFFE/SPIRE"
@@ -170,6 +170,25 @@ main:
         url: /examples/real-world/iot-edge/
         description: "IoT and edge computing use case"
 
+  - title: "Use Cases"
+    url: /use-cases/
+    children:
+      - title: "Agentic Commerce"
+        url: /use-cases/agentic-commerce/
+        description: "Trust infrastructure for AI-driven commerce"
+      - title: "Retail Orchestration"
+        url: /use-cases/retail/
+        description: "Multi-agent retail workflows with verified identity"
+      - title: "B2B Agent Networks"
+        url: /use-cases/b2b/
+        description: "Secure cross-organization agent collaboration"
+      - title: "Cross-Cloud Deployment"
+        url: /use-cases/cross-cloud/
+        description: "Deploy agents across AWS, GCP, and Azure"
+      - title: "Compliance & Audit"
+        url: /use-cases/compliance/
+        description: "Regulatory compliance and audit trail for agent operations"
+
   - title: "Deployment"
     url: /deployment/
     children:
@@ -251,41 +270,52 @@ main:
 
 # Footer navigation
 footer:
-  - title: "Resources"
+  - title: "Product"
     links:
-      - title: "Documentation"
-        url: /
+      - title: "Quick Start"
+        url: /getting-started/quickstart/
+      - title: "Core Concepts"
+        url: /core-concepts/
       - title: "API Reference"
         url: /api-reference/
-      - title: "Examples"
-        url: /examples/
+      - title: "Security"
+        url: /security/
+      - title: "Deployment"
+        url: /deployment/
+
+  - title: "Resources"
+    links:
       - title: "GitHub"
-        url: https://github.com/aj-geddes/hvs-agent-pathfinder
+        url: https://github.com/aj-geddes/agentweave
         external: true
+      - title: "Discussions"
+        url: https://github.com/aj-geddes/agentweave/discussions
+        external: true
+      - title: "Wiki"
+        url: https://github.com/aj-geddes/agentweave/wiki
+        external: true
+
+  - title: "Use Cases"
+    links:
+      - title: "Retail Orchestration"
+        url: /use-cases/retail/
+      - title: "B2B Agent Networks"
+        url: /use-cases/b2b/
+      - title: "Cross-Cloud Deployment"
+        url: /use-cases/cross-cloud/
+      - title: "Compliance & Audit"
+        url: /use-cases/compliance/
+      - title: "Agentic Commerce"
+        url: /use-cases/agentic-commerce/
 
   - title: "Community"
     links:
-      - title: "GitHub Discussions"
-        url: https://github.com/aj-geddes/hvs-agent-pathfinder/discussions
-        external: true
-      - title: "Issues"
-        url: https://github.com/aj-geddes/hvs-agent-pathfinder/issues
-        external: true
       - title: "Contributing"
         url: /contributing/
       - title: "Code of Conduct"
         url: /contributing/code-of-conduct/
-
-  - title: "Support"
-    links:
-      - title: "Troubleshooting"
-        url: /troubleshooting/
-      - title: "Security"
-        url: /security/
-      - title: "FAQ"
-        url: /troubleshooting/faq/
-      - title: "Contact"
-        url: https://github.com/aj-geddes/hvs-agent-pathfinder/discussions
+      - title: "Issues"
+        url: https://github.com/aj-geddes/agentweave/issues
         external: true
 
 # Quick links (shown in sidebar or header)
@@ -300,7 +330,7 @@ quick_links:
     url: /examples/
     icon: code
   - title: "GitHub"
-    url: https://github.com/aj-geddes/hvs-agent-pathfinder
+    url: https://github.com/aj-geddes/agentweave
     icon: github
     external: true
 

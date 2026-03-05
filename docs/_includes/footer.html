@@ -1,45 +1,25 @@
 <footer class="site-footer">
   <div class="footer-container">
     <div class="footer-grid">
-      <!-- About Section -->
+      <!-- Product Column -->
       <div class="footer-section">
-        <h3 class="footer-heading">AgentWeave SDK</h3>
-        <p class="footer-description">
-          Build secure, cross-cloud AI agents with cryptographic identity and automatic authorization.
-        </p>
-        <p class="footer-tagline">
-          The secure path is the only path.
-        </p>
-      </div>
-
-      <!-- Documentation Links -->
-      <div class="footer-section">
-        <h4 class="footer-title">Documentation</h4>
+        <h4 class="footer-title">Product</h4>
         <ul class="footer-links">
           <li><a href="{{ '/getting-started/quickstart/' | relative_url }}">Quick Start</a></li>
           <li><a href="{{ '/core-concepts/' | relative_url }}">Core Concepts</a></li>
           <li><a href="{{ '/tutorials/' | relative_url }}">Tutorials</a></li>
           <li><a href="{{ '/api-reference/' | relative_url }}">API Reference</a></li>
+          <li><a href="{{ '/security/' | relative_url }}">Security</a></li>
+          <li><a href="{{ '/deployment/' | relative_url }}">Deployment</a></li>
         </ul>
       </div>
 
-      <!-- Resources Links -->
+      <!-- Resources Column -->
       <div class="footer-section">
         <h4 class="footer-title">Resources</h4>
         <ul class="footer-links">
-          <li><a href="{{ '/examples/' | relative_url }}">Examples</a></li>
-          <li><a href="{{ '/deployment/' | relative_url }}">Deployment</a></li>
-          <li><a href="{{ '/security/' | relative_url }}">Security</a></li>
-          <li><a href="{{ '/troubleshooting/' | relative_url }}">Troubleshooting</a></li>
-        </ul>
-      </div>
-
-      <!-- Community Links -->
-      <div class="footer-section">
-        <h4 class="footer-title">Community</h4>
-        <ul class="footer-links">
           <li>
-            <a href="{{ site.github_url | default: 'https://github.com/aj-geddes/agentweave' }}"
+            <a href="{{ site.github.repository_url | default: 'https://github.com/aj-geddes/agentweave' }}"
                target="_blank"
                rel="noopener noreferrer">
               GitHub
@@ -49,31 +29,70 @@
             </a>
           </li>
           <li>
-            <a href="{{ site.pypi_url | default: 'https://pypi.org/project/agentweave/' }}"
+            <a href="{{ site.github.repository_url | default: 'https://github.com/aj-geddes/agentweave' }}/discussions"
                target="_blank"
                rel="noopener noreferrer">
-              PyPI
+              Discussions
               <svg class="external-link-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 6.5v3a1.5 1.5 0 01-1.5 1.5h-5A1.5 1.5 0 012 9.5v-5A1.5 1.5 0 013.5 3h3M7.5 2H10v2.5M5.5 6.5L10 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </a>
           </li>
           <li>
-            <a href="{{ site.github_url | default: 'https://github.com/aj-geddes/agentweave' }}/blob/main/LICENSE"
+            <a href="{{ site.github.repository_url | default: 'https://github.com/aj-geddes/agentweave' }}/wiki"
+               target="_blank"
+               rel="noopener noreferrer">
+              Wiki
+              <svg class="external-link-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 6.5v3a1.5 1.5 0 01-1.5 1.5h-5A1.5 1.5 0 012 9.5v-5A1.5 1.5 0 013.5 3h3M7.5 2H10v2.5M5.5 6.5L10 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Use Cases Column -->
+      <div class="footer-section">
+        <h4 class="footer-title">Use Cases</h4>
+        <ul class="footer-links">
+          <li><a href="{{ '/use-cases/retail/' | relative_url }}">Retail Orchestration</a></li>
+          <li><a href="{{ '/use-cases/b2b/' | relative_url }}">B2B Agent Networks</a></li>
+          <li><a href="{{ '/use-cases/cross-cloud/' | relative_url }}">Cross-Cloud Deployment</a></li>
+          <li><a href="{{ '/use-cases/compliance/' | relative_url }}">Compliance &amp; Audit</a></li>
+          <li><a href="{{ '/use-cases/agentic-commerce/' | relative_url }}">Agentic Commerce</a></li>
+        </ul>
+      </div>
+
+      <!-- Community Column -->
+      <div class="footer-section">
+        <h4 class="footer-title">Community</h4>
+        <ul class="footer-links">
+          <li><a href="{{ '/contributing/' | relative_url }}">Contributing</a></li>
+          <li><a href="{{ '/contributing/code-of-conduct/' | relative_url }}">Code of Conduct</a></li>
+          <li>
+            <a href="{{ site.github.repository_url | default: 'https://github.com/aj-geddes/agentweave' }}/issues"
+               target="_blank"
+               rel="noopener noreferrer">
+              Issues
+              <svg class="external-link-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 6.5v3a1.5 1.5 0 01-1.5 1.5h-5A1.5 1.5 0 012 9.5v-5A1.5 1.5 0 013.5 3h3M7.5 2H10v2.5M5.5 6.5L10 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="{{ site.github.repository_url | default: 'https://github.com/aj-geddes/agentweave' }}/blob/main/LICENSE"
                target="_blank"
                rel="noopener noreferrer">
               {{ site.license | default: 'Apache 2.0' }} License
             </a>
           </li>
-          <li>
-            <a href="{{ site.github_url | default: 'https://github.com/aj-geddes/agentweave' }}/issues"
-               target="_blank"
-               rel="noopener noreferrer">
-              Report Issue
-            </a>
-          </li>
         </ul>
       </div>
+    </div>
+
+    <!-- Social Proof -->
+    <div class="footer-social-proof">
+      <p>Built on CNCF-graduated technologies trusted by Netflix, Uber, Pinterest, and Square</p>
     </div>
 
     <!-- Footer Bottom -->
@@ -82,23 +101,27 @@
         <p class="copyright">
           &copy; {{ 'now' | date: "%Y" }} {{ site.author | default: 'AgentWeave Team' }}. All rights reserved.
         </p>
-        {% if page.last_modified_at or page.date %}
-        <p class="last-updated">
-          Last updated:
-          <time datetime="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
-            {{ page.last_modified_at | default: page.date | date: "%B %d, %Y" }}
-          </time>
+      </div>
+
+      <div class="footer-bottom-center">
+        <p class="footer-tagline">
+          Built with
+          <a href="https://spiffe.io" target="_blank" rel="noopener noreferrer">SPIFFE</a>,
+          <a href="https://www.openpolicyagent.org" target="_blank" rel="noopener noreferrer">OPA</a>, and
+          <a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A</a>
         </p>
-        {% endif %}
       </div>
 
       <div class="footer-bottom-right">
-        <p class="made-with">
-          Built with
-          <a href="https://jekyllrb.com" target="_blank" rel="noopener noreferrer">Jekyll</a>
-          and hosted on
-          <a href="https://pages.github.com" target="_blank" rel="noopener noreferrer">GitHub Pages</a>
-        </p>
+        <a href="{{ site.github.repository_url | default: 'https://github.com/aj-geddes/agentweave' }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="footer-github-link"
+           aria-label="AgentWeave on GitHub">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" fill="currentColor"/>
+          </svg>
+        </a>
       </div>
     </div>
   </div>

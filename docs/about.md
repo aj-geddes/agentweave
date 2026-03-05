@@ -1,414 +1,176 @@
 ---
 layout: page
-title: About
-description: About the AgentWeave SDK project - history, philosophy, team, and acknowledgments
+title: "About AgentWeave - Secure AI Agent Framework"
+description: "AgentWeave is an open-source Python SDK providing cryptographic identity, mandatory mTLS, and policy-based authorization for AI agents. Built on CNCF-graduated SPIFFE and OPA for zero-trust agent security."
+permalink: /about/
 nav_order: 12
 ---
 
 # About AgentWeave
 
-AgentWeave is an open-source Python SDK for building secure, cross-cloud AI agents with cryptographic identity and automatic authorization. Built on industry-standard technologies like SPIFFE, OPA, and the A2A protocol, AgentWeave makes security the default path - not an afterthought.
+AgentWeave is the open-source security infrastructure for AI agents. It is a Python SDK that gives every agent a cryptographic identity, enforces mutual TLS on every connection, and evaluates authorization policies on every request. Built on CNCF-graduated standards, AgentWeave makes security the architecture itself -- not a feature you enable or a library you configure.
 
 ---
 
-## Project History
+## Mission
 
-### Origins
+**Make secure AI agents the default, not the exception.**
 
-AgentWeave was born from a simple observation: **AI agents are getting more powerful, but agent security hasn't kept pace.**
+The AI agent economy is growing faster than the trust infrastructure to support it. Agents are negotiating contracts, processing payments, accessing sensitive data, and making decisions on behalf of organizations. The frameworks that power these agents overwhelmingly treat security as optional -- a configuration flag, an add-on library, a best practice that developers may or may not follow.
 
-Traditional agent frameworks focus on capabilities - what agents can do - but largely ignore security fundamentals like identity verification, authorization, and secure communication. Developers are left to implement security themselves, leading to inconsistent implementations, subtle vulnerabilities, and security bypasses.
-
-The founding team asked: **What if security was built into the framework, not bolted on afterward?**
-
-### Timeline
-
-- **Q4 2024** - Initial concept and design
-- **Q1 2025** - Core architecture and SPIFFE integration
-- **Q2 2025** - A2A protocol implementation
-- **Q3 2025** - Beta release and community feedback
-- **January 2025** - Version 1.0.0 released
-
-### Evolution
-
-AgentWeave started as an internal project at a security-focused AI company dealing with multi-cloud agent deployments. After realizing the broader industry faced the same challenges, we open-sourced the project to benefit the entire AI agent ecosystem.
+AgentWeave exists to close that gap. Our mission is to provide the trust layer that every AI agent needs so that organizations can deploy agents with confidence that they are authenticated, authorized, and auditable.
 
 ---
 
-## Design Philosophy
+## The Problem We Solve
 
-AgentWeave is built on several core principles:
+AI agent frameworks focus on what agents can do. AgentWeave focuses on ensuring agents can be trusted.
 
-### 1. The Secure Path is the Only Path
+### The Current State of Agent Security
 
-**Principle:** Security should be impossible to bypass, even accidentally.
+Most agent frameworks share the same security profile:
 
-Unlike traditional frameworks where security is optional or easy to misconfigure, AgentWeave enforces security at the framework level. There's no way to "turn off" identity verification or authorization - if you're using AgentWeave, you're using a secure agent.
+- **Identity**: API keys or bearer tokens passed in HTTP headers. Shared secrets that can be leaked, stolen, or reused. No mutual authentication.
+- **Authorization**: Application-level if-statements scattered through business logic. No policy enforcement layer. No default deny.
+- **Transport**: Optional TLS with no peer verification. Easy to downgrade, skip, or misconfigure.
+- **Audit**: Application logging at best. No structured audit trail. No cryptographic proof of which agent performed which action.
 
-**Why?** Because the easiest way to prevent security bugs is to make them impossible.
+This is not a theoretical concern. **Gartner reports that 40% of agentic AI projects are cancelled due to inadequate risk controls.** The agents work -- they just cannot be trusted in production.
 
-### 2. Identity Over Credentials
+### What AgentWeave Provides
 
-**Principle:** Use cryptographic identity instead of shared secrets.
+AgentWeave replaces each weak link with a production-proven standard:
 
-AgentWeave uses SPIFFE for workload identity. Every agent has a cryptographically verifiable identity (like `spiffe://yourorg.com/agent/processor`). No API keys, no passwords, no secrets to rotate or leak.
+| Problem | Traditional Approach | AgentWeave Approach |
+|---------|---------------------|---------------------|
+| Identity | API keys, shared secrets | SPIFFE cryptographic identity (X.509 SVIDs) |
+| Authentication | One-way TLS or none | Mandatory mutual TLS, no exceptions |
+| Authorization | Application code | OPA policies with default deny |
+| Audit | Application logs | OpenTelemetry traces, metrics, structured audit logs |
+| Transport security | Configurable, optional | Enforced at the SDK level, cannot be bypassed |
 
-**Why?** Shared secrets are the root cause of most security breaches. Cryptographic identity eliminates entire classes of vulnerabilities.
-
-### 3. Zero-Trust by Default
-
-**Principle:** Trust nothing, verify everything.
-
-All agent-to-agent communication uses mutual TLS. Both parties verify each other's identity before exchanging data. Authorization policies are evaluated on every request. Default deny in production.
-
-**Why?** Perimeter security is dead. Modern systems need defense in depth with per-request authorization.
-
-### 4. Standards Over Proprietary
-
-**Principle:** Build on open standards, not vendor lock-in.
-
-AgentWeave uses industry standards:
-- **SPIFFE** for identity (CNCF standard)
-- **OPA** for authorization (CNCF standard)
-- **A2A protocol** for communication (open standard)
-- **OpenTelemetry** for observability (CNCF standard)
-
-**Why?** Open standards ensure interoperability, prevent vendor lock-in, and leverage community expertise.
-
-### 5. Developer Experience Matters
-
-**Principle:** Security should be transparent and developer-friendly.
-
-While security is enforced, developers shouldn't have to think about it constantly. AgentWeave uses decorators, type hints, and sensible defaults to make secure development feel natural.
-
-**Why?** If security is painful, developers will fight it. Make it easy, and they'll embrace it.
-
-### 6. Production-Ready from Day One
-
-**Principle:** Every feature should be production-ready before release.
-
-AgentWeave includes comprehensive testing, observability, error handling, and documentation. Features aren't released as "experimental" - they're ready for production use.
-
-**Why?** Developers need tools they can rely on. Half-baked features erode trust.
+The core design principle is simple: **the secure path is the only path.** There is no configuration option to disable identity verification. There is no flag to skip authorization. There is no way to downgrade from mTLS to plaintext. Developers using AgentWeave write business logic. The SDK handles trust.
 
 ---
 
-## Core Team
+## Our Approach
 
-AgentWeave is developed and maintained by a team of security and distributed systems engineers:
+AgentWeave is built entirely on open standards from the Cloud Native Computing Foundation and the Linux Foundation. We chose established, battle-tested projects over proprietary alternatives for every layer of the stack.
 
-### Project Maintainers
+### Why Open Standards Matter
 
-**AJ Geddes** - Project Lead & Chief Architect
+Vendor lock-in is a security risk. When your trust infrastructure depends on a proprietary service, you inherit that vendor's security posture, uptime guarantees, and business continuity risks. Open standards eliminate this dependency.
+
+More importantly, open standards benefit from community-wide security review. SPIFFE, OPA, and OpenTelemetry are maintained by large, active communities and have been deployed at scale by organizations including Netflix, Uber, Pinterest, Square, and major financial institutions. The security properties of these systems are well understood and continuously tested.
+
+### Design Principles
+
+**1. The Secure Path is the Only Path**
+Security is enforced at the SDK level. Developers cannot accidentally or intentionally bypass identity verification, mTLS, or authorization. This eliminates the most common source of security failures: misconfiguration.
+
+**2. Identity Over Credentials**
+Cryptographic identity replaces shared secrets. Every agent has a SPIFFE Verifiable Identity Document (SVID) -- an X.509 certificate that is automatically rotated, cannot be exfiltrated, and provides mutual authentication. No API keys to manage, rotate, or leak.
+
+**3. Zero Trust by Default**
+Every agent-to-agent interaction requires mutual authentication and authorization. Default deny in production. Trust is verified on every request, not assumed based on network location.
+
+**4. Policy as Code**
+Authorization rules are expressed as OPA Rego policies that are version-controlled, testable, and auditable. Business rules, compliance requirements, and access controls are decoupled from application code.
+
+**5. Observable by Default**
+OpenTelemetry-native metrics, distributed tracing, and structured logging provide complete visibility into agent behavior. Every authorization decision, certificate rotation, and agent interaction is captured.
+
+**6. Developer Experience Matters**
+Security should be transparent. AgentWeave uses Python decorators, type hints, and sensible defaults to make secure development feel natural. Developers focus on business logic -- the SDK handles the security infrastructure.
+
+---
+
+## Technology Stack
+
+AgentWeave integrates four CNCF-graduated or Linux Foundation projects into a cohesive security layer for AI agents.
+
+### SPIFFE / SPIRE -- Cryptographic Identity
+
+[SPIFFE](https://spiffe.io) (Secure Production Identity Framework for Everyone) is the CNCF-graduated standard for workload identity. SPIRE is the reference implementation. Together, they provide automatic, cryptographic identity for every AgentWeave agent.
+
+Every agent receives a SPIFFE Verifiable Identity Document (SVID) -- an X.509 certificate with a SPIFFE ID like `spiffe://yourorg.com/agents/shopper-v2`. Certificates are automatically rotated. No shared secrets, no API keys, no manual certificate management.
+
+### Open Policy Agent (OPA) -- Authorization
+
+[OPA](https://www.openpolicyagent.org) is the CNCF-graduated policy engine that powers AgentWeave's authorization layer. Authorization policies are written in Rego, a purpose-built policy language that is declarative, testable, and auditable.
+
+AgentWeave evaluates OPA policies on every agent interaction with default-deny enforcement. Policies control which agents can perform which actions, under what conditions, with what spending limits, at what times -- all without modifying agent code.
+
+### A2A Protocol -- Agent Communication
+
+The [A2A (Agent-to-Agent) protocol](https://a2a-protocol.org), maintained by the Linux Foundation, is an open standard for framework-agnostic agent communication. AgentWeave provides native A2A support including Agent Cards for capability discovery, JSON-RPC 2.0 messaging, task management, and streaming.
+
+A2A enables AgentWeave agents to interoperate with agents built on other frameworks -- Google ADK, Microsoft AutoGen, LangChain, or custom platforms -- without custom integration code.
+
+### OpenTelemetry -- Observability and Audit
+
+[OpenTelemetry](https://opentelemetry.io) is the CNCF-graduated observability standard that powers AgentWeave's metrics, distributed tracing, and structured logging. Prometheus-compatible metrics, OTLP trace export, and structured audit logs provide complete visibility into agent behavior.
+
+For compliance-sensitive deployments, the observability stack produces immutable audit trails that link every agent action to a cryptographic identity, a policy decision, and a timestamp.
+
+---
+
+## Open Source
+
+AgentWeave is released under the **Apache License 2.0** -- a permissive, patent-safe, enterprise-friendly license.
+
+### What Apache 2.0 Means
+
+- **Use freely** in commercial and non-commercial projects
+- **Modify and distribute** modified versions
+- **Patent protection** via explicit patent grant
+- **Attribution required** -- include copyright and license notice
+- **Compatible** with most other open-source licenses
+
+### Why Open Source
+
+Agent security infrastructure must be transparent. Organizations deploying agents that process payments, access customer data, or make purchasing decisions need to audit the security layer those agents depend on. Proprietary security infrastructure requires trust in the vendor. Open-source infrastructure requires trust in the code -- which anyone can verify.
+
+### Contributing
+
+AgentWeave welcomes contributions from the community. Whether you are fixing a bug, adding a feature, improving documentation, or sharing deployment patterns, your contributions make agent security better for everyone.
+
+- **GitHub Repository**: [github.com/aj-geddes/agentweave](https://github.com/aj-geddes/agentweave)
+- **Issues**: [Report bugs and request features](https://github.com/aj-geddes/agentweave/issues)
+- **Discussions**: [Ask questions and share patterns](https://github.com/aj-geddes/agentweave/discussions)
+- **Contributing Guide**: [How to contribute]({{ '/contributing/' | relative_url }})
+
+---
+
+## Project Leadership
+
+**AJ Geddes** -- Project Lead and Chief Architect
 GitHub: [@aj-geddes](https://github.com/aj-geddes)
 Focus: Architecture, security model, identity systems
 
-**[Name]** - Core Developer
-GitHub: [@username]
-Focus: A2A protocol, transport layer, gRPC implementation
-
-**[Name]** - Core Developer
-GitHub: [@username]
-Focus: Authorization, OPA integration, policy framework
-
-### Emeritus Maintainers
-
-Contributors who have stepped back from active maintenance but made significant contributions to the project.
-
-### Contributors
-
-AgentWeave is made possible by contributions from developers around the world. See our [CONTRIBUTORS.md](https://github.com/aj-geddes/agentweave/blob/main/CONTRIBUTORS.md) for a full list.
-
-### How to Join
-
-Interested in becoming a maintainer?
-1. Start by contributing (see [Contributing Guide](contributing/index.md))
-2. Demonstrate expertise in specific areas
-3. Actively participate in reviews and discussions
-4. Existing maintainers will invite you to join
+AgentWeave is open to new maintainers. Start by contributing, demonstrate expertise, and active maintainers will invite you to join the core team. See the [Contributing Guide]({{ '/contributing/' | relative_url }}) for details.
 
 ---
 
-## Acknowledgments
+## Getting Started
 
-AgentWeave builds on the shoulders of giants. We're grateful to:
+Ready to build secure AI agents?
 
-### Organizations
+1. **Install**: `pip install agentweave` (Python 3.11+)
+2. **Quick Start**: [Build your first secure agent in 10 minutes]({{ '/getting-started/quickstart/' | relative_url }})
+3. **Core Concepts**: [Understand the security architecture]({{ '/core-concepts/' | relative_url }})
+4. **Use Cases**: [See real-world applications]({{ '/use-cases/' | relative_url }})
+5. **Examples**: [Run production-ready code samples]({{ '/examples/' | relative_url }})
 
-- **SPIFFE/SPIRE Project** - For creating a robust workload identity standard
-- **Open Policy Agent (OPA)** - For flexible, powerful policy-based authorization
-- **Cloud Native Computing Foundation (CNCF)** - For fostering open standards
-- **Python Software Foundation** - For the Python language and ecosystem
-
-### Inspiration
-
-AgentWeave was inspired by:
-- **Istio** - Service mesh and zero-trust networking patterns
-- **HashiCorp Vault** - Secrets management and identity-based security
-- **Kubernetes** - Declarative configuration and operator patterns
-- **gRPC** - High-performance RPC framework
-- **FastAPI** - Developer-friendly Python framework design
-
-### Technologies
-
-Core technologies that power AgentWeave:
-- **SPIFFE/SPIRE** - Workload identity framework
-- **Open Policy Agent** - Policy engine
-- **gRPC** - Communication protocol
-- **Python asyncio** - Async runtime
-- **Pydantic** - Data validation
-- **Prometheus** - Metrics
-- **OpenTelemetry** - Distributed tracing
+<div class="cta-box">
+  <a href="{{ '/getting-started/quickstart/' | relative_url }}" class="btn btn-primary btn-large">Get Started</a>
+  <a href="https://github.com/aj-geddes/agentweave" class="btn btn-secondary btn-large">View on GitHub</a>
+</div>
 
 ---
 
-## Related Projects
-
-AgentWeave is part of the broader AI agent ecosystem:
-
-### SPIFFE/SPIRE
-
-**Website:** [spiffe.io](https://spiffe.io)
-**Why it matters:** SPIFFE provides the identity foundation for AgentWeave. Every agent's cryptographic identity comes from SPIRE.
-
-### Open Policy Agent (OPA)
-
-**Website:** [openpolicyagent.org](https://www.openpolicyagent.org)
-**Why it matters:** OPA enables flexible, policy-based authorization. AgentWeave evaluates Rego policies for every agent interaction.
-
-### A2A Protocol
-
-**Specification:** [a2a-protocol.org](https://a2a-protocol.org)
-**Why it matters:** The A2A (Agent-to-Agent) protocol is an open standard for agent communication. AgentWeave agents can interoperate with agents built using other A2A-compatible frameworks.
-
-### Related AI Agent Frameworks
-
-- **Google ADK (Agent Development Kit)** - Google's agent framework with A2A support
-- **AWS Bedrock AgentCore** - AWS agent framework
-- **LangChain** - Popular agent orchestration framework
-- **AutoGen** - Microsoft's multi-agent framework
-- **CrewAI** - Role-based multi-agent framework
-
-### Complementary Tools
-
-- **Tailscale** - Mesh networking for cross-cloud connectivity
-- **Consul** - Service discovery and configuration
-- **Vault** - Secrets management
-- **cert-manager** - Kubernetes certificate management
-
----
-
-## License
-
-AgentWeave is licensed under the **Apache License 2.0**.
-
-### What This Means
-
-The Apache 2.0 license is:
-- **Permissive** - Use AgentWeave in commercial and non-commercial projects
-- **Patent-safe** - Includes explicit patent grant
-- **Attribution required** - Include copyright and license notice
-- **Modification friendly** - Modify and distribute modified versions
-
-### Full License Text
-
-See the [LICENSE](https://github.com/aj-geddes/agentweave/blob/main/LICENSE) file in the repository.
-
-### Why Apache 2.0?
-
-We chose Apache 2.0 because:
-1. It's widely understood and accepted in the enterprise
-2. It's compatible with most other open-source licenses
-3. It includes patent protection for users
-4. It allows both open-source and commercial use
-
----
-
-## Governance
-
-AgentWeave follows an open governance model:
-
-### Decision Making
-
-- **Technical decisions** - Made by consensus among maintainers
-- **Security issues** - Handled privately until patches are available
-- **Breaking changes** - Require RFC and community discussion
-- **Feature requests** - Prioritized based on community needs
-
-### RFC Process
-
-For significant changes:
-1. Author writes an RFC (Request for Comments)
-2. RFC is posted for community feedback
-3. Discussion and iteration period (typically 2 weeks)
-4. Maintainers make final decision
-5. Accepted RFCs are implemented
-
-### Release Process
-
-See our [Changelog](changelog.md) for details on:
-- Release schedule
-- Versioning policy
-- Support policy
-- Deprecation process
-
----
-
-## Community
-
-Join the AgentWeave community:
-
-### Communication Channels
-
-- **GitHub Discussions** - [Discussions](https://github.com/aj-geddes/agentweave/discussions)
-- **GitHub Issues** - [Issues](https://github.com/aj-geddes/agentweave/issues)
-- **Discord** - [Join our Discord](https://discord.gg/agentweave)
-- **Twitter** - [@agentweave](https://twitter.com/agentweave)
-- **Mailing List** - [Subscribe](https://agentweave.io/newsletter)
-
-### Events
-
-- **Monthly Community Calls** - First Tuesday of each month
-- **Office Hours** - Thursdays 2-3pm UTC
-- **Contributor Summits** - Quarterly virtual meetups
-- **Conference Talks** - Find us at KubeCon, PyCon, and security conferences
-
-### Resources
-
-- **Blog** - [blog.agentweave.io](https://blog.agentweave.io)
-- **YouTube** - [AgentWeave Channel](https://youtube.com/@agentweave)
-- **Examples Repository** - [agentweave/examples](https://github.com/agentweave/examples)
-
----
-
-## Roadmap
-
-Want to see where AgentWeave is headed?
-
-### Short-term (Next 6 months)
-
-- Enhanced observability with auto-instrumentation
-- Additional identity provider integrations
-- Performance optimizations for high-throughput scenarios
-- WebSocket transport for browser-based agents
-
-### Medium-term (6-12 months)
-
-- Service mesh integration (Istio, Linkerd)
-- Advanced routing and load balancing
-- Agent orchestration patterns
-- Multi-tenant isolation improvements
-
-### Long-term (12+ months)
-
-- Formal verification of security properties
-- Language SDKs beyond Python (Go, TypeScript, Rust)
-- Edge deployment optimizations
-- Enhanced developer tooling and IDE integrations
-
-See our [GitHub Projects](https://github.com/aj-geddes/agentweave/projects) for detailed roadmap and progress.
-
----
-
-## Support
-
-### Free Support
-
-- **Documentation** - Comprehensive docs at [docs.agentweave.io](https://aj-geddes.github.io/agentweave/)
-- **Community** - Get help from the community in [Discussions](https://github.com/aj-geddes/agentweave/discussions)
-- **Bug Reports** - Report issues on [GitHub](https://github.com/aj-geddes/agentweave/issues)
-
-### Commercial Support
-
-Commercial support, training, and consulting available through our partners:
-- **Email** - support@agentweave.io
-- **Enterprise Plans** - Custom SLAs and priority support
-- **Training** - On-site or virtual training sessions
-- **Consulting** - Architecture reviews and implementation assistance
-
----
-
-## Contact
-
-Questions about AgentWeave?
-
-- **General Inquiries** - hello@agentweave.io
-- **Security Issues** - security@agentweave.io
-- **Commercial Support** - support@agentweave.io
-- **Code of Conduct** - conduct@agentweave.io
-- **Media/Press** - press@agentweave.io
-
----
-
-## Sponsor the Project
-
-AgentWeave is free and open source, but development takes time and resources. Support the project:
-
-- **GitHub Sponsors** - [Sponsor on GitHub](https://github.com/sponsors/agentweave)
-- **Corporate Sponsorship** - Contact sponsor@agentweave.io
-- **Contribute** - Code, documentation, and testing are always welcome
-
-### Sponsors
-
-We're grateful to our sponsors who make AgentWeave possible:
-
-**Platinum Sponsors**
-- [Your Company Here]
-
-**Gold Sponsors**
-- [Your Company Here]
-
-**Silver Sponsors**
-- [Your Company Here]
-
-Interested in sponsoring? Email sponsor@agentweave.io
-
----
-
-## FAQ
-
-### Who is AgentWeave for?
-
-AgentWeave is for developers building AI agents that need:
-- Strong security guarantees
-- Cross-cloud deployment
-- Identity verification
-- Authorization policies
-- Interoperability with other agent frameworks
-
-### Is AgentWeave production-ready?
-
-Yes! Version 1.0.0 is production-ready and used in production by multiple organizations.
-
-### What cloud providers does AgentWeave support?
-
-AgentWeave is cloud-agnostic and runs on:
-- AWS (ECS, EKS, EC2)
-- Google Cloud (Cloud Run, GKE, Compute Engine)
-- Azure (Container Apps, AKS, VMs)
-- On-premises Kubernetes
-- Any environment with SPIRE support
-
-### Can AgentWeave integrate with LangChain/AutoGen/etc?
-
-Yes! AgentWeave agents can be wrapped in LangChain tools or integrated with other frameworks. The A2A protocol also enables interoperability with other A2A-compatible frameworks.
-
-### What programming languages does AgentWeave support?
-
-Currently Python 3.10+. Additional language SDKs (Go, TypeScript, Rust) are on the roadmap.
-
-### Is AgentWeave suitable for hobbyist projects?
-
-Absolutely! While AgentWeave excels in enterprise environments, it's also great for learning about secure agent architectures and distributed systems.
-
----
-
-Thank you for using AgentWeave! Together, we're making AI agents more secure.
-
----
-
-**Learn More:**
-- [Getting Started Guide](getting-started/index.md)
-- [Contributing Guide](contributing/index.md)
-- [Changelog](changelog.md)
-- [GitHub Repository](https://github.com/aj-geddes/agentweave)
+**Related Documentation:**
+- [Security Model]({{ '/core-concepts/security-model/' | relative_url }})
+- [Agentic Commerce Use Case]({{ '/use-cases/agentic-commerce/' | relative_url }})
+- [Deployment Guide]({{ '/deployment/' | relative_url }})
+- [Changelog]({{ '/changelog/' | relative_url }})

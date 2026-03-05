@@ -1,8 +1,9 @@
 # Site settings
-title: "AgentWeave SDK Documentation"
-description: "Build secure, cross-cloud AI agents with cryptographic identity and zero-trust authorization. The secure path is the only path."
-tagline: "Secure AI Agent Framework for Cross-Cloud Deployments"
+title: "AgentWeave - Secure AI Agent Framework | Python SDK for Zero-Trust Agent Security"
+description: "AgentWeave is an open-source Python SDK for building secure, cross-cloud AI agents with cryptographic identity (SPIFFE/SPIRE), mandatory mTLS, OPA policy-based authorization, and A2A protocol support. The trust and security infrastructure layer for agentic commerce."
+tagline: "The Trust and Security Infrastructure for AI Agents and Agentic Commerce"
 author: "AgentWeave Team"
+version: "1.0.0"
 
 # URL settings
 url: "https://aj-geddes.github.io"
@@ -13,7 +14,7 @@ repository: "aj-geddes/agentweave"
 github:
   repository_url: "https://github.com/aj-geddes/agentweave"
   issues_url: "https://github.com/aj-geddes/agentweave/issues"
-  latest_release: "v0.1.0"
+  latest_release: "v1.0.0"
 
 # Build settings
 markdown: kramdown
@@ -116,6 +117,34 @@ navigation:
           url: /concepts/context/
         - title: "Observability"
           url: /concepts/observability/
+
+    - title: "Use Cases"
+      url: /use-cases/
+      children:
+        - title: "Agentic Commerce"
+          url: /use-cases/agentic-commerce/
+        - title: "Multi-Agent Orchestration"
+          url: /use-cases/multi-agent-orchestration/
+        - title: "Secure Data Pipelines"
+          url: /use-cases/data-pipelines/
+        - title: "Healthcare & Compliance"
+          url: /use-cases/healthcare-compliance/
+        - title: "Enterprise AI Workflows"
+          url: /use-cases/enterprise-ai/
+
+    - title: "Agentic Commerce"
+      url: /agentic-commerce/
+      children:
+        - title: "Trust Infrastructure"
+          url: /agentic-commerce/trust-infrastructure/
+        - title: "Agent Identity Verification"
+          url: /agentic-commerce/identity-verification/
+        - title: "Protocol Interoperability"
+          url: /agentic-commerce/protocol-interoperability/
+        - title: "Fraud Prevention"
+          url: /agentic-commerce/fraud-prevention/
+        - title: "Compliance & Audit"
+          url: /agentic-commerce/compliance-audit/
 
     - title: "Tutorials"
       url: /tutorials/
@@ -245,6 +274,7 @@ social:
   links:
     - https://github.com/aj-geddes/agentweave
     - https://twitter.com/agentweave
+    - https://pypi.org/project/agentweave/
 
 # Logo and images
 logo: /assets/images/agentweave-logo.png

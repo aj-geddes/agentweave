@@ -10,14 +10,14 @@
       <!-- Version Selector -->
       <div class="version-selector">
         <button class="version-button" aria-label="Select version" aria-expanded="false">
-          <span class="version-label">v{{ site.version | default: '0.1.0' }}</span>
+          <span class="version-label">v{{ site.version | default: '1.0.0' }}</span>
           <svg class="version-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
         <div class="version-dropdown" hidden>
           <a href="{{ '/' | relative_url }}" class="version-item active">
-            <span class="version-number">v{{ site.version | default: '0.1.0' }}</span>
+            <span class="version-number">v{{ site.version | default: '1.0.0' }}</span>
             <span class="version-badge">Latest</span>
           </a>
           {% if site.previous_versions %}
@@ -52,7 +52,7 @@
             aria-label="Search documentation"
             autocomplete="off"
           >
-          <kbd class="search-hint">⌘K</kbd>
+          <kbd class="search-hint">&#8984;K</kbd>
         </div>
         <div class="search-results" id="search-results" hidden></div>
       </div>
@@ -61,11 +61,12 @@
       <nav class="header-nav">
         <a href="{{ '/getting-started/' | relative_url }}" class="nav-link">Docs</a>
         <a href="{{ '/api-reference/' | relative_url }}" class="nav-link">API</a>
+        <a href="{{ '/use-cases/' | relative_url }}" class="nav-link">Use Cases</a>
         <a href="{{ '/examples/' | relative_url }}" class="nav-link">Examples</a>
       </nav>
 
       <!-- GitHub Link -->
-      <a href="{{ site.github_url | default: 'https://github.com/aj-geddes/agentweave' }}"
+      <a href="{{ site.github.repository_url | default: 'https://github.com/aj-geddes/agentweave' }}"
          class="icon-link github-link"
          target="_blank"
          rel="noopener noreferrer"

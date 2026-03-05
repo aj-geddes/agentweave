@@ -5,28 +5,36 @@
 
   <!-- SEO Meta Tags -->
   <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  <meta name="keywords" content="{% if page.keywords %}{{ page.keywords | join: ', ' }}{% else %}AgentWeave, AI agents, SPIFFE, SPIRE, secure agents, agent-to-agent communication, A2A protocol, OPA, authorization{% endif %}">
+  <meta name="keywords" content="{% if page.keywords %}{{ page.keywords | join: ', ' }}{% else %}secure AI agent framework, AI agent security SDK, SPIFFE AI agents, agent-to-agent communication security, agentic commerce security, zero-trust AI agents, cryptographic agent identity, mTLS agent framework, OPA agent authorization, A2A protocol security, cross-cloud AI agents, Python AI agent SDK, secure multi-agent orchestration, AI agent identity verification, agent-to-agent protocol Python, SPIFFE SPIRE AI workload identity, agentic commerce trust infrastructure, AI agent audit trail compliance, zero-trust agent-to-agent communication, secure agent framework for retail, AI agent mTLS mutual authentication, AgentWeave, agent cards, policy-based authorization{% endif %}">
   <meta name="author" content="{{ site.author | default: 'AgentWeave Team' }}">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="generator" content="AgentWeave SDK Documentation v{{ site.version | default: '1.0.0' }}">
 
   <!-- Open Graph Tags -->
-  <meta property="og:site_name" content="{{ site.title | default: 'AgentWeave SDK' }}">
-  <meta property="og:title" content="{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
-  <meta property="og:image" content="{{ site.url }}/assets/images/og-image.png">
+  <meta property="og:site_name" content="AgentWeave - Secure AI Agent Framework">
+  <meta property="og:title" content="{% if page.title %}{{ page.title }} | AgentWeave SDK{% else %}AgentWeave - Secure AI Agent Framework | Zero-Trust Security for AI Agents{% endif %}">
+  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}Open-source Python SDK for building secure AI agents with cryptographic identity (SPIFFE/SPIRE), mandatory mTLS, OPA authorization, and A2A protocol support. The trust infrastructure layer for agentic commerce.{% endif %}">
+  <meta property="og:type" content="{% if page.layout == 'tutorial' %}article{% else %}website{% endif %}">
+  <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
+  <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/assets/images/agentweave-social.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="AgentWeave SDK - Secure AI Agent Framework for Cross-Cloud Deployments">
   <meta property="og:locale" content="en_US">
+  {% if page.date %}<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">{% endif %}
+  {% if page.last_modified_at %}<meta property="article:modified_time" content="{{ page.last_modified_at | date_to_xmlschema }}">{% endif %}
 
   <!-- Twitter Card Tags -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  <meta name="twitter:image" content="{{ site.url }}/assets/images/twitter-card.png">
-  {% if site.twitter_username %}<meta name="twitter:site" content="@{{ site.twitter_username }}">{% endif %}
+  <meta name="twitter:title" content="{% if page.title %}{{ page.title }} | AgentWeave SDK{% else %}AgentWeave - Zero-Trust Security Framework for AI Agents{% endif %}">
+  <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}Python SDK for secure, cross-cloud AI agents. Cryptographic identity, mTLS, OPA authorization, and A2A protocol. The security layer for agentic commerce.{% endif %}">
+  <meta name="twitter:image" content="{{ site.url }}{{ site.baseurl }}/assets/images/agentweave-social.png">
+  <meta name="twitter:image:alt" content="AgentWeave SDK - Secure AI Agent Framework">
+  {% if site.twitter.username %}<meta name="twitter:site" content="@{{ site.twitter.username }}">{% endif %}
+  <meta name="twitter:creator" content="@{{ site.twitter.username | default: 'agentweave' }}">
 
   <!-- Canonical URL -->
-  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon/favicon.svg' | relative_url }}">
@@ -51,7 +59,7 @@
   {% endif %}
 
   <!-- Page Title -->
-  <title>{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }} - {{ site.tagline }}{% endif %}</title>
+  <title>{% if page.title %}{{ page.title }} | AgentWeave - Secure AI Agent Framework{% else %}AgentWeave SDK - Zero-Trust Security Framework for Cross-Cloud AI Agents{% endif %}</title>
 
   <!-- Theme Color -->
   <meta name="theme-color" content="#1a202c" media="(prefers-color-scheme: dark)">
@@ -60,28 +68,225 @@
   <!-- RSS Feed -->
   {% feed_meta %}
 
-  <!-- JSON-LD Structured Data -->
+  <!-- JSON-LD Structured Data: SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AgentWeave SDK",
+    "alternateName": "agentweave",
+    "description": "Open-source Python SDK for building secure, cross-cloud AI agents with cryptographic identity (SPIFFE/SPIRE), mandatory mTLS, OPA policy-based authorization, and A2A protocol support. The trust and security infrastructure layer for agentic commerce.",
+    "url": "{{ site.url }}{{ site.baseurl }}/",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "AI Agent Security Framework",
+    "operatingSystem": "Linux, macOS, Windows",
+    "softwareVersion": "{{ site.version | default: '1.0.0' }}",
+    "programmingLanguage": "Python",
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "downloadUrl": "https://pypi.org/project/agentweave/",
+    "codeRepository": "https://github.com/aj-geddes/agentweave",
+    "releaseNotes": "{{ site.url }}{{ site.baseurl }}/changelog/",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "AgentWeave Team",
+      "url": "https://github.com/aj-geddes/agentweave"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AgentWeave",
+      "url": "{{ site.url }}{{ site.baseurl }}/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ site.url }}{{ site.baseurl }}/assets/images/agentweave-logo.png"
+      }
+    },
+    "keywords": [
+      "secure AI agent framework",
+      "AI agent security SDK",
+      "SPIFFE AI agents",
+      "agent-to-agent communication security",
+      "agentic commerce security",
+      "zero-trust AI agents",
+      "cryptographic agent identity",
+      "mTLS agent framework",
+      "OPA agent authorization",
+      "A2A protocol security",
+      "cross-cloud AI agents",
+      "Python AI agent SDK"
+    ],
+    "featureList": [
+      "Cryptographic workload identity via SPIFFE/SPIRE",
+      "Mandatory mTLS for all agent-to-agent communication",
+      "Policy-based authorization with Open Policy Agent (OPA)",
+      "A2A protocol support with Agent Cards",
+      "Cross-cloud deployment (AWS, GCP, Azure)",
+      "Zero-trust architecture by default",
+      "Complete audit trail and compliance logging",
+      "Agentic commerce trust infrastructure"
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD Structured Data: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "AgentWeave",
+    "url": "{{ site.url }}{{ site.baseurl }}/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ site.url }}{{ site.baseurl }}/assets/images/agentweave-logo.png"
+    },
+    "sameAs": [
+      "https://github.com/aj-geddes/agentweave",
+      "https://twitter.com/agentweave",
+      "https://pypi.org/project/agentweave/"
+    ],
+    "description": "Creators of AgentWeave, the open-source Python SDK providing trust and security infrastructure for AI agents and agentic commerce."
+  }
+  </script>
+
+  <!-- JSON-LD Structured Data: Page-specific TechArticle (for docs pages) -->
+  {% if page.title %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}",
+    "headline": "{{ page.title }}",
     "description": "{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}",
-    "url": "{{ site.url }}{{ page.url }}",
+    "url": "{{ site.url }}{{ site.baseurl }}{{ page.url }}",
     "datePublished": "{% if page.date %}{{ page.date | date_to_xmlschema }}{% endif %}",
     "dateModified": "{% if page.last_modified_at %}{{ page.last_modified_at | date_to_xmlschema }}{% elsif page.date %}{{ page.date | date_to_xmlschema }}{% endif %}",
     "author": {
       "@type": "Organization",
-      "name": "{{ site.author | default: 'AgentWeave Team' }}"
+      "name": "AgentWeave Team"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "{{ site.title | default: 'AgentWeave SDK' }}",
+      "name": "AgentWeave",
       "logo": {
         "@type": "ImageObject",
-        "url": "{{ site.url }}/assets/images/logo.svg"
+        "url": "{{ site.url }}{{ site.baseurl }}/assets/images/agentweave-logo.png"
       }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ site.url }}{{ site.baseurl }}{{ page.url }}"
+    },
+    "about": {
+      "@type": "SoftwareApplication",
+      "name": "AgentWeave SDK"
     }
   }
   </script>
+  {% endif %}
+
+  <!-- JSON-LD Structured Data: FAQ (homepage only) -->
+  {% if page.url == "/" or page.url == "/index.html" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is AgentWeave?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AgentWeave is an open-source Python SDK for building secure, cross-cloud AI agents. It provides cryptographic workload identity via SPIFFE/SPIRE, mandatory mTLS for all agent-to-agent communication, policy-based authorization with OPA, and A2A protocol support with Agent Cards. It serves as the trust and security infrastructure layer for agentic commerce."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does AgentWeave secure agent-to-agent communication?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AgentWeave enforces mandatory mutual TLS (mTLS) for all agent-to-agent communication. Every agent receives a cryptographic identity through SPIFFE/SPIRE, and all connections are authenticated and encrypted by default. The secure path is the only path - security cannot be bypassed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is agentic commerce and how does AgentWeave support it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Agentic commerce is the emerging market where AI agents autonomously transact, negotiate, and make purchases on behalf of users. AgentWeave provides the critical trust and security infrastructure layer that enables safe agentic commerce through cryptographic agent identity verification, policy-based authorization, fraud prevention, and complete audit trails for compliance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does AgentWeave work across multiple cloud providers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. AgentWeave is designed for cross-cloud deployments spanning AWS, Google Cloud, and Azure. SPIFFE-based identity works across cloud boundaries, and optional Tailscale integration provides secure mesh networking between clouds without complex VPN configuration."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What protocols does AgentWeave support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AgentWeave implements the A2A (Agent-to-Agent) protocol from the Linux Foundation with full Agent Card support. Its security layer is protocol-agnostic and can work alongside other emerging protocols including ACP and UCP, providing the trust infrastructure that all agent communication protocols need."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does AgentWeave handle authorization?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AgentWeave uses Open Policy Agent (OPA) for fine-grained, policy-based authorization written in Rego. Policies can control access by agent identity, action, resource, and context. Production mode enforces default-deny - agents must be explicitly authorized for every action."
+        }
+      }
+    ]
+  }
+  </script>
+  {% endif %}
+
+  <!-- JSON-LD Structured Data: WebSite with SearchAction -->
+  {% if page.url == "/" or page.url == "/index.html" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AgentWeave SDK Documentation",
+    "url": "{{ site.url }}{{ site.baseurl }}/",
+    "description": "Official documentation for AgentWeave, the secure AI agent framework for cross-cloud deployments and agentic commerce.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{{ site.url }}{{ site.baseurl }}/search/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  {% endif %}
+
+  <!-- JSON-LD Structured Data: BreadcrumbList -->
+  {% if page.url != "/" and page.url != "/index.html" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "AgentWeave",
+        "item": "{{ site.url }}{{ site.baseurl }}/"
+      }{% if page.title %},
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{{ page.title }}",
+        "item": "{{ site.url }}{{ site.baseurl }}{{ page.url }}"
+      }{% endif %}
+    ]
+  }
+  </script>
+  {% endif %}
 </head>
