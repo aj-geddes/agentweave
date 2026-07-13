@@ -28,8 +28,6 @@ from .fixtures import (
     sample_tasks,
 )
 
-from .cluster import TestCluster
-
 from .policy import PolicySimulator
 
 __all__ = [
@@ -54,3 +52,20 @@ __all__ = [
     "TestCluster",
     "PolicySimulator",
 ]
+
+
+def __getattr__(name):
+    if name == "TestCluster":
+        try:
+            from .cluster import TestCluster
+            return TestCluster
+        except ImportError as e:
+            raise ImportError(
+                "TestCluster requires the optional 'docker' package. "
+                "Install it with: pip install docker"
+            ) from e
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+def __dir__():
+    return list(globals().keys()) + ["TestCluster"]

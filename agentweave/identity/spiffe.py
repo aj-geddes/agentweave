@@ -14,7 +14,8 @@ from pathlib import Path
 from typing import Optional, Dict, Callable, Awaitable
 
 from spiffe import X509Svid, X509Bundle, WorkloadApiClient
-from spiffe.errors import SpiffeError
+from spiffe.errors import PySpiffeError
+from cryptography.hazmat.primitives import serialization
 
 from .base import IdentityProvider, IdentityError, TrustDomainError, ConnectionError as IdentityConnectionError
 
@@ -102,7 +103,7 @@ class SPIFFEIdentityProvider(IdentityProvider):
             self._initialized = True
             logger.info(f"SPIFFE identity provider initialized with ID: {self._svid_cache.spiffe_id}")
 
-        except SpiffeError as e:
+        except PySpiffeError as e:
             logger.error(f"Failed to connect to SPIFFE Workload API: {e}")
             raise IdentityConnectionError(
                 f"Cannot connect to SPIFFE Workload API at {self._endpoint}: {e}"
@@ -191,7 +192,9 @@ class SPIFFEIdentityProvider(IdentityProvider):
         # If no trust domain specified, use our own
         if trust_domain is None:
             svid = await self.get_svid()
-            trust_domain = svid.spiffe_id.trust_domain
+            trust_domain = str(svid.spiffe_id.trust_domain)
+        else:
+            trust_domain = str(trust_domain)
 
         # Check cache first
         if trust_domain in self._bundle_cache:
@@ -199,19 +202,21 @@ class SPIFFEIdentityProvider(IdentityProvider):
 
         # Fetch bundles from Workload API
         try:
-            bundles = await asyncio.to_thread(self._client.fetch_x509_bundles)
-            self._bundle_cache.update(bundles)
+            bundle_set = await asyncio.to_thread(self._client.fetch_x509_bundles)
+            # Populate cache by iterating over bundle_set.bundles
+            for bundle in bundle_set.bundles:
+                self._bundle_cache[str(bundle.trust_domain)] = bundle
 
             if trust_domain not in self._bundle_cache:
                 raise TrustDomainError(
                     f"Trust domain '{trust_domain}' not found in available bundles. "
-                    f"Available: {list(bundles.keys())}"
+                    f"Available: {list(self._bundle_cache.keys())}"
                 )
 
             logger.debug(f"Fetched trust bundle for domain: {trust_domain}")
             return self._bundle_cache[trust_domain]
 
-        except SpiffeError as e:
+        except PySpiffeError as e:
             logger.error(f"Failed to fetch trust bundles: {e}")
             raise IdentityError(f"Cannot fetch trust bundles: {e}") from e
 
@@ -297,7 +302,7 @@ class SPIFFEIdentityProvider(IdentityProvider):
             svid = await asyncio.to_thread(self._client.fetch_x509_svid)
             self._svid_cache = svid
             logger.info(f"Fetched SVID: {svid.spiffe_id}, expires: {svid.leaf.not_valid_after_utc}")
-        except SpiffeError as e:
+        except PySpiffeError as e:
             logger.error(f"Failed to fetch SVID: {e}")
             raise IdentityError(f"Cannot fetch SVID: {e}") from e
 
@@ -352,14 +357,8 @@ class SPIFFEIdentityProvider(IdentityProvider):
         cert_path = Path(self._temp_dir.name) / "cert.pem"
         key_path = Path(self._temp_dir.name) / "key.pem"
 
-        # Write certificate chain
-        cert_path.write_bytes(svid.cert_chain_bytes)
-
-        # Write private key
-        key_path.write_bytes(svid.private_key_bytes)
-
-        # Secure the key file
-        os.chmod(key_path, 0o600)
+        # Write certificate chain and private key using save method
+        svid.save(str(cert_path), str(key_path), serialization.Encoding.PEM)
 
         return str(cert_path), str(key_path)
 
@@ -373,7 +372,7 @@ class SPIFFEIdentityProvider(IdentityProvider):
             str: Path to the bundle file
         """
         bundle_path = Path(self._temp_dir.name) / "bundle.pem"
-        bundle_path.write_bytes(bundle.x509_authorities_bytes)
+        bundle.save(str(bundle_path), serialization.Encoding.PEM)
         return str(bundle_path)
 
     def _ensure_initialized(self) -> None:
